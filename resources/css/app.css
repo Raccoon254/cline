@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.pac-regular {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.pac-thin {
+    font-family: "Pacifico", cursive;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body {
+    font-family: "Work Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.archivo {
+    font-family: "Archivo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+
+.work-sans {
+    font-family: "Work Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dm-sans {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.inter {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+}
+
+.center {
+    @apply flex items-center justify-center;
+}
+
+.day {
+    @apply ring-1 w-[130px] h-[130px] ring-offset-1 p-2 rounded-2xl ring-gray-700 flex flex-col items-start border-2 border-blue-300 justify-between;
+}
+
+.day:hover {
+    @apply ring-2 ring-blue-200 scale-105 transition-transform border-blue-100 cursor-pointer;
+}
+
+.day > .date {
+    @apply text-2xl pac-regular;
+}
+
+.day > .text {
+    @apply text-xl pac-thin;
+}
+
+.custom-input {
+    @apply p-3 pl-4 rounded-full border-2 ring-1 ring-offset-1 ring-gray-300 border-gray-300 focus:outline-none focus:border-blue-300 transition-all duration-300 ease-in-out;
+}
+
+/* Placeholders */
+.custom-input::placeholder {
+    @apply pac-thin;
+}
+
+/* Text color */
+.custom-input:focus {
+    @apply text-gray-700 bg-gray-100;
+}
+
+.custom-input {
+    @apply text-gray-700;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-orange-300;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-orange-500 w-[15px];
+    width: 100px !important;
+}
+
+.scale:hover {
+    @apply transform scale-105 transition-transform duration-300 ease-in-out;
+}
+
+.ring-c {
+    @apply ring-orange-600 ring-inset ring-1 ring-opacity-50 hover:ring-[1px] hover:ring-orange-500;
+}
+
+.custom-nav-style {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}

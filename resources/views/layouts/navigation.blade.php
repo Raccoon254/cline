@@ -1,12 +1,23 @@
 <div class="nav custom-nav-style relative min-h-14 w-full border-b border-gray-100 text-gray-800 bg-gray-100 bg-opacity-25 backdrop-blur-[1px]">
     <div class="container px-4 flex w-full justify-between items-center">
-        <div class="logo mx-2 flex items-center absolute top-2 left-1 text-3xl">
+        <div class="logo mx-2 gap-2 flex items-center justify-center absolute top-2 left-1 text-3xl">
+            <label for="my-drawer-2" class="btn btn-ghost btn-circle btn-sm drawer-button lg:hidden">
+                <i class="fa-solid fa-bars"></i>
+            </label>
             <a href="{{ url('/') }}" class="flex items-center">
                 <i class="fa-solid fa-feather"></i>
-                Cline
+                <span class="hidden sm:block">
+                    Cline
+                </span>
             </a>
         </div>
-        <div class="h-full min-h-12 my-1"></div>
+
+        <span class="sm:hidden absolute top-2 left-[47%] text-3xl">
+                    Cline
+            </span>
+
+        <div class="h-full min-h-12 my-1">
+        </div>
         <!-- Three Dots Icon for small screens -->
         <div class="md:hidden absolute top-3 right-1 flex items-center">
             <button id="menu-btn" class="mobile-menu-button">

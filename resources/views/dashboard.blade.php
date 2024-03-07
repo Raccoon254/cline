@@ -1,10 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
     <div class=" text-gray-900 p-4">
         <div class="message flex flex-col">
             <span>
@@ -15,9 +9,9 @@
             </span>
         </div>
         <!-- Page Content -->
-        <div class="p-4">
+        <div class="py-4">
 
-            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-2 w-fit">
+            <div class="grid gap-2 grid-cols-2 w-full sm:w-[310px]">
                 @for($i = 0; $i < 4; $i++)
                     <div class="dashboard-card">
                         <div class="top">

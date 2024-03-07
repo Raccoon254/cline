@@ -143,13 +143,21 @@ body {
 }
 
 .dashboard-card{
-    @apply bg-white w-[150px] h-[150px] overflow-hidden shadow-sm flex flex-col items-center justify-center rounded-3xl;
+    @apply bg-white w-full h-[150px] overflow-hidden shadow-sm flex flex-col items-center justify-center rounded-3xl;
+}
+
+.dashboard-card:hover{
+    @apply bg-opacity-70 scale-105 transition-transform duration-300 ring-1 ring-inset ring-offset-1 ring-gray-300 ring-opacity-50;
 }
 
 .earn-container{
-    @apply bg-custom-black w-[310px] h-auto grid grid-cols-2 my-2 rounded-3xl;
+    @apply bg-custom-black w-full sm:w-[310px] h-auto grid grid-cols-2 my-2 rounded-3xl;
 }
 
 .earn-card{
-    @apply w-[150px] h-[78px] overflow-hidden flex flex-col items-center justify-center rounded-3xl;
+    @apply w-full h-[78px] overflow-hidden flex flex-col items-center justify-center;
+}
+
+.earn-card:hover{
+    @apply bg-gray-100 bg-opacity-10;
 }

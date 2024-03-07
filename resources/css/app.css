@@ -17,7 +17,7 @@
 }
 
 body {
-    font-family: "Work Sans", sans-serif;
+    font-family: "Work Sans", sans-serif !important;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
@@ -94,15 +94,15 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 3px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #111111;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-orange-300;
+    @apply bg-white;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -124,4 +124,32 @@ body {
     align-content: center;
     flex-wrap: wrap;
     justify-content: flex-end;
+}
+
+.side {
+    @apply flex gap-2 items-center hover:bg-gray-100 hover:bg-opacity-5 hover:text-gray-50 p-2 px-4 rounded-[8px] w-full hover:shadow hover:scale-105 transition duration-300;
+}
+
+.side.active {
+    @apply bg-blue-700 bg-opacity-10 text-gray-50;
+}
+
+.bg-custom-black{
+    @apply bg-[#111111];
+}
+
+.input-no-focus{
+    @apply focus:outline-none focus:border-none focus:ring-0 focus:text-gray-800;
+}
+
+.dashboard-card{
+    @apply bg-white w-[150px] h-[150px] overflow-hidden shadow-sm flex flex-col items-center justify-center rounded-3xl;
+}
+
+.earn-container{
+    @apply bg-custom-black w-[310px] h-auto grid grid-cols-2 my-2 rounded-3xl;
+}
+
+.earn-card{
+    @apply w-[150px] h-[78px] overflow-hidden flex flex-col items-center justify-center rounded-3xl;
 }

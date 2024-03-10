@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('recipient_id');
             $table->text('body');
             $table->boolean('is_read')->default(false);
-            $table->timestamp('delivered_at')->nullable();
             $table->timestamp('sent_at')->useCurrent();
+            $table->timestamp('delivered_at')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
 

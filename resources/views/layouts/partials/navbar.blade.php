@@ -1,8 +1,8 @@
-<div class="nav relative min-h-14 border-b border-gray-100 bg-gray-100 bg-opacity-10 backdrop-blur-[1px]">
+<div class="nav relative min-h-14 text-white border-b border-gray-100 bg-gray-100 bg-opacity-10 backdrop-blur-[1px]">
     <div class="px-4 w-full flex justify-between items-center">
         <div class="logo mx-2 flex items-center text-3xl">
             <a href="{{ url('/') }}" class="flex items-center">
-                <i class="fa-solid fa-feather"></i>
+                <i class="fa-solid fa-feather mr-2"></i>
                 Cline
             </a>
         </div>

@@ -80,7 +80,7 @@ body {
 
 /* Placeholders */
 .custom-input::placeholder {
-    @apply pac-thin;
+    @apply pac-thin text-sm;
 }
 
 /* Text color */
@@ -160,4 +160,8 @@ body {
 
 .earn-card:hover{
     @apply bg-gray-100 bg-opacity-10;
+}
+
+.custom-btn{
+    @apply bg-blue-500 text-white p-2 px-4 rounded-[8px] hover:bg-blue-600 transition duration-300 btn btn-ghost btn-sm ring-1 ring-offset-1 ring-gray-300 ring-opacity-50;
 }

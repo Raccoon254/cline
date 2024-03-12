@@ -2,6 +2,14 @@
     <form class="w-full md:w-[70%] items-center justify-center" method="POST" action="{{ route('register') }}">
         @csrf
 
+
+        <div class="mb-4 mx-2 text-2xl font-semibold text-gray-200">
+            {{ __('Welcome to Cline') }}
+            <span class="text-sm text-gray-400 font-normal block">
+                Let's get you started
+            </span>
+        </div>
+
         <div class="flex-col flex md:flex-row mt-4 gap-3">
             <!-- Name -->
             <div>

@@ -5,6 +5,10 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
+        <div class="mb-4 mx-2 text-2xl font-semibold text-gray-200">
+            {{ __('Cline Auth') }}
+        </div>
+
         <!-- Email Address -->
         <div class="flex flex-col mt-4 gap-4 w-full sm:max-w-md">
             <x-text-input id="email" class="custom-input block mt-1 w-full" type="email"

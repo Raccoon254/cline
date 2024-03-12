@@ -14,7 +14,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans text-gray-900 antialiased bg-cover bg-center" style="background-image: url('/bg.svg');">
+<body class="font-sans bg-custom-black antialiased bg-cover bg-center" style="background-image: url('/bg.svg');">
 @include('layouts.partials.navbar')
 <div
     class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 bg-opacity-10">

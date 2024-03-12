@@ -20,7 +20,6 @@ return new class extends Migration
             $table->timestamp('sent_at')->useCurrent();
             $table->timestamp('delivered_at')->nullable();
             $table->timestamp('read_at')->nullable();
-            $table->timestamps();
 
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('recipient_id')->references('id')->on('users')->onDelete('cascade');

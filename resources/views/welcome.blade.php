@@ -19,13 +19,13 @@
           rel="stylesheet">
 
 </head>
-<body class="antialiased bg-cover text-gray-900 bg-center" style="background-image: url('/bg.svg');">
+<body class="antialiased bg-cover bg-custom-black bg-center" style="background-image: url('/bg.svg');">
 @include('layouts.partials.navbar')
 <section class="main flex min-h-screen items-center justify-center flex-col">
 
-    <div class="sm:flex gap-4 sm:items-center dark:bg-dots-lighter h-[70vh] selection:bg-red-500 selection:text-blue-300">
+    <div class="flex flex-col sm:flex-row gap-4 sm:items-center dark:bg-dots-lighter h-[70vh] selection:bg-red-500 selection:text-blue-300">
         <!-- Check for login route -->
-        <div class="left flex flex-col h-[50vh] justify-between items-start">
+        <div class="left flex flex-col justify-between items-start">
             <div class="text-4xl archivo">
                 Welcome to Cline <br>
                 We connect clients to skills, <br>
@@ -48,27 +48,7 @@
             </div>
         </div>
 
-        <div class="">
-
-            <div class="cols">
-                <div class="top bg-gray-100 p-4 text-xl bg-opacity-75 rounded-2xl">
-                    Business Days
-                    <div class="flex mt-2 gap-3">
-                        @for($i = 0; $i < 3; $i++)
-                            <div class="day">
-                                <div class="date">
-                                    0{{ $i + 1 }}
-                                </div>
-                                <div class="text">
-                                    Workday
-                                </div>
-                            </div>
-                        @endfor
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <img src="work.svg" alt="hero" class="w-96">
 
     </div>
 </section>

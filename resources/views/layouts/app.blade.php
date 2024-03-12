@@ -18,7 +18,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-cover bg-center" style="background-image: url('/bg.svg');">
+<body class="font-sans antialiased bg-custom-black bg-cover bg-center" style="background-image: url('/bg.svg');">
 <div class="min-h-screen bg-custom-black">
     <!-- Page Content -->
     <div class="flex">

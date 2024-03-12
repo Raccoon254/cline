@@ -1,6 +1,6 @@
-<div class="nav relative min-h-14 border-b border-gray-100 bg-gray-100 bg-opacity-25 backdrop-blur-[1px]">
-    <div class="container px-4 mx-auto flex justify-between items-center">
-        <div class="logo mx-2 flex items-center absolute top-2 left-1 text-3xl">
+<div class="nav relative min-h-14 border-b border-gray-100 bg-gray-100 bg-opacity-10 backdrop-blur-[1px]">
+    <div class="px-4 w-full flex justify-between items-center">
+        <div class="logo mx-2 flex items-center text-3xl">
             <a href="{{ url('/') }}" class="flex items-center">
                 <i class="fa-solid fa-feather"></i>
                 Cline
@@ -17,17 +17,17 @@
         <div id="menu" class="hidden md:flex flex-col md:flex-row items-start md:items-center my-2 gap-3 text-md">
             <ul class="flex flex-col md:flex-row gap-4">
                 <li>
-                    <a href="{{ url('/about') }}" class="text-gray-900 hover:text-gray-700">
+                    <a href="{{ url('/about') }}" class="text-white hover:text-gray-700">
                         Features
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/services') }}" class="text-gray-900 hover:text-gray-700">
+                    <a href="{{ url('/services') }}" class="text-white hover:text-gray-700">
                         Pricing
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/contact') }}" class="text-gray-900 hover:text-gray-700">
+                    <a href="{{ url('/contact') }}" class="text-white hover:text-gray-700">
                         Contact
                     </a>
                 </li>
@@ -37,20 +37,20 @@
                 <div class="md:p-1 mt-4 md:mt-0 text-left z-10">
                     @auth
                         <a href="{{ url('/dashboard') }}">
-                            <button class="btn btn-outline btn-sm rounded-md ring-1 ring-inset ring-gray-400  btn-secondary text-gray-900 normal-case">
+                            <button class="btn btn-outline btn-sm rounded-md ring-1 ring-inset ring-gray-400  btn-secondary text-white normal-case">
                                 Dashboard
                             </button>
                         </a>
                     @else
                         <div class="flex flex-col md:flex-row gap-4">
                             <a href="{{ route('login') }}">
-                                <button class="btn btn-outline btn-sm rounded-md ring-1 ring-inset ring-gray-50  btn-secondary text-gray-900 normal-case">
+                                <button class="btn btn-outline btn-sm rounded-md ring-1 ring-inset ring-gray-50  btn-secondary text-white normal-case">
                                     Login
                                 </button>
                             </a>
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}">
-                                    <button class="btn btn-outline btn-sm rounded-md ring-1 ring-inset ring-gray-100 btn-ghost text-gray-900 normal-case">
+                                    <button class="btn btn-outline btn-sm rounded-md ring-1 ring-inset ring-gray-100 btn-ghost text-white normal-case">
                                         Register
                                     </button>
                                 </a>

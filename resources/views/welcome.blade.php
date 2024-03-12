@@ -25,17 +25,17 @@
 
     <div class="flex flex-col sm:flex-row gap-4 sm:items-center dark:bg-dots-lighter h-[70vh] selection:bg-red-500 selection:text-blue-300">
         <!-- Check for login route -->
-        <div class="left flex flex-col justify-between items-start">
+        <div class="left flex gap-4 flex-col justify-between items-start">
             <div class="text-4xl archivo">
                 Welcome to Cline <br>
                 We connect clients to skills, <br>
                 managing projects with ease
             </div>
             <div class="flex gap-2">
-                <button class="btn btn-outline btn-secondary text-gray-900 normal-case ring-1">
+                <button class="btn btn-outline btn-secondary text-gray-50 normal-case ring-1">
                     Get Started
                 </button>
-                <button class="btn btn-outline btn-ghost text-gray-900 normal-case ring-1">
+                <button class="btn btn-outline btn-ghost text-white normal-case ring-1">
                     Learn More
                 </button>
             </div>

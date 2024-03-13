@@ -12,28 +12,68 @@
         <div class="py-4">
 
             <div class="grid gap-2 grid-cols-2 w-full sm:w-[310px]">
-                @for($i = 0; $i < 4; $i++)
-                    <div class="dashboard-card">
-                        <div class="top">
-                            <div class="badge">
+                <div class="dashboard-card">
+                    <div class="top">
+                        <div class="badge">
                         <span class="text-xs text-gray-700">
                             +12
                         </span>
-                            </div>
-                        </div>
-                        <div class="mid">
-                            <i class="ri-user-star-line"></i>
-                        </div>
-                        <div class="data flex-col flex items-center justify-center">
-                            <div class="text-lg">
-                                1,200
-                            </div>
-                            <div class="text-xs text-gray-700">
-                                Users
-                            </div>
                         </div>
                     </div>
-                @endfor
+                    <div class="mid">
+                        <i class="ri-user-star-line"></i>
+                    </div>
+                    <div class="data flex-col flex items-center justify-center">
+                        <div class="text-lg">
+                            1,200
+                        </div>
+                        <div class="text-xs text-gray-700">
+                            Users
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="top">
+                        <div class="badge">
+                        <span class="text-xs text-gray-700">
+                            +2
+                        </span>
+                        </div>
+                    </div>
+                    <div class="mid">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div class="data flex-col flex items-center justify-center">
+                        <div class="text-lg">
+                            389+
+                        </div>
+                        <div class="text-xs text-gray-700">
+                            Hours Worked
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="top">
+                        <div class="badge">
+                        <span class="text-xs text-gray-700">
+                            +12
+                        </span>
+                        </div>
+                    </div>
+                    <div class="mid">
+                        <i class="ri-user-star-line"></i>
+                    </div>
+                    <div class="data flex-col flex items-center justify-center">
+                        <div class="text-lg">
+                            1,200
+                        </div>
+                        <div class="text-xs text-gray-700">
+                            Users
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="next">
                 <div class="label mt-2">

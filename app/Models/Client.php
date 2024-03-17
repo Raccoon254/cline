@@ -16,12 +16,10 @@ class Client extends Model
         'address'
     ];
 
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);

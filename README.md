@@ -9,6 +9,9 @@ with the following features:
 - Tailwind CSS
 - DaisyUI
 - Laravel Livewire
+- Fontawesome icons
+- Remix icons
+- Alpine js
 
 ## Installation
 

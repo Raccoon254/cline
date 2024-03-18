@@ -51,3 +51,8 @@
 
 - [ ] Freelancer can chat with client
 - [ ] Freelancer can modify projects status
+
+### System
+- [ ] Generate notifications
+- [ ] Prioritize tasks depending on the project deadlines
+- [ ] Sync with notes and calendar

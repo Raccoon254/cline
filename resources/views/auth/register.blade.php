@@ -1,4 +1,5 @@
 <x-guest-layout>
+
     <form class="w-full md:w-[70%] items-center justify-center" method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -6,7 +7,12 @@
         <div class="mb-4 mx-2 text-2xl font-semibold text-gray-200">
             {{ __('Welcome to Cline') }}
             <span class="text-sm text-gray-400 font-normal block">
-                Let's get you started
+                Let's get you started as a client
+            </span>
+            <span class="text-sm text-gray-400 font-normal block">
+                <a href="" class="underline text-blue-400 hover:text-orange-400">
+                    Register as a freelancer <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </span>
         </div>
 

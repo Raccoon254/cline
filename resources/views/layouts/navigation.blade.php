@@ -11,8 +11,12 @@
             <i class="fa-regular fa-bell"></i>
             {{ Auth::user()->name }}
             <div class="avatar">
-                <div class="w-8 rounded-full ring-1">
-                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <div class="w-8 p-[1px] rounded-full ring-1">
+                    <img
+                        class="rounded-full w-full h-full object-cover"
+                        src="https://api.dicebear.com/8.x/identicon/svg?seed={{ Auth::user()->name }}"
+                        alt="avatar"
+                    />
                 </div>
             </div>
         </div>

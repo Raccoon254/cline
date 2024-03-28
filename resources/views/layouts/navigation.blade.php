@@ -10,7 +10,7 @@
         <div class="user flex items-center gap-2">
             <i class="fa-regular fa-bell"></i>
             {{ Auth::user()->name }}
-            <div class="avatar">
+            <a class="avatar" href="{{ route('profile.edit') }}">
                 <div class="w-8 p-[1px] rounded-full ring-1">
                     <img
                         class="rounded-full w-full h-full object-cover"
@@ -18,7 +18,7 @@
                         alt="avatar"
                     />
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>

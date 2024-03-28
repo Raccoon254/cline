@@ -15,7 +15,7 @@
                 <div class="dashboard-card">
                     <div class="top">
                         <div class="badge">
-                        <span class="text-xs text-gray-700">
+                        <span class="text-xs text-gray-100">
                             +12
                         </span>
                         </div>
@@ -36,7 +36,7 @@
                 <div class="dashboard-card">
                     <div class="top">
                         <div class="badge">
-                        <span class="text-xs text-gray-700">
+                        <span class="text-xs text-gray-100">
                             +2
                         </span>
                         </div>
@@ -57,7 +57,7 @@
                 <div class="dashboard-card">
                     <div class="top">
                         <div class="badge">
-                        <span class="text-xs text-gray-700">
+                        <span class="text-xs text-gray-100">
                             +12
                         </span>
                         </div>

@@ -16,35 +16,23 @@
             </form>
             <h3 class="font-semibold text-lg">New Project</h3>
             <p>
-                Create a new project by filling out the form below.
+                Fill in the form below to create a new project
             </p>
-            <!--
-            protected $fillable = [
-                'name',
-                'project_id',
-                'status', // 'active', 'completed', 'archived', 'pending', 'cancelled', 'in_progress'
-                'description',
-                'start_date',
-                'end_date',
-                'user_id',
-                'client_id',
-            ];
-            -->
             <form class="flex flex-col">
-                <label for="name">
+                <label class="mt-4 mb-2" for="name">
                     Name
                 </label>
                 <input class="input ring-1" type="text" placeholder="name">
 
-                <label for="description">
+                <label class="mt-4 mb-2" for="description">
                     Description
                 </label>
                 <textarea class="textarea ring-1" type="text" placeholder="description"></textarea>
-                <label for="end_date">
+                <label class="mt-4 mb-2" for="end_date">
                     End Date
                 </label>
                 <input class="input ring-1" type="date" placeholder="end_date">
-                <label for="client">
+                <label class="mt-4 mb-2" for="client">
                     Client
                 </label>
                 <input class="input ring-1" type="text" placeholder="client_id">

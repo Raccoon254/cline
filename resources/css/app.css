@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -31,7 +31,6 @@ body {
     font-variation-settings: "wdth" 100;
 }
 
-
 .work-sans {
     font-family: "Work Sans", sans-serif;
     font-optical-sizing: auto;
@@ -59,23 +58,23 @@ body {
 }
 
 .day {
-    @apply ring-1 w-[130px] h-[130px] ring-offset-1 p-2 rounded-2xl ring-gray-700 flex flex-col items-start border-2 border-blue-300 justify-between;
+    @apply flex h-[130px] w-[130px] flex-col items-start justify-between rounded-2xl border-2 border-blue-300 p-2 ring-1 ring-gray-700 ring-offset-1;
 }
 
 .day:hover {
-    @apply ring-2 ring-blue-200 scale-105 transition-transform border-blue-100 cursor-pointer;
+    @apply scale-105 cursor-pointer border-blue-100 ring-2 ring-blue-200 transition-transform;
 }
 
 .day > .date {
-    @apply text-2xl pac-regular;
+    @apply pac-regular text-2xl;
 }
 
 .day > .text {
-    @apply text-xl pac-thin;
+    @apply pac-thin text-xl;
 }
 
 .custom-input {
-    @apply p-3 pl-4 rounded-full border-2 ring-1 ring-offset-1 ring-gray-300 border-gray-300 focus:outline-none focus:border-blue-300 transition-all duration-300 ease-in-out;
+    @apply rounded-full border-2 border-gray-300 p-3 pl-4 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none;
 }
 
 /* Placeholders */
@@ -85,7 +84,7 @@ body {
 
 /* Text color */
 .custom-input:focus {
-    @apply text-gray-700 bg-gray-100;
+    @apply bg-gray-100 text-gray-700;
 }
 
 .custom-input {
@@ -106,16 +105,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    @apply bg-orange-500 w-[15px];
+    @apply w-[15px] bg-orange-500;
     width: 100px !important;
 }
 
 .scale:hover {
-    @apply transform scale-105 transition-transform duration-300 ease-in-out;
+    @apply scale-105 transform transition-transform duration-300 ease-in-out;
 }
 
 .ring-c {
-    @apply ring-orange-600 ring-inset ring-1 ring-opacity-50 hover:ring-[1px] hover:ring-orange-500;
+    @apply ring-1 ring-inset ring-orange-600 ring-opacity-50 hover:ring-[1px] hover:ring-orange-500;
 }
 
 .custom-nav-style {
@@ -127,41 +126,41 @@ body {
 }
 
 .side {
-    @apply flex gap-2 items-center hover:bg-gray-100 hover:bg-opacity-5 hover:text-gray-50 p-2 px-4 rounded-[8px] w-full hover:shadow hover:scale-105 transition duration-300;
+    @apply flex w-full items-center gap-2 rounded-[8px] p-2 px-4 transition duration-300 hover:scale-105 hover:bg-gray-100 hover:bg-opacity-5 hover:text-gray-50 hover:shadow;
 }
 
 .side.active {
     @apply bg-blue-700 bg-opacity-10 text-gray-50;
 }
 
-.bg-custom-black{
+.bg-custom-black {
     @apply bg-[#111111];
 }
 
-.input-no-focus{
-    @apply focus:outline-none focus:border-none focus:ring-0 focus:text-gray-800;
+.input-no-focus {
+    @apply focus:border-none focus:text-gray-800 focus:outline-none focus:ring-0;
 }
 
-.dashboard-card{
-    @apply bg-white w-full h-[150px] overflow-hidden shadow-sm flex flex-col items-center justify-center rounded-3xl;
+.dashboard-card {
+    @apply flex h-[150px] w-full flex-col items-center justify-center overflow-hidden rounded-3xl bg-white shadow-sm;
 }
 
-.dashboard-card:hover{
-    @apply bg-opacity-70 scale-105 transition-transform duration-300 ring-1 ring-inset ring-offset-1 ring-gray-300 ring-opacity-50;
+.dashboard-card:hover {
+    @apply scale-105 bg-opacity-70 ring-1 ring-inset ring-gray-300 ring-opacity-50 ring-offset-1 transition-transform duration-300;
 }
 
-.earn-container{
-    @apply bg-custom-black w-full sm:w-[310px] h-auto grid grid-cols-2 my-2 rounded-3xl;
+.earn-container {
+    @apply bg-custom-black my-2 grid h-auto w-full grid-cols-2 rounded-3xl sm:w-[310px];
 }
 
-.earn-card{
-    @apply w-full h-[78px] overflow-hidden flex flex-col items-center justify-center;
+.earn-card {
+    @apply flex h-[78px] w-full flex-col items-center justify-center overflow-hidden;
 }
 
-.earn-card:hover{
+.earn-card:hover {
     @apply bg-gray-100 bg-opacity-10;
 }
 
-.custom-btn{
-    @apply bg-blue-500 text-white p-2 px-4 rounded-[8px] hover:bg-blue-600 transition duration-300 btn btn-ghost btn-sm ring-1 ring-offset-1 ring-gray-300 ring-opacity-50;
+.custom-btn {
+    @apply btn btn-ghost btn-sm rounded-[8px] bg-blue-500 p-2 px-4 text-white ring-1 ring-gray-300 ring-opacity-50 ring-offset-1 transition duration-300 hover:bg-blue-600;
 }

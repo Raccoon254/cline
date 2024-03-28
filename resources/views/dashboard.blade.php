@@ -8,6 +8,50 @@
                 Welcome to your dashboard
             </span>
         </div>
+        <!-- Page Modals -->
+        <dialog id="project_creation_modal" class="modal text-gray-200">
+          <div class="modal-box backdrop-blur-sm">
+            <form method="dialog">
+              <button class="btn btn-sm ring-1 btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <h3 class="font-semibold text-lg">New Project</h3>
+            <p>
+                Create a new project by filling out the form below.
+            </p>
+            <!--
+            protected $fillable = [
+                'name',
+                'project_id',
+                'status', // 'active', 'completed', 'archived', 'pending', 'cancelled', 'in_progress'
+                'description',
+                'start_date',
+                'end_date',
+                'user_id',
+                'client_id',
+            ];
+            -->
+            <form class="flex flex-col">
+                <label for="name">
+                    Name
+                </label>
+                <input class="input ring-1" type="text" placeholder="name">
+
+                <label for="description">
+                    Description
+                </label>
+                <textarea class="textarea ring-1" type="text" placeholder="description"></textarea>
+                <label for="end_date">
+                    End Date
+                </label>
+                <input class="input ring-1" type="date" placeholder="end_date">
+                <label for="client">
+                    Client
+                </label>
+                <input class="input ring-1" type="text" placeholder="client_id">
+            </form>
+            <p class="py-4 text-xs">Press ESC key or click on ✕ button to close</p>
+          </div>
+        </dialog>
         <!-- Page Content -->
         <div class="py-4">
 

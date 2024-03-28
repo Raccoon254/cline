@@ -44,16 +44,6 @@
                 <i class="fa-solid max-h-9 fa-chevron-down"></i>
             </span>
 
-            <dialog id="project_creation_modal" class="modal">
-              <div class="modal-box">
-                <form method="dialog">
-                  <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                </form>
-                <h3 class="font-bold text-lg">Hello!</h3>
-                <p class="py-4">Press ESC key or click on ✕ button to close</p>
-              </div>
-            </dialog>
-
             <!-- Sidebar content here -->
             <a class="side {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                 <i class="fa-solid text-green-500 fa-feather"></i>

@@ -17,22 +17,21 @@
             </div>
 
             <span
+                onclick="project_creation_modal.showModal()"
                 class="ring-1 mb-10 rounded-[8px] w-full flex items-center justify-between normal-case bg-opacity-25 bg-gray-600 p-2 hover:scale-105 transition duration-300">
                     <span class="flex items-center m-0 gap-2">
                         <span class="btn btn-sm btn-circle btn-ghost ring-c rounded-md">
-
-                                        <svg height="18" viewBox="0 0 1024 1089.841" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                fill="white"
-                                                fill-opacity="60%"
-                                                d="M520.258 1056.92H503.76c0-134.61-50.306-252.21-150.918-352.824S134.628 553.178 0 553.178V536.68c134.628 0 252.23-50.306 352.842-151.145C453.454 284.677 503.76 167.075 503.76 32.938h16.498c0 134.61 50.306 252.21 150.918 352.824S889.39 536.68 1024 536.68v16.498c-134.61 0-252.21 50.306-352.824 150.918S520.258 922.31 520.258 1056.92z"
-                                                stroke="#000"
-                                                stroke-width="2"
-                                                stroke-linejoin="miter"
-                                            />
-                                        </svg>
-
-                                    </span>
+                            <svg height="18" viewBox="0 0 1024 1089.841" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    fill="white"
+                                    fill-opacity="60%"
+                                    d="M520.258 1056.92H503.76c0-134.61-50.306-252.21-150.918-352.824S134.628 553.178 0 553.178V536.68c134.628 0 252.23-50.306 352.842-151.145C453.454 284.677 503.76 167.075 503.76 32.938h16.498c0 134.61 50.306 252.21 150.918 352.824S889.39 536.68 1024 536.68v16.498c-134.61 0-252.21 50.306-352.824 150.918S520.258 922.31 520.258 1056.92z"
+                                    stroke="#000"
+                                    stroke-width="2"
+                                    stroke-linejoin="miter"
+                                />
+                            </svg>
+                        </span>
                     <span class="flex h-1/6 max-h-9 overflow-hidden items-start flex-col">
                         <span>
                             Create
@@ -44,6 +43,16 @@
                     </span>
                 <i class="fa-solid max-h-9 fa-chevron-down"></i>
             </span>
+
+            <dialog id="project_creation_modal" class="modal">
+              <div class="modal-box">
+                <form method="dialog">
+                  <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <h3 class="font-bold text-lg">Hello!</h3>
+                <p class="py-4">Press ESC key or click on ✕ button to close</p>
+              </div>
+            </dialog>
 
             <!-- Sidebar content here -->
             <a class="side {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">

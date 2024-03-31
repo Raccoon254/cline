@@ -164,3 +164,7 @@ body {
 .custom-btn {
     @apply btn btn-ghost btn-sm rounded-[8px] bg-blue-500 p-2 px-4 text-white ring-1 ring-gray-300 ring-opacity-50 ring-offset-1 transition duration-300 hover:bg-blue-600;
 }
+
+dialog {
+    @apply backdrop-blur-sm;
+}

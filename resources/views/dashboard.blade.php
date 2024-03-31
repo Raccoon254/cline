@@ -9,10 +9,10 @@
             </span>
         </div>
         <!-- Page Modals -->
-        <dialog id="project_creation_modal" class="modal text-gray-200">
+        <dialog id="project_creation_modal" class="modal rounded-[10px] text-gray-200">
           <div class="modal-box backdrop-blur-sm">
             <form method="dialog">
-              <button class="btn btn-sm ring-1 btn-circle btn-ghost absolute right-2 top-2">✕</button>
+              <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
             <h3 class="font-semibold text-lg">New Project</h3>
             <p>

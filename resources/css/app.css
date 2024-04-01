@@ -186,3 +186,7 @@ details > summary::-webkit-details-marker {
     display: none;
     @apply hidden;
 }
+
+.animate-scale {
+    @apply scale-105 transform transition-transform duration-300 ease-in-out;
+}

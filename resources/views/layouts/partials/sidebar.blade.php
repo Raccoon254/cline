@@ -48,7 +48,7 @@
               <ul class="p-2 shadow peer-hover:scale-105 transition duration-300 menu dropdown-content -mt-6 z-[1] bg-base-100 rounded-[10px] w-full">
                 <li>
                     <a onclick="project_creation_modal.showModal()">
-                        <i class="fa-solid fa-circle-plus"></i>
+                        <i class="fa-solid fa-bolt"></i>
                         <span>Create Project</span>
                     </a>
                 </li>

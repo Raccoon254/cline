@@ -18,12 +18,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'role',
-        'phone_number',
-        'password',
-        'last_login_at',
+        "name",
+        "email",
+        "role",
+        "phone_number",
+        "password",
+        "last_login_at",
     ];
 
     /**
@@ -31,10 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ["password", "remember_token"];
 
     /**
      * The attributes that should be cast.
@@ -42,7 +39,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        "email_verified_at" => "datetime",
+        "password" => "hashed",
     ];
+
+    //client relationship
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
 }

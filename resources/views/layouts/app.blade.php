@@ -25,7 +25,7 @@
         @include('layouts.partials.sidebar')
         <main class="bg-gray-100 rounded-[10px] w-full m-2">
             @include('layouts.navigation')
-
+            @include('session.alerts')
             {{ $slot }}
         </main>
     </div>

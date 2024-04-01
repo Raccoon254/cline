@@ -71,17 +71,7 @@ class RegisteredUserController extends Controller
      */
     public function store_client(Request $request): RedirectResponse
     {
-        dd($request->all());
-        /*array:7 [▼ // app/Http/Controllers/Auth/RegisteredUserController.php:73
-          "_token" => "8SSZoXpatAKSZRaDSOAEfdid3SbuC45fHlNeo0ym"
-          "name" => "Raccoon"
-          "email" => "tomsteve187@gmail.com"
-          "phone_number" => "88818912"
-          "address" => "22"
-          "password" => "222"
-          "password_confirmation" => "2222"
-        ]
-        */
+        // Validate the request
         $request->validate([
             "name" => ["required", "string", "max:255"],
             "email" => [
@@ -97,30 +87,41 @@ class RegisteredUserController extends Controller
                 "max:10",
                 "unique:" . User::class,
             ],
+            "address" => ["required", "string"],
             "password" => ["required", "confirmed", Rules\Password::defaults()],
         ]);
 
+        // Validate the phone number
         $phone_number_validated = $this->validateNumber($request->phone_number);
         if (!$phone_number_validated) {
             return redirect()->back()->with("error", "Invalid phone number");
         }
 
+        // Create the user
         $user = User::create([
             "name" => $request->name,
             "email" => $request->email,
-            "role" => "client",
+            "role" => "client", // Assign the role of client
             "phone_number" => $phone_number_validated,
             "password" => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
-
+        // Log in the new user
         Auth::login($user);
-        $user->last_login_at = now();
 
-        //create a client
+        // Create the client and associate it with the user
+        $client = new Client([
+            "address" => $request->address,
+            // TODO! add other client-specific fields
+            // - Location data is useful for location-based services
+        ]);
+        $user->client()->save($client); // Assuming you have a client relation defined on the User model
 
-        return redirect(RouteServiceProvider::HOME);
+        // Optionally, redirect with a success message
+        return redirect(RouteServiceProvider::HOME)->with(
+            "success",
+            "Client account created successfully."
+        );
     }
 
     private function validateNumber(mixed $phone_number): int|bool

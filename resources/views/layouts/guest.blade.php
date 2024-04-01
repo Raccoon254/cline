@@ -24,6 +24,7 @@
     </div>
 
     <div class="w-full sm:max-w-[80%] mt-6 px-6 py-4 overflow-hidden sm:rounded-lg">
+          @include('session.alerts')
         {{ $slot }}
     </div>
 </div>

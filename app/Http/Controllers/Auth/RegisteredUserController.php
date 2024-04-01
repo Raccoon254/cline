@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Client;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Termwind\Components\Dd;
 
 class RegisteredUserController extends Controller
 {
@@ -24,23 +26,34 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
-            'phone_number' => ['required', 'string', 'max:10', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            "name" => ["required", "string", "max:255"],
+            "email" => [
+                "required",
+                "string",
+                "email",
+                "max:255",
+                "unique:" . User::class,
+            ],
+            "phone_number" => [
+                "required",
+                "string",
+                "max:10",
+                "unique:" . User::class,
+            ],
+            "password" => ["required", "confirmed", Rules\Password::defaults()],
         ]);
 
         $phone_number_validated = $this->validateNumber($request->phone_number);
         if (!$phone_number_validated) {
-            return redirect()->back()->with('error', 'Invalid phone number');
+            return redirect()->back()->with("error", "Invalid phone number");
         }
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => 'user',
-            'phone_number' => $phone_number_validated,
-            'password' => Hash::make($request->password),
+            "name" => $request->name,
+            "email" => $request->email,
+            "role" => "user",
+            "phone_number" => $phone_number_validated,
+            "password" => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
@@ -51,9 +64,68 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws ValidationException
+     */
+    public function store_client(Request $request): RedirectResponse
+    {
+        dd($request->all());
+        /*array:7 [▼ // app/Http/Controllers/Auth/RegisteredUserController.php:73
+          "_token" => "8SSZoXpatAKSZRaDSOAEfdid3SbuC45fHlNeo0ym"
+          "name" => "Raccoon"
+          "email" => "tomsteve187@gmail.com"
+          "phone_number" => "88818912"
+          "address" => "22"
+          "password" => "222"
+          "password_confirmation" => "2222"
+        ]
+        */
+        $request->validate([
+            "name" => ["required", "string", "max:255"],
+            "email" => [
+                "required",
+                "string",
+                "email",
+                "max:255",
+                "unique:" . User::class,
+            ],
+            "phone_number" => [
+                "required",
+                "string",
+                "max:10",
+                "unique:" . User::class,
+            ],
+            "password" => ["required", "confirmed", Rules\Password::defaults()],
+        ]);
+
+        $phone_number_validated = $this->validateNumber($request->phone_number);
+        if (!$phone_number_validated) {
+            return redirect()->back()->with("error", "Invalid phone number");
+        }
+
+        $user = User::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            "role" => "client",
+            "phone_number" => $phone_number_validated,
+            "password" => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+        $user->last_login_at = now();
+
+        //create a client
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+
     private function validateNumber(mixed $phone_number): int|bool
     {
-        $phone_number = str_replace(['(', ')', '-', ' '], '', $phone_number);
+        $phone_number = str_replace(["(", ")", "-", " "], "", $phone_number);
         if (strlen($phone_number) != 10) {
             return false;
         }
@@ -67,7 +139,7 @@ class RegisteredUserController extends Controller
          *Remove the 0 at the beginning and replace it with country code
          *This is done to facilitate standardization of phone numbers
          */
-        $country_code = env('COUNTRY_CODE', '0');
+        $country_code = env("COUNTRY_CODE", "0");
         return $country_code . substr($phone_number, 1);
     }
 
@@ -76,6 +148,14 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view("auth.register");
+    }
+
+    /**
+     * Display the registration view.
+     */
+    public function create_freelancer(): View
+    {
+        return view("auth.freelancer.register");
     }
 }

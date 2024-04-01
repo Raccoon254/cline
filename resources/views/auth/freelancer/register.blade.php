@@ -1,46 +1,42 @@
 <x-guest-layout>
 
-    <form class="w-full md:w-[70%] items-center justify-center" method="POST" action="{{ route('client.register') }}">
+    <form class="w-full md:w-[70%] items-center justify-center" method="POST" action="{{ route('register') }}">
         @csrf
 
 
         <div class="mb-4 mx-2 text-2xl font-semibold text-gray-200">
             {{ __('Welcome to Cline') }}
             <span class="text-sm text-gray-400 font-normal block">
-                Let's get you started as a client
+                Let's get you started as a freelancer
             </span>
             <span class="text-sm text-gray-400 font-normal block">
-                <a href="{{ route('freelancer.register') }}"
+                <a href="{{ route('register') }}"
                     class="underline text-blue-400 hover:text-orange-400">
-                    Register as a freelancer <i class="fa-solid fa-arrow-right"></i>
+                    Register as a client <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </span>
         </div>
 
         <div class="flex-col flex md:flex-row mt-4 gap-3">
             <!-- Name -->
-            <div class="tooltip" data-tip="Use official name">
+            <div>
                 <x-text-input  id="name" class="block mt-1 custom-input w-full custom-input" type="text" name="name" :value="old('name')" required placeholder="Name e.g. John Doe"
                               autofocus autocomplete="name"/>
             </div>
 
             <!-- Email Address -->
-            <div class="tooltip" data-tip="You will receive a confirmation email">
+            <div>
                 <x-text-input id="email" class="block mt-1 custom-input w-full" type="email" name="email" :value="old('email')" required placeholder="Email e.g. m@cline.me"
                               autocomplete="username"/>
             </div>
 
             <!-- Phone Number -->
-            <div class="tooltip" data-tip="Use international format e.g. +10801234567">
-                <x-text-input id="phone_number" class="block mt-1 custom-input w-full" type="text" name="phone_number" placeholder="Phone e.g. +10801234567" :value="old('phone_number')" required autocomplete="phone_number"/>
+            <div>
+                <x-text-input id="phone_number" class="block mt-1 custom-input w-full" type="text" name="phone_number" placeholder="Phone e.g. 08012345678" :value="old('phone_number')" required autocomplete="phone_number"/>
             </div>
         </div>
 
         <div class="flex-col flex md:flex-row gap-4">
-            <!-- Address -->
-            <div class="mt-4 tooltip" data-tip="E.g 123, Cline Street">
-                <x-text-input id="address" class="block mt-1 custom-input w-full" type="text" name="address" placeholder="Address e.g. 123, Cline Street" :value="old('address')" required autocomplete="address"/>
-            </div>
             <!-- Password -->
             <div class="mt-4">
 

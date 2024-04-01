@@ -166,5 +166,23 @@ body {
 }
 
 dialog {
-    @apply backdrop-blur-sm;
+    @apply bg-black;
+}
+
+/*Hide all summary markers*/
+summary::-webkit-details-marker {
+    display: none;
+}
+details summary::-webkit-details-marker {
+    display: none;
+}
+details > summary {
+    list-style: none;
+}
+details > summary::-webkit-details-marker {
+    display: none;
+}
+::marker {
+    display: none;
+    @apply hidden;
 }

@@ -22,7 +22,7 @@
 <div class="min-h-screen bg-custom-black">
     <!-- Page Content -->
     <div class="flex">
-        @include('layouts.partials.sidebar')
+        @include('layouts.partials.user.sidebar')
         <main class="bg-gray-100 rounded-[10px] w-full m-2">
             @include('layouts.navigation')
             @include('session.alerts')

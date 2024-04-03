@@ -31,7 +31,6 @@ Route::get("/dashboard", function () {
     } else {
         return redirect()->route("unauthorized");
     }
-    return view("dashboard");
 })
     ->middleware(["auth", "verified"])
     ->name("dashboard");
@@ -78,3 +77,4 @@ Route::get("/get-theme", [ThemeController::class, "getTheme"])->name(
 );
 
 require __DIR__ . "/auth.php";
+require __DIR__ . "/client.php";

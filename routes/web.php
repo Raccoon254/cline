@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,16 @@ Route::get("/", function () {
 });
 
 Route::get("/dashboard", function () {
+    $role = Auth::user()->role;
+    if ($role === "admin") {
+        return redirect()->route("admin.dashboard");
+    } elseif ($role === "user") {
+        return redirect()->route("user.dashboard");
+    } elseif ($role === "client") {
+        return redirect()->route("client.dashboard");
+    } else {
+        return redirect()->route("unauthorized");
+    }
     return view("dashboard");
 })
     ->middleware(["auth", "verified"])
@@ -31,14 +42,14 @@ Route::group(["middleware" => ["auth", "role:admin"]], function () {
     })->name("admin.dashboard");
 });
 
-Route::group(["middleware" => ["auth", "role:manager"]], function () {
-    Route::get("/manager/dashboard", function () {
-        return view("manager.dashboard");
-    })->name("manager.dashboard");
+Route::group(["middleware" => ["auth", "role:client"]], function () {
+    Route::get("/client/dashboard", function () {
+        return view("client.dashboard");
+    })->name("client.dashboard");
 });
 
 Route::group(["middleware" => ["auth", "role:user"]], function () {
-    Route::get("/dashboard", function () {
+    Route::get("/user/dashboard", function () {
         return view("user.dashboard");
     })->name("user.dashboard");
 });

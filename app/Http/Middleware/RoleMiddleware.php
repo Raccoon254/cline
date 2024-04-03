@@ -27,6 +27,10 @@ class RoleMiddleware
             return $next($request);
         }
 
-        return redirect("/unauthorized");
+        $message = "You are not authorized to access the " . $request->path() . " page";
+        return redirect("/unauthorized")->with(
+            "error",
+            $message
+        );
     }
 }

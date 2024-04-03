@@ -38,7 +38,7 @@ Route::group(["middleware" => ["auth", "role:manager"]], function () {
 });
 
 Route::group(["middleware" => ["auth", "role:user"]], function () {
-    Route::get("/user/dashboard", function () {
+    Route::get("/dashboard", function () {
         return view("user.dashboard");
     })->name("user.dashboard");
 });

@@ -69,6 +69,10 @@ Route::get("/unauthorized", function () {
     return view("static/unauthorized");
 })->name("unauthorized");
 
+Route::get("/about", function () {
+    return view("static/about");
+})->name("about");
+
 Route::post("/set-theme", [ThemeController::class, "setTheme"])->name(
     "set-theme"
 );

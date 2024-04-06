@@ -11,7 +11,7 @@
             <i class="fa-regular fa-bell"></i>
             {{ Auth::user()->name }}
             <div class="dropdown group dropdown-bottom dropdown-end">
-                <section tabindex="0" role="button" class="avatar animate-scale cursor-pointer">
+                <section tabindex="0" role="region" class="avatar animate-scale cursor-pointer">
                     <div class="w-8 p-[1px] animate-scale rounded-full ring-1">
                         <img
                             class="rounded-full w-full h-full object-cover"

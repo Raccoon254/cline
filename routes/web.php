@@ -21,7 +21,7 @@ Route::get("/", function () {
 })->name("welcome");
 
 Route::get("/dashboard", function () {
-    $role = Auth::user()->role;
+    $role = Auth::user()->role ?? "user";
     if ($role === "admin") {
         return redirect()->route("admin.dashboard");
     } elseif ($role === "user") {

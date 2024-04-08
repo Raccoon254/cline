@@ -5,7 +5,8 @@
         "dev": "vite",
         "build": "vite build",
         "install": "concurrently \"npm install\" \"composer install\"",
-        "start": "concurrently \"npm run dev\" \"php artisan serve\""
+        "start": "concurrently \"npm run dev\" \"php artisan serve\"",
+        "clear": "concurrently \"php artisan optimize:clear\" \"php artisan view:clear\" \"php artisan route:clear\" \"php artisan config:clear\" \"php artisan cache:clear\""
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",

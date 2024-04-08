@@ -16,6 +16,7 @@ class Project extends Model
         'project_id',
         'status', // 'active', 'completed', 'archived', 'pending', 'cancelled', 'in_progress'
         'description',
+        'price',
         'start_date',
         'end_date',
         'user_id',

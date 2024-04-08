@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('status')->default('pending'); // pending, paid, in progress, in revision, complete
+            $table->decimal('price', 10, 2)->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->timestamps();

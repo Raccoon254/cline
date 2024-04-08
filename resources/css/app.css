@@ -79,7 +79,7 @@ body {
 
 /* Placeholders */
 .custom-input::placeholder {
-    @apply pac-thin text-sm;
+    @apply archivo text-gray-400 text-sm;
 }
 
 /* Text color */

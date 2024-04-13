@@ -8,37 +8,43 @@
         <p>
             Fill in the form below to create a new project {{ $role }}
         </p>
-        <form class="flex flex-col">
+        <form class="flex flex-col" wire:submit.prevent="createProject">
             <label class="mt-4 mb-2" for="name">
                 Name
             </label>
-            <input class="input ring-1" id="name" type="text" placeholder="name">
+            <input class="input ring-1" id="name" type="text" placeholder="name" wire:model="name">
 
             <label class="mt-4 mb-2" for="description">
                 Description
             </label>
-            <textarea class="textarea ring-1" id="description" type="text" placeholder="description"></textarea>
+            <textarea class="textarea ring-1" id="description" type="text" placeholder="description" wire:model="description"></textarea>
+
             <label class="mt-4 mb-2" for="end_date">
                 End Date
             </label>
-            <input class="input ring-1" id="end_date" type="date" placeholder="end_date">
+            <input class="input ring-1" id="end_date" type="date" placeholder="end_date" wire:model="end_date">
 
+            @if($role != 'client')
             <label class="mt-4 mb-2" for="client">
                 Client
             </label>
-            <input class="input ring-1" id="client" type="text" placeholder="client_id">
+            <input class="input ring-1" id="client" type="text" placeholder="client_id" wire:model="client_id">
+            @endif
 
+            @if($role == 'client')
             <label class="mt-4 mb-2" for="freelancer">
                 Freelancer
             </label>
-            <input class="input ring-1" id="freelancer" type="text" placeholder="freelancer_id">
+            <input class="input ring-1" id="freelancer" type="text" placeholder="freelancer_id" wire:model="freelancer_id">
+            @endif
 
             <!-- Price -->
             <label class="mt-4 mb-2" for="price">
                 Price
             </label>
-            <input class="input ring-1" id="price" type="number" placeholder="price">
-            <button class="btn btn-info mt-4">Create Project</button>
+            <input class="input ring-1" id="price" type="number" placeholder="price" wire:model="price">
+
+            <button class="btn btn-info mt-4" type="submit">Create Project</button>
         </form>
         <p class="py-4 text-xs">Press ESC key or click on ✕ button to close</p>
     </div>

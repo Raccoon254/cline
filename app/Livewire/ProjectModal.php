@@ -24,7 +24,7 @@ class ProjectModal extends Component
     public function mount(): void
     {
         $this->clients = User::where('role', 'client')->get();
-        $this->freelancers = User::where('role', 'freelancer')->get();
+        $this->freelancers = User::where('role', 'user')->get();
         $this->role = Auth::user()->role ?? "user";
     }
 
@@ -43,7 +43,7 @@ class ProjectModal extends Component
         $validatedData['start_date'] = $start_date;
         //change key freelancer_id to user_id
         $validatedData['user_id'] = $validatedData['freelancer_id'];
-        dd($validatedData);
+        //dd($validatedData);
 
         Project::create($validatedData);
 

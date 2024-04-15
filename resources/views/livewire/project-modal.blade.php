@@ -6,7 +6,7 @@
         </form>
         <h3 class="font-semibold text-lg">New Project</h3>
         <p>
-            Fill in the form below to create a new project {{ $role }}
+            Fill in the form below to create a new project
         </p>
         <form class="flex flex-col" wire:submit.prevent="createProject">
             <label class="mt-4 mb-2" for="name">
@@ -32,10 +32,10 @@
             @endif
 
             @if($role == 'client')
-            <label class="mt-4 mb-2" for="freelancer">
-                Freelancer
-            </label>
-            <input class="input ring-1" id="freelancer" type="text" placeholder="freelancer_id" wire:model="freelancer_id">
+                <label class="mt-4 mb-2" for="freelancer">
+                    Freelancer
+                </label>
+                <livewire:freelancer-select wire:model="freelancer_id" />
             @endif
 
             <!-- Price -->

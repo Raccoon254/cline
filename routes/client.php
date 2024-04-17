@@ -1,8 +1,4 @@
 <?php
-
-//client.projects.index
-//All routes for clients
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ClientProjectController;

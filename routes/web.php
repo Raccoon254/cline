@@ -81,4 +81,5 @@ Route::get("/get-theme", [ThemeController::class, "getTheme"])->name(
 );
 
 require __DIR__ . "/auth.php";
+require __DIR__ . "/projects.php";
 require __DIR__ . "/client.php";

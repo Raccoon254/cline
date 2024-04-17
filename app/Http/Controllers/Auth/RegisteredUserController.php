@@ -110,12 +110,10 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Create the client and associate it with the user
-        $client = new Client([
+        $client = Client::create([
+            "user_id" => $user->id,
             "address" => $request->address,
-            // TODO! add other client-specific fields
-            // - Location data is useful for location-based services
         ]);
-        $user->client()->save($client); // Assuming you have a client relation defined on the User model
 
         // Optionally, redirect with a success message
         return redirect(RouteServiceProvider::HOME)->with(

@@ -32,7 +32,6 @@
             {{ $slot }}
         </main>
     </div>
-    <livewire:project_modal/>
 </div>
 <!-- Livewire Scripts -->
 @livewireScripts

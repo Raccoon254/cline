@@ -30,6 +30,8 @@ class ProjectModal extends Component
 
     public function createProject(): void
     {
+        //dd all the data
+        dd($this->name, $this->description, $this->end_date, $this->client_id, $this->price);
         $validatedData = $this->validate([
             'name' => 'required',
             'description' => 'required',

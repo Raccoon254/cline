@@ -190,3 +190,10 @@ details > summary::-webkit-details-marker {
 .animate-scale {
     @apply scale-105 transform transition-transform duration-300 ease-in-out;
 }
+.stripped-list {
+    @apply list-none;
+}
+
+.stripped-list>li:nth-child(odd) {
+    @apply bg-gray-100 bg-opacity-5 rounded-sm;
+}

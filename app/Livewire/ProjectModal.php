@@ -43,7 +43,7 @@ class ProjectModal extends Component
         $validatedData['start_date'] = $start_date;
         //change key freelancer_id to user_id
         $validatedData['user_id'] = $validatedData['freelancer_id'];
-        //dd($validatedData);
+        dd($validatedData);
 
         Project::create($validatedData);
 

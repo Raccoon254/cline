@@ -8,13 +8,14 @@ use Livewire\Component;
 
 class FreelancerSelect extends Component
 {
-    public $searchTerm = '';
-    public $selectedFreelancer;
-
+    public string $searchTerm = '';
+    public int $selectedFreelancer;
+    public string $selectedFreelancerName;
 
     public function selectFreelancer($freelancerId): void
     {
         $this->selectedFreelancer = $freelancerId;
+        $this->selectedFreelancerName = User::find($freelancerId)->name;
     }
 
     public function render(): View
@@ -22,7 +23,7 @@ class FreelancerSelect extends Component
         return view('livewire.freelancer-select',[
             'freelancers' => User::where('role', 'user')
                 ->where('name', 'like', '%'.$this->searchTerm.'%')
-                ->take(6)
+                ->take(20)
                 ->get()
         ]);
     }

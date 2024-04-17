@@ -1,6 +1,6 @@
 <!-- Project creation modal -->
 <dialog id="project_creation_modal" class="modal rounded-[10px] text-gray-200">
-    <div class="modal-box backdrop-blur-sm">
+    <div class="modal-box py-4 backdrop-blur-sm">
         <form method="dialog">
             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>

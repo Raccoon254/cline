@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeController;
+use App\Livewire\Messaging;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,6 +65,8 @@ Route::middleware("auth")->group(function () {
         "profile.destroy"
     );
 });
+
+Route::get('/inbox', Messaging::class)->name('inbox');
 
 Route::get("/unauthorized", function () {
     return view("static/unauthorized");

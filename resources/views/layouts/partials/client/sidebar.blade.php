@@ -76,7 +76,7 @@
                 </div>
             </a>
 
-            <a href="" class="side {{ request()->routeIs('courses') ? 'active' : '' }}">
+            <a href="{{route('projects.index')}}" class="side {{ request()->routeIs('projects.index') ? 'active' : '' }}">
                 <i class="ri-pie-chart-line text-yellow-300"></i>
                 <div class="">
                     Projects

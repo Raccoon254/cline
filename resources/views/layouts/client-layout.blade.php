@@ -29,7 +29,6 @@
             {{ $slot }}
         </main>
     </div>
-    <livewire:project_modal/>
 </div>
 </body>
 </html>

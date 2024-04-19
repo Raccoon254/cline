@@ -23,7 +23,7 @@
                         <h3 class="font-normal text-gray-800">{{ $selectedRecipient->name }}</h3>
                     </div>
                 </div>
-                <div class="overflow-y-auto" wire:poll.keep-alive>
+                <div class="overflow-y-auto">
                     <div class="p-6 space-y-4">
                         @foreach($messages as $message)
                             <div class="{{ $message->sender_id == Auth::id() ? 'text-right' : 'text-left' }}">

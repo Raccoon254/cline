@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Livewire\Messaging;
+use App\Http\Livewire\MessagingNull;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -56,7 +57,8 @@ Route::get("/client/freelancers/{freelancer}", function ($freelancer) {
 
 Route::group(["middleware" => ["auth", "role:user"]], function () {
     Route::get("/user/dashboard", function () {
-        return view("user.dashboard");
+        $clients = App\Models\User::where("role", "client")->get();
+        return view("user.dashboard")->with("clients", $clients);
     })->name("user.dashboard");
 });
 
@@ -72,7 +74,7 @@ Route::middleware("auth")->group(function () {
     );
 });
 
-Route::get('/inbox', Messaging::class)->name('inbox')->middleware('auth');
+Route::get('/inbox', MessagingNull::class)->name('inbox')->middleware('auth');
 Route::get('/inbox/{user?}', Messaging::class)->name('messages.create')->middleware('auth');
 
 Route::get("/unauthorized", function () {

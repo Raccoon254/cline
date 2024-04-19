@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class Messaging extends Component
+class MessagingNull extends Component
 {
     public $newMessage = '';
     public $messages = [];
@@ -18,9 +18,10 @@ class Messaging extends Component
 
     protected $listeners = ['newMessage', 'loadMessages', 'selectRecipient', 'updatedSearch'];
 
-    public function mount(User $user = null): void
+    public function mount(): void
     {
-        $this->selectRecipient($user->id ?? User::where('id', '!=', Auth::id())->first()->id);
+        $users = User::where('id', '!=', Auth::id())->get();
+        $this->selectRecipient($users->first()->id);
     }
 
     public function loadMessages(): void
@@ -61,9 +62,6 @@ class Messaging extends Component
             ->where('id', '!=', Auth::id())
             ->orderBy('name')
             ->get();
-
-        //select the first user in the list
-        $this->selectRecipient($users->first()->id);
 
         return view('livewire.messaging', [
             'users' => $users,

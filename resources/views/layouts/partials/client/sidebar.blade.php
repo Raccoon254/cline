@@ -90,13 +90,6 @@
                 </div>
             </a>
 
-            <a class="side" href="">
-                <i class="fa-solid text-yellow-200 fa-bolt"></i>
-                <div class="">
-                    Skills
-                </div>
-            </a>
-
             <a href="" class="side {{ request()->routeIs('connect') ? 'active' : '' }}">
                 <i class="fa-solid text-pink-400 fa-circle-nodes"></i>
                 <div class="">

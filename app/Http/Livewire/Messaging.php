@@ -18,10 +18,9 @@ class Messaging extends Component
 
     protected $listeners = ['newMessage', 'loadMessages', 'selectRecipient', 'updatedSearch'];
 
-    public function mount(): void
+    public function mount(User $user = null): void
     {
-        $users = User::where('id', '!=', Auth::id())->get();
-        $this->selectRecipient($users->first()->id);
+        $this->selectRecipient($user->id ?? User::where('id', '!=', Auth::id())->first()->id);
     }
 
     public function loadMessages(): void

@@ -54,6 +54,21 @@ class MessagingNull extends Component
         $this->selectedRecipientId = $userId;
         $this->selectedRecipient = User::find($userId);
         $this->loadMessages();
+
+        // get all unread messages and mark them as read
+        $unreadMessages = Message::where('recipient_id', Auth::id())
+            ->where('sender_id', $this->selectedRecipientId)
+            ->where('is_read', false)
+            ->get();
+
+        //dd($unreadMessages);
+
+        foreach ($unreadMessages as $message) {
+            $message->is_read = true;
+            $message->read_at = now();
+            $message->save();
+        }
+
     }
 
     public function render(): View
@@ -61,7 +76,10 @@ class MessagingNull extends Component
         $users = User::where('name', 'like', '%' . $this->search . '%')
             ->where('id', '!=', Auth::id())
             ->orderBy('name')
-            ->get();
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->unreadMessagesCount();
+            });
 
         return view('livewire.messaging', [
             'users' => $users,

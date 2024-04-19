@@ -53,6 +53,18 @@ class Messaging extends Component
         $this->selectedRecipientId = $userId;
         $this->selectedRecipient = User::find($userId);
         $this->loadMessages();
+
+        // get all unread messages and mark them as read
+        $unreadMessages = Message::where('recipient_id', Auth::id())
+            ->where('sender_id', $this->selectedRecipientId)
+            ->where('is_read', false)
+            ->get();
+
+        foreach ($unreadMessages as $message) {
+            $message->is_read = true;
+            $message->read_at = now();
+            $message->save();
+        }
     }
 
     public function render(): View
@@ -60,7 +72,10 @@ class Messaging extends Component
         $users = User::where('name', 'like', '%' . $this->search . '%')
             ->where('id', '!=', Auth::id())
             ->orderBy('name')
-            ->get();
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->unreadMessagesCount();
+            });
 
         //select the first user in the list
         $this->selectRecipient($users->first()->id);

@@ -7,9 +7,14 @@
             <div class="overflow-y-auto h-[calc(100vh-8rem)]">
                 @foreach($users as $user)
                     <div wire:click="selectRecipient({{ $user->id }})" class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 border-b cursor-pointer hover:bg-gray-200">
-                        <div class="flex items-center">
-                            <img src="{{ $user->profile_picture }}" class="w-10 h-10 ring-1 ring-gray-400 rounded-full mr-4" alt="{{ $user->name }}">
-                            <h3 class="font-normal text-gray-800">{{ $user->name }}</h3>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="{{ $user->profile_picture }}" class="w-10 h-10 ring-1 ring-gray-400 rounded-full mr-4" alt="{{ $user->name }}">
+                                <h3 class="font-normal text-gray-800">{{ $user->name }}</h3>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500">{{ $user->unreadMessagesCount() }} unread</span>
+                            </div>
                         </div>
                     </div>
                 @endforeach

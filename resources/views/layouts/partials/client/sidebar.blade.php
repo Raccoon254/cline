@@ -69,8 +69,8 @@
                 </div>
             </a>
 
-            <a href="" class="side {{ request()->routeIs('courses') ? 'active' : '' }}">
-                <i class="fa-regular text-blue-600 fa-envelope"></i>
+            <a href="{{ route('inbox') }} " class="side {{ request()->routeIs('inbox') ? 'active' : '' }}">
+            <i class="fa-regular text-blue-600 fa-envelope"></i>
                 <div class="">
                     Inbox
                 </div>

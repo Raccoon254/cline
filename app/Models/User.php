@@ -54,4 +54,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Project::class);
     }
+
+    //get attribute profile_picture
+    public function getProfilePictureAttribute(): string
+    {
+        //return src="https://api.dicebear.com/8.x/identicon/svg?seed=name"
+        return "https://api.dicebear.com/8.x/identicon/svg?seed=" . $this->name;
+    }
 }

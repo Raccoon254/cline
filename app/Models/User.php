@@ -68,10 +68,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Skill::class);
     }
 
-    public function unreadMessagesCount(): int
+    public function unreadMessagesCount($userId): int
     {
-        return $this->hasMany(Message::class, 'recipient_id')
+        return $this->messages()
+            ->where('sender_id', $userId)
+            ->where('recipient_id', $this->id)
             ->where('is_read', false)
             ->count();
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'recipient_id');
     }
 }

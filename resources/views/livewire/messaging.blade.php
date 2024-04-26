@@ -13,7 +13,7 @@
                                 <h3 class="font-normal text-gray-800">{{ $user->name }}</h3>
                             </div>
                             <div>
-                                <span class="text-xs text-gray-500">{{ $user->unreadMessagesCount() }} unread</span>
+                                <span class="text-xs text-gray-500">{{ $user->unreadMessagesCount($user->id) }} unread</span>
                             </div>
                         </div>
                     </div>
@@ -40,8 +40,10 @@
                     </div>
                 </div>
                 <div class="bg-gray-100 px-6 py-4 flex items-center">
-                    <input wire:model.live="newMessage" wire:keydown.enter="newMessage" class="flex-1 bg-transparent border-none outline-none px-4 py-2 rounded-lg" type="text" placeholder="Type your message...">
-                    <button wire:click="sendMessage" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg ml-4">Send</button>
+                    <input wire:model.live="newMessage" wire:keydown.enter="newMessage" class="w-full rounded-[10px] border-2 border-gray-300 p-3 pl-4 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none bg-gray-200 px-4 " type="text" placeholder="Type your message...">
+                    <button wire:click="sendMessage" class="btn btn-sm btn-circle btn-primary ml-4">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
             @else
                 <div class="flex items-center justify-center h-full">

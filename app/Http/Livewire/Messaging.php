@@ -74,11 +74,13 @@ class Messaging extends Component
             ->orderBy('name')
             ->get()
             ->sortByDesc(function ($user) {
-                return $user->unreadMessagesCount();
-            });
+                $lastMessage = Message::where(function ($query) use ($user) {
+                    $query->where('sender_id', $user->id)
+                        ->orWhere('recipient_id', $user->id);
+                })->orderBy('sent_at', 'desc')->first();
 
-        //select the first user in the list
-        $this->selectRecipient($users->first()->id);
+                return $lastMessage ? $lastMessage->sent_at : now()->subYears(100);
+            });
 
         return view('livewire.messaging', [
             'users' => $users,

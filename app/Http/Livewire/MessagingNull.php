@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Message;
 use App\Models\User;
+use App\Notifications\NewMessageNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -47,6 +48,9 @@ class MessagingNull extends Component
 
         $this->messages->push($message);
         $this->newMessage = '';
+
+        $recipient = User::find($this->selectedRecipientId);
+        $recipient->notify(new NewMessageNotification($message));
     }
 
     public function selectRecipient($userId): void
@@ -61,16 +65,12 @@ class MessagingNull extends Component
             ->where('is_read', false)
             ->get();
 
-        //dd($unreadMessages);
-
         foreach ($unreadMessages as $message) {
             $message->is_read = true;
             $message->read_at = now();
             $message->save();
         }
-
     }
-
     public function render(): View
     {
         $users = User::where('name', 'like', '%' . $this->search . '%')
@@ -78,7 +78,12 @@ class MessagingNull extends Component
             ->orderBy('name')
             ->get()
             ->sortByDesc(function ($user) {
-                return $user->unreadMessagesCount();
+                $lastMessage = Message::where(function ($query) use ($user) {
+                    $query->where('sender_id', $user->id)
+                        ->orWhere('recipient_id', $user->id);
+                })->orderBy('sent_at', 'desc')->first();
+
+                return $lastMessage ? $lastMessage->sent_at : now()->subYears(100);
             });
 
         return view('livewire.messaging', [

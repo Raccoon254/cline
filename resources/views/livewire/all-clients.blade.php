@@ -8,16 +8,16 @@
         <!-- if we have no clients -->
         @if($clients->isEmpty())
             <div class="center w-full">
-                <div class="text-gray-500 text-center">
-                    <i class="fa-solid text-5xl fa-user-slash"></i>
+                <div class="text-gray-500 h-full mt-16 text-center">
+                    <i class="fa-solid text-3xl fa-user-slash"></i>
                     <p class="text-lg">No clients found</p>
-                    <span class="text-sm italic text-gray-500">Try typing a client name or email</span>
+                    <span class="text-xs text-gray-500">Try typing a client name or email</span>
                 </div>
             </div>
         @else
             <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
                 @foreach($clients as $client)
-                    <div class="client-card bg-white p-4 rounded-lg mb-4">
+                    <div class="client-card bg-white p-4 rounded-lg">
                         <div class="top grid items-center gap-2 grid-cols-4">
                             <div class="w-8 p-[1px] animate-scale rounded-full ring-1">
                                 <img

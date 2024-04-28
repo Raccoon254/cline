@@ -177,15 +177,19 @@ dialog {
 summary::-webkit-details-marker {
     display: none;
 }
+
 details summary::-webkit-details-marker {
     display: none;
 }
+
 details > summary {
     list-style: none;
 }
+
 details > summary::-webkit-details-marker {
     display: none;
 }
+
 ::marker {
     display: none;
     @apply hidden;
@@ -194,6 +198,7 @@ details > summary::-webkit-details-marker {
 .animate-scale {
     @apply scale-105 transform transition-transform duration-300 ease-in-out;
 }
+
 .stripped-list {
     @apply list-none;
 }

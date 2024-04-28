@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Message;
 use App\Models\User;
+use App\Notifications\NewMessageNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -46,6 +47,9 @@ class Messaging extends Component
 
         $this->messages->push($message);
         $this->newMessage = '';
+
+        $recipient = User::find($this->selectedRecipientId);
+        $recipient->notify(new NewMessageNotification($message));
     }
 
     public function selectRecipient($userId): void

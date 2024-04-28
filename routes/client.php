@@ -12,3 +12,6 @@ Route::middleware(["auth", "role:client"])->group(function () {
     Route::put("/client/projects/{id}", [ClientProjectController::class, "update"])->name("client.projects.update");
     Route::delete("/client/projects/{id}", [ClientProjectController::class, "destroy"])->name("client.projects.destroy");
 });
+
+//clients.show
+Route::get("/clients/{id}", [ClientProjectController::class, "showClient"])->name("clients.show");

@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class AllClients extends Component
 {
-    public string $search;
+    public string $search = '';
 
     public function mount()
     {
@@ -23,7 +23,8 @@ class AllClients extends Component
                         ->orWhere('email', 'like', '%' . $this->search . '%')
                         ->orWhere('phone_number', 'like', '%' . $this->search . '%');
                 })
-                ->get()
+                ->orderBy("name", "asc")
+                ->paginate(20),
         ]);
     }
 }

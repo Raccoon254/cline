@@ -17,7 +17,7 @@
         @else
             <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
                 @foreach($clients as $client)
-                    <div class="client-card bg-white p-4 rounded-lg">
+                    <a class="client-card tooltip tooltip-warning bg-white p-4 rounded-lg" data-tip="View {{ $client->name }}" data-for="client-tooltip" href="{{ route('clients.show', $client) }}">
                         <div class="top grid items-center gap-2 grid-cols-4">
                             <div class="w-8 p-[1px] animate-scale rounded-full ring-1">
                                 <img
@@ -42,8 +42,11 @@
                                 {{ $client->address }}
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         @endif
+    <div class="pagination mt-4">
+        {{ $clients->links() }}
+    </div>
 </div>

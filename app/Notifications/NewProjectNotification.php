@@ -2,6 +2,9 @@
 
 namespace App\Notifications;
 
+use App\Models\Client;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,12 +14,20 @@ class NewProjectNotification extends Notification
 {
     use Queueable;
 
+    private Project $project;
+    private User $user;
+    private Client $client;
+    private User $creator;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($project, $creator)
     {
-        //
+        $this->project = $project;
+        $this->user = $project->user;
+        $this->client = $project->client;
+        $this->creator = $creator;
     }
 
     /**
@@ -32,12 +43,26 @@ class NewProjectNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable): MailMessage
     {
+        $url = url('/projects/' . $this->project->id);
+        //get the current user role
+        $role = $this->creator->role;
+        if ($role === 'user') {
+            $title = 'New Project Created';
+        } else {
+            $title = 'New Project Assigned';
+        }
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject($title)
+            ->markdown('emails.new_project', [
+                'title' => $title,
+                'project' => $this->project,
+                'user' => $this->user,
+                'client' => $this->client->user,
+                'url' => $url,
+            ]);
     }
 
     /**

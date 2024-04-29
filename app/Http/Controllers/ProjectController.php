@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\NewProjectNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -61,9 +62,11 @@ class ProjectController extends Controller
         $start_date = now();
         $validatedData['start_date'] = $start_date;
 
-        Project::create($validatedData);
+        $project = Project::create($validatedData);
 
         //Send a notification to both the client and the freelancer
+        $client->notify(new NewProjectNotification($project, Auth::user()));
+        $project->user->notify(new NewProjectNotification($project, Auth::user()));
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }

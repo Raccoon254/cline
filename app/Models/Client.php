@@ -18,12 +18,47 @@ class Client extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function projects(): HasMany
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'client_id');
+    }
+
+    public function getNameAttribute(): string
+    {
+        return $this->user->name;
+    }
+
+    public function getEmailAttribute(): string
+    {
+        return $this->user->email;
+    }
+
+    public function getRoleAttribute(): string
+    {
+        return $this->user->role;
+    }
+
+    public function getPhoneNumberAttribute(): string
+    {
+        return $this->user->phone_number;
+    }
+
+    public function getPasswordAttribute(): string
+    {
+        return $this->user->password;
+    }
+
+    public function getLastLoginAtAttribute(): string
+    {
+        return $this->user->last_login_at;
+    }
+
+    public function getProfilePictureAttribute(): string
+    {
+        return "https://api.dicebear.com/8.x/identicon/svg?seed=" . $this->user->name;
     }
 
     public function invoices(): HasMany

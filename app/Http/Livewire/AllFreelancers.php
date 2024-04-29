@@ -12,7 +12,7 @@ class AllFreelancers extends Component
     public function render(): View
     {
         return view('livewire.all-freelancers', [
-            'clients' => User::where('role', 'user')
+            'freelancers' => User::where('role', 'user')
                 ->where(function ($query) {
                     $query->where('name', 'like', '%' . $this->search . '%')
                         ->orWhere('email', 'like', '%' . $this->search . '%')

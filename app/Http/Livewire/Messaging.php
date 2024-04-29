@@ -11,11 +11,12 @@ use Livewire\Component;
 
 class Messaging extends Component
 {
-    public $newMessage = '';
-    public $messages = [];
-    public $selectedRecipientId;
-    public $selectedRecipient;
-    public $search = '';
+    public string $newMessage = '';
+    public array $messages = [];
+    public mixed $selectedRecipientId;
+    public mixed $selectedRecipient;
+    public string $search = '';
+    public mixed $attachment;
 
     protected $listeners = ['newMessage', 'loadMessages', 'selectRecipient', 'updatedSearch'];
 
@@ -38,16 +39,25 @@ class Messaging extends Component
 
     public function sendMessage(): void
     {
+        $attachmentPath = null;
+        $attachmentType = null;
+
+        if ($this->attachment) {
+            $attachmentPath = $this->attachment->store('attachments', 'public');
+            $attachmentType = $this->attachment->getMimeType();
+        }
+
         $message = Message::create([
             'sender_id' => Auth::id(),
             'recipient_id' => $this->selectedRecipientId,
             'body' => $this->newMessage,
             'sent_at' => now(),
+            'attachment_path' => $attachmentPath,
+            'attachment_type' => $attachmentType
         ]);
 
         $this->messages->push($message);
         $this->newMessage = '';
-
         $recipient = User::find($this->selectedRecipientId);
         $recipient->notify(new NewMessageNotification($message));
     }

@@ -18,6 +18,8 @@ class Message extends Model
         'sent_at',
         'delivered_at',
         'read_at',
+        'attachment_path',
+        'attachment_type'
     ];
 
     public function sender(): BelongsTo

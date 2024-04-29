@@ -15,7 +15,7 @@
             </div>
         </div>
     @else
-        <div class="grid gap-4 grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-2">
+        <div class="grid gap-4 grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach($freelancers as $freelancer)
                 <a class="client-card tooltip tooltip-warning bg-white p-4 rounded-lg" data-tip="View {{ $freelancer->name }}" data-for="client-tooltip" href="{{ route('clients.show', $freelancer) }}">
                     <div class="top grid items-center gap-2 grid-cols-4">

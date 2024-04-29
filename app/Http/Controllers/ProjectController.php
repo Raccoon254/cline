@@ -63,6 +63,8 @@ class ProjectController extends Controller
 
         Project::create($validatedData);
 
+        //Send a notification to both the client and the freelancer
+
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
 

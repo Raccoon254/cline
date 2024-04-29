@@ -15,7 +15,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 @foreach ($freelancers as $freelancer)
                     <div class="w-full h-full">
-                        <div class="bg-white w-full h-full shadow-md rounded-md p-4">
+                        <div class="bg-white w-full client-card h-full shadow-md rounded-md p-4">
                             <div class="flex items justify-between">
                                 <div class="flex flex-col">
                                     <div>

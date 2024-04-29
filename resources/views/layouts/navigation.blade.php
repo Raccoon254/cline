@@ -20,7 +20,7 @@
                         />
                     </div>
                 </section>
-                <ul tabindex="0" class="p-2 text-gray-200 bg-base-100 shadow menu dropdown-content rounded-box w-52">
+                <ul tabindex="0" class="p-2 text-gray-200 bg-base-100 z-50 shadow menu dropdown-content rounded-box w-52">
                     <li>
                         <a href="{{ route('profile.edit') }}" class="flex items-center gap-2">
                             <i class="fa-solid fa-user"></i>

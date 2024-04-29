@@ -1,6 +1,6 @@
-<div class="clients p-2 rounded-lg h-[80vh] overflow-y-auto w-full">
+<div class="clients p-2 rounded-lg h-[80vh] overflow-y-auto overflow-x-visible w-full">
     <div class="label flex flex-col center mb-4">
-        <label class="w-full relative">
+        <label class="w-full relative z-20">
             <input type="text" wire:model.live="search" class="w-full p-2 rounded-lg border border-gray-200" placeholder="Search clients...">
             <i class="fas fa-search absolute right-3 top-[50%] transform -translate-y-1/2 text-gray-400"></i>
         </label>
@@ -15,7 +15,7 @@
                 </div>
             </div>
         @else
-            <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
+            <div class="grid gap-4 grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-2">
                 @foreach($clients as $client)
                     <a class="client-card tooltip tooltip-warning bg-white p-4 rounded-lg" data-tip="View {{ $client->name }}" data-for="client-tooltip" href="{{ route('clients.show', $client) }}">
                         <div class="top grid items-center gap-2 grid-cols-4">

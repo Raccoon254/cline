@@ -6,14 +6,13 @@ use App\Models\User;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class AllClients extends Component
+class AllFreelancers extends Component
 {
     public string $search = '';
-
     public function render(): View
     {
-        return view('livewire.all-clients', [
-            'clients' => User::where('role', 'client')
+        return view('livewire.all-freelancers', [
+            'clients' => User::where('role', 'user')
                 ->where(function ($query) {
                     $query->where('name', 'like', '%' . $this->search . '%')
                         ->orWhere('email', 'like', '%' . $this->search . '%')

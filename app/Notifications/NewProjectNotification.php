@@ -49,10 +49,20 @@ class NewProjectNotification extends Notification
         //get the current user role
         $role = $this->creator->role;
         if ($role === 'user') {
-            $title = 'New Project Created';
+            if ($notifiable->id === $this->creator->id) {
+                $title = 'You have created a new project';
+            } else {
+                $title = $this->creator->name . ' has assigned you a new project';
+            }
         } else {
-            $title = 'New Project Assigned';
+            if ($notifiable->id === $this->creator->id) {
+                $title = 'You have created a new project';
+            } else {
+                $title = 'You have a new project from ' . $this->creator->name;
+            }
         }
+
+        //if the email is going to a client
 
         return (new MailMessage)
             ->subject($title)

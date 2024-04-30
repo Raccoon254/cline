@@ -88,7 +88,7 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="flex flex-col g">
+                <div class="flex flex-col">
                     @if (count($attachments) > 0)
                         <div class="flex w-full bg-gray-100 p-2 pt-3">
                             @foreach($attachments as $attachment)
@@ -137,8 +137,11 @@
                         </button>
                         <!-- Send message button -->
                         <button wire:click="sendMessage"
+                                wire:loading.class.remove="btn-primary"
+                                wire:loading.class="btn-ghost"
                                 class="btn absolute right-3 btn-primary top[50%] transform[-50%] btn-sm btn-circle mr-2">
-                            <i class="fas fa-paper-plane"></i>
+                            <i wire:target="sendMessage" wire:loading.class="hidden" class="fas fa-paper-plane"></i>
+                            <span wire:loading wire:target="sendMessage" class="loading loading-spinner text-primary loading-sm"></span>
                         </button>
                     </div>
                 </div>

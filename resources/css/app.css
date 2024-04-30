@@ -219,3 +219,11 @@ details > summary::-webkit-details-marker {
 .message-input{
     @apply w-full rounded-full pl-14 border-2 border-gray-300 p-3 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none bg-gray-200 px-4;
 }
+
+.sent-message{
+    @apply rounded-t-2xl rounded-bl-2xl bg-blue-500 text-white p-1 px-4;
+}
+
+.received-message{
+    @apply rounded-t-2xl rounded-br-2xl bg-gray-200 text-gray-700 p-1 px-4;
+}

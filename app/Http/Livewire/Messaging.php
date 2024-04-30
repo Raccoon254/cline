@@ -11,13 +11,14 @@ use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Database\Eloquent\Collection;
 
 class Messaging extends Component
 {
     use WithFileUploads;
 
     public string $newMessage = '';
-    public mixed $messages = [];
+    public Collection $messages;
     public mixed $selectedRecipientId;
     public mixed $selectedRecipient;
     public string $search = '';
@@ -44,17 +45,8 @@ class Messaging extends Component
 
     public function sendMessage(): void
     {
-        //validate new message
-        $this->validate([
-            'newMessage' => 'required',
-        ]);
-
-        if ($this->attachments) {
-            //total storage size of attachments must not exceed 10MB
-            // validate attachments
-            $this->validate([
-                'attachments.*' => 'max:10240', //10MB
-            ]);
+        if (empty($this->newMessage) && empty($this->attachments)) {
+            return;
         }
 
         $message = Message::create([
@@ -65,6 +57,16 @@ class Messaging extends Component
         ]);
 
         if ($this->attachments) {
+            $totalSize = array_reduce($this->attachments, function ($carry, $attachment) {
+                return $carry + $attachment->getSize();
+            }, 0);
+
+            if ($totalSize > 10240000) { // 10MB
+                $this->addError('attachments', 'Total attachment size should not exceed 10MB.');
+                $message->delete(); // Delete the message since attachments exceeded the limit
+                return;
+            }
+
             foreach ($this->attachments as $attachment) {
                 $path = $attachment->store('attachments', 'public');
                 $type = $attachment->getMimeType();
@@ -76,8 +78,9 @@ class Messaging extends Component
             }
         }
 
-        $this->messages->push($message);
+        $this->loadMessages();
         $this->newMessage = '';
+        $this->attachments = [];
         $recipient = User::find($this->selectedRecipientId);
         $recipient->notify(new NewMessageNotification($message));
     }

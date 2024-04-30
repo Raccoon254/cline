@@ -6,6 +6,7 @@ use App\Models\Message;
 use App\Models\MessageAttachment;
 use App\Models\User;
 use App\Notifications\NewMessageNotification;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Attributes\Validate;
@@ -16,7 +17,7 @@ class MessagingNull extends Component
 {
     use WithFileUploads;
     public string $newMessage = '';
-    public mixed $messages = [];
+    public Collection $messages;
     public mixed $selectedRecipientId;
     public mixed $selectedRecipient;
     public string $search = '';
@@ -26,8 +27,13 @@ class MessagingNull extends Component
 
     public function mount(): void
     {
-        $users = User::where('id', '!=', Auth::id())->get();
-        $this->selectRecipient($users->first()->id);
+        $user = User::where('id', '!=', Auth::id())->first();
+        if ($user) {
+            $this->selectRecipient($user->id);
+        } else {
+            // Handle the case where no other users are found
+            session()->flash('error', 'No users available for messaging.');
+        }
     }
 
     public function loadMessages(): void
@@ -44,17 +50,8 @@ class MessagingNull extends Component
 
     public function sendMessage(): void
     {
-        //validate new message
-        $this->validate([
-            'newMessage' => 'required',
-        ]);
-
-        if ($this->attachments) {
-            //total storage size of attachments must not exceed 10MB
-            // validate attachments
-            $this->validate([
-                'attachments.*' => 'max:10240', //10MB
-            ]);
+        if (empty($this->newMessage) && empty($this->attachments)) {
+            return;
         }
 
         $message = Message::create([
@@ -65,6 +62,16 @@ class MessagingNull extends Component
         ]);
 
         if ($this->attachments) {
+            $totalSize = array_reduce($this->attachments, function ($carry, $attachment) {
+                return $carry + $attachment->getSize();
+            }, 0);
+
+            if ($totalSize > 10240000) { // 10MB
+                $this->addError('attachments', 'Total attachment size should not exceed 10MB.');
+                $message->delete(); // Delete the message since attachments exceeded the limit
+                return;
+            }
+
             foreach ($this->attachments as $attachment) {
                 $path = $attachment->store('attachments', 'public');
                 $type = $attachment->getMimeType();
@@ -76,8 +83,9 @@ class MessagingNull extends Component
             }
         }
 
-        $this->messages->push($message);
+        $this->loadMessages();
         $this->newMessage = '';
+        $this->attachments = [];
         $recipient = User::find($this->selectedRecipientId);
         $recipient->notify(new NewMessageNotification($message));
     }
@@ -100,6 +108,7 @@ class MessagingNull extends Component
             $message->save();
         }
     }
+
     public function render(): View
     {
         $users = User::where('name', 'like', '%' . $this->search . '%')

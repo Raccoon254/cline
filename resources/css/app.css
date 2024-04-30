@@ -217,7 +217,7 @@ details > summary::-webkit-details-marker {
 }
 
 .message-input{
-    @apply w-full rounded-full px-12 border-2 border-gray-300 p-3 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none bg-gray-200;
+    @apply w-full rounded-full px-12 border-2 border-gray-300 p-3 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none bg-gray-200 text-gray-800;
 }
 
 .sent-message{
@@ -226,4 +226,12 @@ details > summary::-webkit-details-marker {
 
 .received-message{
     @apply rounded-t-2xl rounded-br-2xl bg-gray-200 text-gray-700 p-1 px-4;
+}
+
+.received-message-attachment{
+    @apply rounded-b-2xl rounded-tr-2xl bg-gray-200 text-gray-700 p-1 mt-1 px-4;
+}
+
+.sent-message-attachment{
+    @apply rounded-b-2xl rounded-tl-2xl bg-blue-500 text-white p-1 mt-1 px-4;
 }

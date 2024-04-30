@@ -28,12 +28,6 @@ class MessagingNull extends Component
     public function mount(): void
     {
         $user = User::where('id', '!=', Auth::id())->first();
-        if ($user) {
-            $this->selectRecipient($user->id);
-        } else {
-            // Handle the case where no other users are found
-            session()->flash('error', 'No users available for messaging.');
-        }
     }
 
     public function loadMessages(): void
@@ -46,6 +40,8 @@ class MessagingNull extends Component
             $query->where('sender_id', $this->selectedRecipientId)
                 ->where('recipient_id', Auth::id());
         })->orderBy('sent_at', 'asc')->get();
+
+        $this->dispatch('messagesLoaded');
     }
 
     public function sendMessage(): void
@@ -60,6 +56,10 @@ class MessagingNull extends Component
             'body' => $this->newMessage,
             'sent_at' => now(),
         ]);
+
+        $this->newMessage = '';
+        $this->attachments = [];
+        $this->reset('newMessage', 'attachments');
 
         if ($this->attachments) {
             $totalSize = array_reduce($this->attachments, function ($carry, $attachment) {
@@ -84,10 +84,10 @@ class MessagingNull extends Component
         }
 
         $this->loadMessages();
-        $this->newMessage = '';
-        $this->attachments = [];
+
+        // Delay the notification for 5 minutes
         $recipient = User::find($this->selectedRecipientId);
-        $recipient->notify(new NewMessageNotification($message));
+        $recipient->notify((new NewMessageNotification($message))->delay(now()->addMinutes(5)));
     }
 
     public function selectRecipient($userId): void
@@ -107,6 +107,8 @@ class MessagingNull extends Component
             $message->read_at = now();
             $message->save();
         }
+        $this->dispatch('messagesLoaded');
+
     }
 
     public function render(): View
@@ -123,6 +125,8 @@ class MessagingNull extends Component
 
                 return $lastMessage ? $lastMessage->sent_at : now()->subYears(100);
             });
+
+        $this->dispatch('messagesLoaded');
 
         return view('livewire.messaging', [
             'users' => $users,

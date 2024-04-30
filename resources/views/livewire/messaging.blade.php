@@ -1,28 +1,64 @@
 <div>
     @php
         use Illuminate\Support\Facades\Storage;
+        use Illuminate\Support\Facades\Auth;
     @endphp
     <div class="flex h-[93vh]">
         <div class="bg-gray-100 w-1/4 border-r-none">
             <div class="p-2 border-b">
-                <input wire:model.live="search"
-                       class="message-input rounded-sm"
-                       type="text" placeholder="Search users">
+                <label class="w-full relative">
+                    <input wire:model.live="search"
+                           class="message-input rounded-sm"
+                           type="text" placeholder="Search users">
+                    <i class="fas btn btn-sm btn-circle fa-search absolute top-1/2 transform -translate-y-1/2 left-2 btn-primary"></i>
+                </label>
             </div>
             <div class="overflow-y-auto h-[calc(100vh-8rem)]">
                 @foreach($users as $user)
                     <div wire:click="selectRecipient({{ $user->id }})"
-                         class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 border-b cursor-pointer hover:bg-gray-200">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <img src="{{ $user->profile_picture }}"
-                                     class="w-10 h-10 ring-1 ring-gray-400 rounded-full mr-4" alt="{{ $user->name }}">
-                                <h3 class="font-normal text-gray-800">{{ $user->name }}</h3>
-                            </div>
-                            <div>
-                                <span
-                                    class="text-xs text-gray-500">{{ $user->unreadMessagesCount($user->id) }} unread</span>
-                            </div>
+                         class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 border-b cursor-pointer hover:bg-gray-200 flex gap-2">
+                        <div class="flex w-14 items-center">
+                            <img src="{{ $user->profile_picture }}"
+                                 class="ring-1 w-10 h-10 ring-gray-400 rounded-full mr-2" alt="{{ $user->name }}">
+                        </div>
+                        <div class="w-1/2">
+                            <h3 class="font-normal text-sm text-gray-800">{{ $user->name }}</h3>
+                            @php
+                                $lastMessage = $user->messages()->where(function ($query) {
+                                    $query->where('sender_id', Auth::id())
+                                        ->orWhere('recipient_id', Auth::id());
+                                })->latest()->first();
+                            @endphp
+                            @if ($lastMessage)
+                                <p class="text-xs text-gray-500 truncate">
+                                    @if ($lastMessage->sender_id == Auth::id())
+                                        <span class="font-semibold">You:</span>
+                                    @endif
+                                    @if($lastMessage->body)
+                                        {{ $lastMessage->body }}
+                                    @else
+                                        <span class="text-red-500">
+                                                <i class="fa-solid fa-paperclip"></i> Attachment
+                                            </span>
+                                    @endif
+                                </p>
+                            @else
+                                <p class="text-xs text-gray-500 truncate">No messages yet.</p>
+                            @endif
+                        </div>
+                        <div class="flex time flex-col items-end">
+                            @if ($user->unreadMessagesCount($user->id) > 0)
+                                <div class="bg-green-500 text-white rounded-full px-2 py-1 text-xs mb-1">
+                                    {{ $user->unreadMessagesCount($user->id) }}
+                                </div>
+                            @endif
+                            <span class="text-xs text-gray-500">
+                                @if ($lastMessage)
+                                    @if(str_contains($lastMessage->time, 'minutes') || str_contains($lastMessage->time, 'hours') || str_contains($lastMessage->time, 'days'))
+                                        {{ str_replace('minutes', 'min', str_replace('hours', 'hr', str_replace('days', 'day', $lastMessage->time))) }}
+                                    @endif
+                                @endif
+                            </span>
                         </div>
                     </div>
                 @endforeach
@@ -38,55 +74,86 @@
                         <h3 class="font-normal text-gray-800">{{ $selectedRecipient->name }}</h3>
                     </div>
                 </div>
-                <div class="overflow-y-auto">
-                    <div class="p-6 space-y-4">
-                        @foreach($messages as $message)
-                            <div class="{{ $message->sender_id == Auth::id() ? 'text-right' : 'text-left' }} max-w-2/3 mx-auto">
-                                <div class="inline-block {{ $message->sender_id == Auth::id() ? 'bg-blue-500 text-white sent-message ' : 'bg-gray-200 text-gray-800 received-message ' }} px-1 py-1/4">
-                                    {{ $message->body }}
-                                    @if ($message->attachments->count() > 0)
-                                        <div class="flex flex-wrap -mx-1">
-                                            @foreach($message->attachments as $attachment)
-                                                <div class="w-1/3 px-1 mb-2">
-                                                    <div class="bg-gray-200 rounded-md overflow-hidden relative">
-                                                        @if (in_array($attachment->type, ['image/jpeg', 'image/png', 'image/gif']))
-                                                            <img src="{{ Storage::url($attachment->path) }}" alt="Attachment" class="w-full h-32 object-cover">
-                                                        @elseif ($attachment->type == 'application/pdf')
-                                                            <div class="flex items-center justify-center h-32 bg-red-200">
-                                                                <i class="fas fa-file-pdf text-4xl text-red-500"></i>
-                                                            </div>
-                                                        @elseif ($attachment->type == 'application/zip' || $attachment->type == 'application/x-rar-compressed')
-                                                            <div class="flex items-center justify-center h-32 bg-green-200">
-                                                                <i class="fas fa-file-archive text-4xl text-green-500"></i>
-                                                            </div>
-                                                        @elseif (str_starts_with($attachment->type, 'video/'))
-                                                            <div class="flex items-center justify-center h-32 bg-blue-200">
-                                                                <i class="fas fa-file-video text-4xl text-blue-500"></i>
-                                                            </div>
-                                                        @elseif (str_starts_with($attachment->type, 'audio/'))
-                                                            <div class="flex items-center justify-center h-32 bg-yellow-200">
-                                                                <i class="fas fa-file-audio text-4xl text-yellow-500"></i>
-                                                            </div>
-                                                        @else
-                                                            <div class="flex items-center justify-center h-32 bg-gray-300">
-                                                                <i class="fas fa-file text-4xl text-gray-500"></i>
-                                                            </div>
-                                                        @endif
-                                                        <a href="{{ Storage::url($attachment->path) }}" class="absolute top-0 btn btn-xs btn-circle btn-ghost right-0 mt-1 mr-1 bg-gray-500 text-white text-xs px-2 py-1">
-                                                            <i class="fas fa-download"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            @endforeach
+                <div class="overflow-y-auto h-full" id="messagesContainer">
+
+                    @if ($messages->count() == 0)
+                        <div class="flex items-center flex-col justify-center h-full">
+                            <i class="fa-regular fa-bell-slash text-4xl text-gray-500"></i>
+                            <p class="text-gray-500">No messages yet.</p>
+                        </div>
+                    @else
+                        <div class="p-6 space-y-4">
+                            @foreach($messages as $message)
+                                <div
+                                    id="message_{{ $message->id }}"
+                                    class="{{ $message->sender_id == Auth::id() ? 'text-right' : 'text-left' }} max-w-2/3 text-sm mx-auto message">
+                                    @if($message->body)
+                                        <div
+                                            class="inline-block max-w-[400px] {{ $message->sender_id == Auth::id() ? 'bg-blue-500 text-white sent-message ' : 'bg-gray-200 text-gray-800 received-message ' }} px-1 py-1/4">
+                                            {{ $message->body }}
                                         </div>
                                     @endif
+                                    <br>
+                                    @if ($message->attachments->count() > 0)
+                                        <div
+                                            class="inline-block {{ $message->sender_id == Auth::id() ? 'bg-blue-500 text-white sent-message-attachment ' : 'bg-gray-200 text-gray-800 received-message-attachment' }}">
+                                            <div class="flex max-w-[392px] flex-wrap gap-1 -mx-3">
+                                                @foreach($message->attachments as $attachment)
+                                                    <div class="min-w-[128px]">
+                                                        <div class="bg-gray-200 rounded-xl overflow-hidden relative">
+                                                            @if (in_array($attachment->type, ['image/jpeg', 'image/png', 'image/gif']))
+                                                                <img src="{{ Storage::url($attachment->path) }}"
+                                                                     alt="Attachment" class="w-[128px] h-32 object-cover">
+                                                            @elseif ($attachment->type == 'application/pdf')
+                                                                <div
+                                                                    class="flex items-center justify-center h-32 bg-red-200">
+                                                                    <i class="fas fa-file-pdf text-4xl text-red-500"></i>
+                                                                </div>
+                                                            @elseif ($attachment->type == 'application/zip' || $attachment->type == 'application/x-rar-compressed')
+                                                                <div
+                                                                    class="flex items-center justify-center h-32 bg-green-200">
+                                                                    <i class="fas fa-file-archive text-4xl text-green-500"></i>
+                                                                </div>
+                                                            @elseif (str_starts_with($attachment->type, 'video/'))
+                                                                <div
+                                                                    class="flex items-center justify-center h-32 bg-blue-200">
+                                                                    <i class="fas fa-file-video text-4xl text-blue-500"></i>
+                                                                </div>
+                                                            @elseif (str_starts_with($attachment->type, 'audio/'))
+                                                                <div
+                                                                    class="flex items-center justify-center h-32 bg-yellow-200">
+                                                                    <i class="fas fa-file-audio text-4xl text-yellow-500"></i>
+                                                                </div>
+                                                            @else
+                                                                <div
+                                                                    class="flex items-center justify-center h-32 bg-gray-300">
+                                                                    <i class="fas fa-file text-4xl text-gray-500"></i>
+                                                                </div>
+                                                            @endif
+                                                            <a href="{{ Storage::url($attachment->path) }}"
+                                                               class="absolute top-0 btn btn-xs btn-circle btn-ghost right-0 mt-1 mr-1 bg-gray-500 text-white text-xs px-2 py-1">
+                                                                <i class="fas fa-download"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <!-- if no message or attachment -->
+                                    @if (!$message->body && $message->attachments->count() == 0)
+                                        <div
+                                            class="inline-block max-w-[400px] {{ $message->sender_id == Auth::id() ? 'bg-blue-500 text-white sent-message ' : 'bg-gray-200 text-gray-800 received-message ' }} px-1 py-1/4">
+                                            <i class="fas fa-exclamation-circle"></i> This message has been deleted.
+                                        </div>
+                                    @endif
+                                    <div class="text-[10px] mt-1 text-blue-500">
+                                        {{ $message->time }}
+                                    </div>
                                 </div>
-                                <div class="text-[10px] mt-1 text-blue-500">
-                                    {{ $message->time }}
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
                 <div class="flex flex-col">
                     @if (count($attachments) > 0)
@@ -123,7 +190,7 @@
                     </div>
                     <div class="bg-gray-100 px-2 py-4 relative flex items-center">
                         <label class="w-full">
-                            <input wire:model.live="newMessage" wire:keydown.enter="sendMessage"
+                            <input id="messageInput" wire:model="newMessage" wire:keydown.enter="sendMessage"
                                    class="message-input"
                                    type="text" placeholder="Type your message...">
                         </label>
@@ -141,7 +208,8 @@
                                 wire:loading.class="btn-ghost"
                                 class="btn absolute right-3 btn-primary top[50%] transform[-50%] btn-sm btn-circle mr-2">
                             <i wire:target="sendMessage" wire:loading.class="hidden" class="fas fa-paper-plane"></i>
-                            <span wire:loading wire:target="sendMessage" class="loading loading-spinner text-primary loading-sm"></span>
+                            <span wire:loading wire:target="sendMessage"
+                                  class="loading loading-spinner text-primary loading-sm"></span>
                         </button>
                     </div>
                 </div>
@@ -152,4 +220,17 @@
             @endif
         </div>
     </div>
+    @script
+        <script>
+            $wire.on('messagesLoaded', () => {
+                setTimeout(() => {
+                    let messagesContainer = document.getElementById('messagesContainer');
+                    let messages = messagesContainer.getElementsByClassName('message');
+                    let lastMessage = messages[messages.length - 1];
+                    lastMessage.scrollIntoView({behavior: 'smooth'});
+                }, 40);
+            });
+        </script>
+    @endscript
+
 </div>

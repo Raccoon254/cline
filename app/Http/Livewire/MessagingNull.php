@@ -3,20 +3,24 @@
 namespace App\Http\Livewire;
 
 use App\Models\Message;
+use App\Models\MessageAttachment;
 use App\Models\User;
 use App\Notifications\NewMessageNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class MessagingNull extends Component
 {
+    use WithFileUploads;
     public string $newMessage = '';
     public mixed $messages = [];
     public mixed $selectedRecipientId;
     public mixed $selectedRecipient;
     public string $search = '';
-    public mixed $attachment = null;
+    public array $attachments = [];
 
     protected $listeners = ['newMessage', 'loadMessages', 'selectRecipient', 'updatedSearch'];
 
@@ -40,12 +44,17 @@ class MessagingNull extends Component
 
     public function sendMessage(): void
     {
-        $attachmentPath = null;
-        $attachmentType = null;
+        //validate new message
+        $this->validate([
+            'newMessage' => 'required',
+        ]);
 
-        if ($this->attachment) {
-            $attachmentPath = $this->attachment->store('attachments', 'public');
-            $attachmentType = $this->attachment->getMimeType();
+        if ($this->attachments) {
+            //total storage size of attachments must not exceed 10MB
+            // validate attachments
+            $this->validate([
+                'attachments.*' => 'max:10240', //10MB
+            ]);
         }
 
         $message = Message::create([
@@ -53,9 +62,19 @@ class MessagingNull extends Component
             'recipient_id' => $this->selectedRecipientId,
             'body' => $this->newMessage,
             'sent_at' => now(),
-            'attachment_path' => $attachmentPath,
-            'attachment_type' => $attachmentType
         ]);
+
+        if ($this->attachments) {
+            foreach ($this->attachments as $attachment) {
+                $path = $attachment->store('attachments', 'public');
+                $type = $attachment->getMimeType();
+                MessageAttachment::create([
+                    'message_id' => $message->id,
+                    'path' => $path,
+                    'type' => $type,
+                ]);
+            }
+        }
 
         $this->messages->push($message);
         $this->newMessage = '';

@@ -38,7 +38,8 @@
                 <div class="overflow-y-auto">
                     <div class="p-6 space-y-4">
                         @foreach($messages as $message)
-                            <div class="{{ $message->sender_id == Auth::id() ? 'text-right' : 'text-left' }} max-w-2/3 mx-auto">
+                            <div
+                                class="{{ $message->sender_id == Auth::id() ? 'text-right' : 'text-left' }} max-w-2/3 mx-auto">
                                 <div
                                     class="inline-block {{ $message->sender_id == Auth::id() ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800' }} rounded-lg px-1 py-1/4">
                                     {{ $message->body }}
@@ -64,25 +65,57 @@
                     </div>
                 </div>
                 <div class="bg-gray-100 px-2 py-4 relative flex items-center">
-                    @if ($attachment)
-                        <img class="absolute -top-36 right-6 w-48 h-36 object-cover rounded-md"
-                             src="{{ $attachment->temporaryUrl() }}" alt="Attachment">
-                    @endif
-                    <input wire:model.live="newMessage" wire:keydown.enter="newMessage"
-                           class="message-input"
-                           type="text" placeholder="Type your message...">
-                        <!-- Hidden file input -->
-                        <input wire:model.live="attachment" type="file" id="fileInput" style="display: none;">
-                        <!-- Clip icon for opening file dialog -->
-                        <button class="btn absolute left-3 btn-ghost ring-1 ring-primary text-primary top[50%] transform[-50%] btn-sm btn-circle ml-2"
-                                onclick="document.getElementById('fileInput').click();">
-                            <i class="fas fa-paperclip"></i>
-                        </button>
-                        <!-- Send message button -->
-                        <button wire:click="sendMessage" class="btn absolute right-3 btn-primary top[50%] transform[-50%] btn-sm btn-circle mr-2">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+                    <label class="w-full">
+                        <input wire:model.live="newMessage" wire:keydown.enter="newMessage"
+                               class="message-input"
+                               type="text" placeholder="Type your message...">
+                    </label>
+                    <!-- Hidden file input -->
+                    <input wire:model.live="attachments" type="file" id="fileInput" multiple style="display: none;">
+                    <!-- Clip icon for opening file dialog -->
+                    <button
+                        class="btn absolute left-3 btn-ghost ring-1 ring-primary text-primary top[50%] transform[-50%] btn-sm btn-circle ml-2"
+                        onclick="document.getElementById('fileInput').click();">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <!-- Send message button -->
+                    <button wire:click="sendMessage"
+                            class="btn absolute right-3 btn-primary top[50%] transform[-50%] btn-sm btn-circle mr-2">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
+                <div class="text-red-500 bg-gray-100 text-xs px-4">
+                    @error('attachments.*') <span class="error m-1">{{ $message }}</span> @enderror
+                    @error('newMessage') <span class="error m-1">{{ $message }}</span> @enderror
+                </div>
+                @if (count($attachments) > 0)
+                    <div class="flex w-full bg-gray-100 p-2 pt-3">
+                        @foreach($attachments as $attachment)
+                            <div
+                                class="flex relative flex-col items-center justify-center w-16 h-16 bg-blue-200 rounded-md mr-2">
+                                @if (in_array($attachment->getMimeType(), ['image/jpeg', 'image/png']))
+                                    <img src="{{ $attachment->temporaryUrl() }}" alt="Attachment"
+                                         class="w-16 h-16 object-cover rounded-md">
+                                @elseif ($attachment->getMimeType() == 'image/svg+xml')
+                                    <i class="fas fa-file-image text-4xl text-gray-500"></i>
+                                @elseif ($attachment->getMimeType() == 'application/zip')
+                                    <i class="fas fa-file-archive text-4xl text-gray-500"></i>
+                                @else
+                                    <i class="fas fa-file text-4xl text-gray-500"></i>
+                                @endif
+                                <!-- Displaying the first five characters of the file name -->
+                                <span class="text-xs mt-1">
+                                    {{ substr($attachment->getClientOriginalName(), 0, 5) }}{{ strlen($attachment->getClientOriginalName()) > 5 ? '...' : '' }}
+                                </span>
+                                <button wire:click="removeAttachment('{{ $attachment->getClientOriginalName() }}')"
+                                        class="absolute btn-warning btn btn-xs btn-circle top-0 right-1 text-red-500 hover:text-red-700 -mt-2 -mr-3">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        @endforeach
+
+                    </div>
+                @endif
             @else
                 <div class="flex items-center justify-center h-full">
                     <p class="text-gray-500">Select a user to start chatting.</p>

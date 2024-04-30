@@ -22,6 +22,16 @@ class Message extends Model
         'attachment_type'
     ];
 
+    protected $appends = ['time'];
+
+    protected array $dates = ['sent_at', 'delivered_at', 'read_at'];
+
+    protected $casts = [
+        'is_read' => 'boolean',
+        'sent_at' => 'datetime',
+        'delivered_at' => 'datetime',
+    ];
+
     public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class, 'sender_id');
@@ -30,5 +40,15 @@ class Message extends Model
     public function recipient(): BelongsTo
     {
         return $this->belongsTo(User::class, 'recipient_id');
+    }
+
+    //time attribute, if more than 1 hr, show date
+    public function getTimeAttribute(): string
+    {
+        $time = $this->sent_at->diffForHumans();
+        if ($this->sent_at->diffInHours() > 1) {
+            $time = $this->sent_at->format('M d, Y');
+        }
+        return $time;
     }
 }

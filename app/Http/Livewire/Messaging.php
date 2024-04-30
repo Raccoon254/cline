@@ -48,8 +48,6 @@ class Messaging extends Component
         if ($this->attachment) {
             $attachmentPath = $this->attachment->store('attachments', 'public');
             $attachmentType = $this->attachment->getMimeType();
-
-            //dd($attachmentPath, $attachmentType);
         }
 
         $message = Message::create([

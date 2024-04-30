@@ -3,7 +3,7 @@
         <div class="bg-gray-100 w-1/4 border-r-none">
             <div class="p-2 border-b">
                 <input wire:model.live="search"
-                       class="w-full rounded-[10px] border-2 border-gray-300 p-3 pl-4 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none bg-gray-200 px-4 py-2"
+                       class="message-input rounded-sm"
                        type="text" placeholder="Search users">
             </div>
             <div class="overflow-y-auto h-[calc(100vh-8rem)]">
@@ -69,21 +69,19 @@
                              src="{{ $attachment->temporaryUrl() }}" alt="Attachment">
                     @endif
                     <input wire:model.live="newMessage" wire:keydown.enter="newMessage"
-                           class="w-full rounded-[10px] border-2 border-gray-300 p-3 pl-4 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none bg-gray-200 px-4 "
+                           class="message-input"
                            type="text" placeholder="Type your message...">
-                    <div class="absolute md:right-2 lg:right-4 top[50%] transform[-50%] flex items-center">
                         <!-- Hidden file input -->
                         <input wire:model.live="attachment" type="file" id="fileInput" style="display: none;">
                         <!-- Clip icon for opening file dialog -->
-                        <button class="btn btn-sm btn-circle ml-2"
+                        <button class="btn absolute left-3 btn-ghost ring-1 ring-primary text-primary top[50%] transform[-50%] btn-sm btn-circle ml-2"
                                 onclick="document.getElementById('fileInput').click();">
                             <i class="fas fa-paperclip"></i>
                         </button>
                         <!-- Send message button -->
-                        <button wire:click="sendMessage" class="btn btn-sm btn-circle btn-primary ml-4">
+                        <button wire:click="sendMessage" class="btn absolute right-3 btn-primary top[50%] transform[-50%] btn-sm btn-circle mr-2">
                             <i class="fas fa-paper-plane"></i>
                         </button>
-                    </div>
                 </div>
             @else
                 <div class="flex items-center justify-center h-full">

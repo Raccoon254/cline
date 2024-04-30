@@ -215,3 +215,7 @@ details > summary::-webkit-details-marker {
     @apply scale-[101%] transform transition-transform duration-300 m-1 ease-in-out bg-gray-200 ring-1 ring-orange-400;
     cursor: pointer;
 }
+
+.message-input{
+    @apply w-full rounded-full pl-14 border-2 border-gray-300 p-3 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none bg-gray-200 px-4;
+}

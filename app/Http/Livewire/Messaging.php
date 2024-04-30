@@ -8,15 +8,18 @@ use App\Notifications\NewMessageNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Messaging extends Component
 {
+    use WithFileUploads;
+
     public string $newMessage = '';
-    public array $messages = [];
+    public mixed $messages = [];
     public mixed $selectedRecipientId;
     public mixed $selectedRecipient;
     public string $search = '';
-    public mixed $attachment;
+    public mixed $attachment = null;
 
     protected $listeners = ['newMessage', 'loadMessages', 'selectRecipient', 'updatedSearch'];
 
@@ -45,6 +48,8 @@ class Messaging extends Component
         if ($this->attachment) {
             $attachmentPath = $this->attachment->store('attachments', 'public');
             $attachmentType = $this->attachment->getMimeType();
+
+            //dd($attachmentPath, $attachmentType);
         }
 
         $message = Message::create([

@@ -13,17 +13,19 @@
                     <i class="fas btn btn-sm btn-circle fa-search absolute top-1/2 transform -translate-y-1/2 left-2 btn-primary"></i>
                 </label>
             </div>
-            <div class="overflow-y-auto h-[calc(100vh-8rem)]">
+            <div class="overflow-y-auto users-chat-container h-[calc(100vh-8rem)]">
                 @foreach($users as $user)
                     <div wire:click="selectRecipient({{ $user->id }})"
-                         class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 border-b cursor-pointer hover:bg-gray-200 flex gap-2">
+                         class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 cursor-pointer hover:bg-gray-200 flex gap-2">
                         <div class="flex w-14 items-center">
                             <img src="{{ $user->profile_picture }}"
-                                 class="ring-1 w-10 h-10 ring-gray-400 rounded-full mr-2" alt="{{ $user->name }}">
+                                 class="ring-1 w-10 h-10 ring-gray-400 rounded-full mr-1" alt="{{ $user->name }}">
                         </div>
                         <div class="w-1/2">
-                            <h3 class="font-normal text-sm text-gray-800">{{ $user->name }}</h3>
+                            <!-- 10 characters of the user's name -->
+                            <h3 class="font-normal text-sm text-gray-800">{{ substr($user->name, 0, 13) }}{{ strlen($user->name) > 15 ? '...' : '' }}</h3>
                             @php
+                            // Get the last message sent or received by the user
                                 $lastMessage = $user->messages()->where(function ($query) {
                                     $query->where('sender_id', Auth::id())
                                         ->orWhere('recipient_id', Auth::id());
@@ -33,13 +35,15 @@
                                 <p class="text-xs text-gray-500 truncate">
                                     @if ($lastMessage->sender_id == Auth::id())
                                         <span class="font-semibold">You:</span>
+                                    @else
+                                        <span class="font-semibold">{{ $user->name }}:</span>
                                     @endif
                                     @if($lastMessage->body)
                                         {{ $lastMessage->body }}
                                     @else
                                         <span class="text-red-500">
                                                 <i class="fa-solid fa-paperclip"></i> Attachment
-                                            </span>
+                                        </span>
                                     @endif
                                 </p>
                             @else
@@ -94,16 +98,37 @@
                                         </div>
                                     @endif
                                     <br>
+                                    <!-- Button to open the modal, hidden by default and triggered by JavaScript -->
+                                    <button class="btn" id="openModalButton" style="display:none;">Open Modal</button>
+
+                                    <!-- Dialog modal structure -->
+                                    <dialog id="my_modal_1" class="modal">
+                                        <div class="modal-box">
+                                            <h3 class="font-bold text-lg">Attachment Preview</h3>
+                                            <div id="modalContent" class="py-4">Press ESC key or click the button below
+                                                to close
+                                            </div>
+                                            <div class="modal-action">
+                                                <form method="dialog">
+                                                    <button class="btn">Close</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dialog>
+
                                     @if ($message->attachments->count() > 0)
                                         <div
                                             class="inline-block {{ $message->sender_id == Auth::id() ? 'bg-blue-500 text-white sent-message-attachment ' : 'bg-gray-200 text-gray-800 received-message-attachment' }}">
                                             <div class="flex max-w-[392px] flex-wrap gap-1 -mx-3">
                                                 @foreach($message->attachments as $attachment)
                                                     <div class="min-w-[128px]">
-                                                        <div class="bg-gray-200 rounded-xl overflow-hidden relative">
+                                                        <div
+                                                            onclick="viewAttachment('{{ $attachment->type }}', '{{ Storage::url($attachment->path) }}')"
+                                                            class="bg-gray-200 rounded-xl overflow-hidden relative">
                                                             @if (in_array($attachment->type, ['image/jpeg', 'image/png', 'image/gif']))
                                                                 <img src="{{ Storage::url($attachment->path) }}"
-                                                                     alt="Attachment" class="w-[128px] h-32 object-cover">
+                                                                     alt="Attachment"
+                                                                     class="w-[128px] h-32 object-cover">
                                                             @elseif ($attachment->type == 'application/pdf')
                                                                 <div
                                                                     class="flex items-center justify-center h-32 bg-red-200">
@@ -137,6 +162,25 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
+                                                <script>
+                                                    function showModalWithContent(title, content) {
+                                                        document.getElementById('modalContent').innerHTML = content;
+                                                        document.getElementById('my_modal_1').showModal();
+                                                        alert(title + content + 'success');
+                                                    }
+
+                                                    function viewAttachment(type, path) {
+                                                        let content = '';
+                                                        if (['image/jpeg', 'image/png', 'image/gif'].includes(type)) {
+                                                            content = `<img src="${path}" alt="Image" style="max-width: 100%; height: auto;">`;
+                                                        } else if (type === 'application/pdf') {
+                                                            content = `<iframe src="${path}" style="width:100%; height:500px;" frameborder="0"></iframe>`;
+                                                        } else {
+                                                            content = '<p>Preview not supported.</p>';
+                                                        }
+                                                        showModalWithContent('Attachment Preview', content);
+                                                    }
+                                                </script>
                                             </div>
                                         </div>
                                     @endif
@@ -214,23 +258,29 @@
                     </div>
                 </div>
             @else
-                <div class="flex items-center justify-center h-full">
-                    <p class="text-gray-500">Select a user to start chatting.</p>
+                <div class="flex items-center flex-col justify-center h-full">
+                    <i class="fa-solid fa-user-slash text-4xl text-gray-500"></i>
+                    <p class="text-gray-500">No user selected.</p>
                 </div>
             @endif
         </div>
     </div>
     @script
-        <script>
-            $wire.on('messagesLoaded', () => {
-                setTimeout(() => {
+    <script>
+        $wire.on('messagesLoaded', () => {
+            setTimeout(() => {
+                try {
                     let messagesContainer = document.getElementById('messagesContainer');
                     let messages = messagesContainer.getElementsByClassName('message');
                     let lastMessage = messages[messages.length - 1];
+
                     lastMessage.scrollIntoView({behavior: 'smooth'});
-                }, 40);
-            });
-        </script>
+                } catch (Exception) {
+                    //Ignore
+                }
+            }, 40);
+        });
+    </script>
     @endscript
 
 </div>

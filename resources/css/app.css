@@ -235,3 +235,10 @@ details > summary::-webkit-details-marker {
 .sent-message-attachment{
     @apply rounded-b-2xl rounded-tl-2xl bg-blue-500 text-white p-1 mt-1 px-4;
 }
+
+.users-chat-container{
+/*No scroll bar*/
+    @apply overflow-y-auto;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Message extends Model
 {
@@ -18,9 +19,12 @@ class Message extends Model
         'sent_at',
         'delivered_at',
         'read_at',
-        'attachment_path',
-        'attachment_type'
     ];
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(MessageAttachment::class);
+    }
 
     protected $appends = ['time'];
 

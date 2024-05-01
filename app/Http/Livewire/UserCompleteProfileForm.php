@@ -14,8 +14,9 @@ class UserCompleteProfileForm extends Component
 {
     use WithFileUploads;
 
-    public $skills = [];
+    public $skills;
     public $all_skills;
+    public $search = '';
     public $certifications;
     public $profile_picture;
     public $certification_name;
@@ -27,10 +28,36 @@ class UserCompleteProfileForm extends Component
 
     public function mount(): void
     {
-        $this->skills = Auth::user()->skills->pluck('id')->toArray();
+        $this->skills = Auth::user()->skills;
         $this->all_skills = Skill::all();
         $this->certifications = Auth::user()->certifications;
         $this->profile_picture = Auth::user()->profile_picture;
+    }
+
+    public function addSkill($skillId = null): void
+    {
+        $skill = $skillId ? Skill::find($skillId) : Skill::where('name', $this->search)->first();
+
+        if ($skill && !$this->skills->contains($skill)) {
+            $this->skills->push($skill);
+            $this->search = '';
+        }
+    }
+
+    public function removeSkill($skillId): void
+    {
+        $skill = Skill::find($skillId);
+
+        if ($skill) {
+            $this->skills = $this->skills->reject(function ($value, $key) use ($skill) {
+                return $value->id === $skill->id;
+            });
+        }
+    }
+
+    public function getSearchResultsProperty()
+    {
+        return Skill::where('name', 'like', '%' . $this->search . '%')->get();
     }
 
     public function submit(): void
@@ -48,7 +75,7 @@ class UserCompleteProfileForm extends Component
         ]);
 
         $user = User::find(Auth::id());
-        $user->skills()->sync($this->skills);
+        $user->skills()->sync($this->skills->pluck('id'));
         $user->certifications = $this->certifications;
 
         // Handle profile picture upload
@@ -74,6 +101,11 @@ class UserCompleteProfileForm extends Component
 
     public function render(): View
     {
-        return view('livewire.user-complete-profile-form');
+        $searchResults = Skill::where('name', 'like', '%' . $this->search . '%')->get();
+        //Todo Return Suggested Skills
+
+        return view('livewire.user-complete-profile-form',
+            compact('searchResults')
+        );
     }
 }

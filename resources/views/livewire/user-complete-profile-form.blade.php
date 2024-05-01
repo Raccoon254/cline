@@ -1,5 +1,5 @@
-<div class="flex flex-col items-center justify-center">
-    <h1 class="text-2xl font-bold mb-4">Complete Your Profile</h1>
+<div class="flex flex-col items-center text-gray-700 justify-center">
+    <h1 class="text-2xl font-bold my-7">Complete Your Profile</h1>
     @if (session()->has('message'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 w-full" role="alert">
             {{ session('message') }}
@@ -7,13 +7,75 @@
     @endif
 
     <form wire:submit.prevent="submit" class="w-full max-w-lg">
-        <div class="mb-4 w-full">
+        <div class="mb-4 w-full relative">
             <label for="skills" class="block text-gray-700 font-bold mb-2">Skills</label>
-            <select wire:model="skills" id="skills" class="custom-input-profile" multiple>
-                @foreach($all_skills as $skill)
-                    <option value="{{ $skill->id }}">{{ $skill->name }}</option>
-                @endforeach
-            </select>
+            <div class="flex">
+                <input type="text" wire:model.live="search" placeholder="Search skills" class="w-full pb-2 rounded-[20px] border-2 border-gray-300 p-[10px] pl-4 ring-1 ring-gray-300 ring-offset-1 transition-all duration-100 ease-in-out focus:border-blue-300 focus:outline-none {{ $search ? 'rounded-t-[20px] rounded-b-[0px]' : '' }}">
+            </div>
+            @if(!empty($search))
+                <div class="absolute bg-white w-full mt-1 rounded-b-[20px] border-2 border-t-0 p-[10px] pl-4 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out border-blue-300 outline-1 outline-blue-700 top-16 z-10">
+                    @if($searchResults->count() > 0)
+                        <div class="">
+                            <h3 class="text-gray-700 font-bold mb-2">Search Results</h3>
+                            <ul>
+                                @foreach($searchResults->take(4) as $skill)
+                                    <li class="flex items-center justify-between py-1">
+                                        <span>{{ $skill->name }}</span>
+                                        @if(!$skills->contains($skill))
+                                            <button wire:click="addSkill({{ $skill->id }})" class="btn btn-xs btn-circle btn-warning tooltip" data-tip="Add {{ $skill->name }}">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        @else
+                                            <div class="flex gap-2">
+                                                <span class="btn btn-xs btn-success tooltip" data-tip="Already Added">
+                                                    Added
+                                                </span>
+                                                <button wire:click="removeSkill({{ $skill->id }})" class="btn btn-xs btn-circle bg-red-400 btn-ghost text-white tooltip" data-tip="Remove {{ $skill->name }}">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @else
+                        <p>No results found.</p>
+                        <span class="text-gray-500 text-xs mb-2">
+                            Check out the following skills:
+                        </span>
+                        <ul>
+                            <!-- Random 4 skills -->
+                            @foreach($all_skills->take(4) as $skill)
+                                <li class="flex items-center justify-between py-1">
+                                    <span>{{ $skill->name }}</span>
+                                    @if(!$skills->contains($skill))
+                                        <button wire:click="addSkill({{ $skill->id }})" class="btn btn-xs btn-circle btn-warning tooltip" data-tip="Add {{ $skill->name }}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    @endif
+                                </li>
+                            @endforeach
+                    @endif
+                </div>
+            @endif
+            <div class="mt-4">
+                @if($skills->count() > 0)
+                <h3 class="text-gray-700 font-bold mb-2">Selected Skills</h3>
+                <ul>
+                    @foreach($skills as $skill)
+                        <li class="flex items-center justify-between py-1">
+                            <span>{{ $skill->name }}</span>
+                            <button wire:click="removeSkill({{ $skill->id }})" class="btn btn-xs btn-circle bg-red-400 btn-ghost text-white tooltip" data-tip="Remove {{ $skill->name }}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </li>
+                    @endforeach
+                </ul>
+                @else
+                    <p>No skills added yet.</p>
+                @endif
+            </div>
             @error('skills') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 

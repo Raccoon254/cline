@@ -57,4 +57,9 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function complete(): View
+    {
+        return view('user.profile.complete');
+    }
 }

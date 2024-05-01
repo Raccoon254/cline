@@ -17,7 +17,7 @@ class EnsureUserProfileIsComplete
     {
         $user = $request->user();
 
-        if ($user && $user->role === 'freelancer') {
+        if ($user && $user->role === 'user') {
             if (!$user->skills()->exists() || !$user->certifications()->exists() || !$user->profile_picture) {
                 return redirect()->route('user.profile.complete');
             }

@@ -55,7 +55,7 @@ Route::get("/client/freelancers/{freelancer}", function ($freelancer) {
     return view("client.freelancers.show")->with("freelancer", $freelancer);
 })->name("client.freelancers.show");
 
-Route::group(["middleware" => ["auth", "role:user"]], function () {
+Route::group(["middleware" => ["auth", "role:user", "complete_profile"]], function () {
     Route::get("/user/dashboard", function () {
         $clients = App\Models\User::where("role", "client")->get();
         return view("user.dashboard")->with("clients", $clients);
@@ -73,6 +73,8 @@ Route::middleware("auth")->group(function () {
         "profile.destroy"
     );
 });
+
+Route::get('/user/profile/complete', [ProfileController::class, 'complete'])->name('user.profile.complete')->middleware('auth');
 
 Route::get('/inbox', MessagingNull::class)->name('inbox')->middleware('auth');
 Route::get('/inbox/{user?}', Messaging::class)->name('messages.create')->middleware('auth');

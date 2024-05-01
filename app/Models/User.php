@@ -67,9 +67,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return "https://api.dicebear.com/8.x/identicon/svg?seed=" . $this->name;
     }
 
-    public function skills(): BelongsToMany
+    public function skills(): hasMany
     {
-        return $this->belongsToMany(Skill::class);
+        return $this->hasMany(UserSkill::class);
     }
 
     public function messages(): HasMany

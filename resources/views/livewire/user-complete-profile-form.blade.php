@@ -9,7 +9,11 @@
     <form wire:submit.prevent="submit" class="w-full max-w-lg">
         <div class="mb-4 w-full">
             <label for="skills" class="block text-gray-700 font-bold mb-2">Skills</label>
-            <textarea wire:model="skills" id="skills" class="custom-input-profile"></textarea>
+            <select wire:model="skills" id="skills" class="custom-input-profile" multiple>
+                @foreach($all_skills as $skill)
+                    <option value="{{ $skill->id }}">{{ $skill->name }}</option>
+                @endforeach
+            </select>
             @error('skills') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 

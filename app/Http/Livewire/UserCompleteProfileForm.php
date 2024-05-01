@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Skill;
 use App\Models\User;
 use App\Models\UserCertification;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,8 @@ class UserCompleteProfileForm extends Component
 {
     use WithFileUploads;
 
-    public $skills;
+    public $skills = [];
+    public $all_skills;
     public $certifications;
     public $profile_picture;
     public $certification_name;
@@ -23,9 +25,10 @@ class UserCompleteProfileForm extends Component
     public $certification_validity;
     public $certification_document;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->skills = Auth::user()->skills;
+        $this->skills = Auth::user()->skills->pluck('id')->toArray();
+        $this->all_skills = Skill::all();
         $this->certifications = Auth::user()->certifications;
         $this->profile_picture = Auth::user()->profile_picture;
     }
@@ -33,7 +36,7 @@ class UserCompleteProfileForm extends Component
     public function submit(): void
     {
         $this->validate([
-            'skills' => 'required',
+            'skills' => 'required|array',
             'certifications' => 'required',
             'profile_picture' => 'required|image',
             'certification_name' => 'required',
@@ -45,18 +48,16 @@ class UserCompleteProfileForm extends Component
         ]);
 
         $user = User::find(Auth::id());
-        $user->skills = $this->skills;
+        $user->skills()->sync($this->skills);
         $user->certifications = $this->certifications;
 
         // Handle profile picture upload
         $profile_picture_path = $this->profile_picture->store('profile_pictures', 'public');
         $user->profile_picture = $profile_picture_path;
-
         $user->save();
 
         // Create UserCertification
         $certification_document_path = $this->certification_document->store('certification_documents', 'public');
-
         UserCertification::create([
             'user_id' => $user->id,
             'name' => $this->certification_name,

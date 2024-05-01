@@ -18,10 +18,37 @@
     @else
         <div class="grid gap-4 grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach($freelancers as $freelancer)
-                <a class="client-card bg-white rounded-xl"
+                <div class="client-card bg-white rounded-xl"
                    data-tip="View {{ $freelancer->name }}"
-                   href="{{ route('clients.show', $freelancer) }}">
+                     onclick="window.location.href={{ route('clients.show', $freelancer) }}"
+                >
                     <div class="bg-white rounded-xl p-4 relative shadow-md">
+                        <!--Share button to whatsapp, facebook, twitter and linkedin-->
+                        <div class="absolute z-50 top-0 right-0 p-2">
+                            <div class="dropdown rounded-t-md hover:bg-white bg:bg-opacity-50 dropdown-hover">
+                                <button tabindex="0" role="button" class="btn m-1 btn-square btn-ghost btn-sm rounded-sm">
+                                    <i class="fa-solid fa-share-nodes"></i>
+                                </button>
+                                <div class="dropdown-content rounded-b-md p-1 flex flex-col center bg-white backdrop-blur-[1px]">
+                                    <div onclick="window.location.href='https://wa.me/?text={{ $freelancer->name }}\'s profile on our platform {{ route('clients.show', $freelancer) }}"
+                                         class="btn btn-ghost btn-sm btn-square rounded-sm">
+                                        <i class="fa-brands fa-whatsapp"></i>
+                                    </div>
+                                    <div onclick="window.location.href='https://www.facebook.com/sharer/sharer.php?u={{ route('clients.show', $freelancer) }}'"
+                                         class="btn btn-ghost btn-sm btn-square rounded-sm">
+                                        <i class="fa-brands fa-facebook"></i>
+                                    </div>
+                                    <div onclick="window.location.href='https://twitter.com/intent/tweet?url={{ route('clients.show', $freelancer) }}'"
+                                         class="btn btn-ghost btn-sm btn-square rounded-sm">
+                                        <i class="fa-brands fa-twitter"></i>
+                                    </div>
+                                    <div onclick="window.location.href='https://www.linkedin.com/shareArticle?mini=true&url={{ route('clients.show', $freelancer) }}'"
+                                         class="btn btn-ghost btn-sm btn-square rounded-sm">
+                                        <i class="fa-brands fa-linkedin"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="flex items-center">
                             <div class="w-full opacity-30 top-0 left-0 p-1 absolute">
                                 <img
@@ -56,19 +83,19 @@
                             <!-- Mail, phone and message buttons -->
                             <div class="flex gap-2 justify-between">
                                 <!-- Mail to -->
-                                <div class="mail custom-btn"
+                                <div class="phone btn btn-ghost btn-sm h-8 w-8 rounded-[8px] bg-green-500 p-2 text-white ring-1 ring-gray-300 ring-opacity-50 ring-offset-1 transition duration-300 border-none hover:bg-blue-600"
                                      onclick="window.location.href='mailto:{{ $freelancer->email }}'">
                                     <i class="fa-solid fa-envelope"></i>
                                 </div>
                                 <!-- Phone -->
-                                <div class="phone custom-btn"
+                                <div class="phone btn btn-ghost btn-sm h-8 w-8 rounded-[8px] bg-green-500 p-2 text-white ring-1 ring-gray-300 ring-opacity-50 ring-offset-1 transition duration-300 border-none hover:bg-blue-600"
                                      onclick="window.location.href='tel:{{ $freelancer->phone_number }}'">
                                     <i class="fa-solid fa-phone"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             @endforeach
         </div>
     @endif

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Livewire\Messaging;
 use App\Http\Livewire\MessagingNull;
+use App\Http\Livewire\UserCompleteProfileForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -74,7 +75,7 @@ Route::middleware("auth")->group(function () {
     );
 });
 
-Route::get('/user/profile/complete', [ProfileController::class, 'complete'])->name('user.profile.complete')->middleware('auth');
+Route::get('/user/profile/complete', UserCompleteProfileForm::class)->name('user.profile.complete')->middleware('auth');
 
 Route::get('/inbox', MessagingNull::class)->name('inbox')->middleware('auth');
 Route::get('/inbox/{user?}', Messaging::class)->name('messages.create')->middleware('auth');

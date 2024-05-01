@@ -77,6 +77,14 @@ body {
     @apply rounded-[20px] border-2 border-gray-300 p-3 pl-4 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none;
 }
 
+.custom-input-profile{
+    @apply rounded-[20px] w-full border-2 border-gray-300 p-[10px] pl-4 ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none;
+}
+
+.custom-file-input {
+    @apply rounded-[20px] border-2 border-gray-300 file-input w-full ring-1 ring-gray-300 ring-offset-1 transition-all duration-300 ease-in-out focus:border-blue-300 focus:outline-none;
+}
+
 /* Placeholders */
 .custom-input::placeholder {
     @apply archivo text-gray-400 text-sm;

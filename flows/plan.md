@@ -12,6 +12,13 @@
 - Chat feature
 - Invoice generation
 
+### Freelancer details
+- Your profile is incomplete
+- Add your skills
+- Add your services
+- Add samples of your work
+- Add Certifications
+
 ## Client Pages
 - My Profile
 - Payment Mechanism - Lemons-squeezy | Paypal

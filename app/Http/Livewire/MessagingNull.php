@@ -111,6 +111,14 @@ class MessagingNull extends Component
 
     }
 
+    public function getUnreadMessagesCount($senderId, $recipientId): int
+    {
+        return Message::where('sender_id', $senderId)
+            ->where('recipient_id', $recipientId)
+            ->where('is_read', false)
+            ->count();
+    }
+
     public function render(): View
     {
         $users = User::where('name', 'like', '%' . $this->search . '%')

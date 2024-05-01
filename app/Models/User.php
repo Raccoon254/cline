@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         "name",
         "email",
-        "role",
+        "role",//user,client,admin
         "phone_number",
         "password",
         "last_login_at",
@@ -65,15 +65,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function skills(): BelongsToMany
     {
         return $this->belongsToMany(Skill::class);
-    }
-
-    public function unreadMessagesCount($userId): int
-    {
-        return $this->messages()
-            ->where('sender_id', $userId)
-            ->where('recipient_id', $this->id)
-            ->where('is_read', false)
-            ->count();
     }
 
     public function messages(): HasMany

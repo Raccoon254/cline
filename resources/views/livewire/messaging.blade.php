@@ -2,41 +2,74 @@
     @php
         use Illuminate\Support\Facades\Storage;
         use Illuminate\Support\Facades\Auth;
+        use App\Models\Message;
     @endphp
-    <div class="flex h-[93vh]">
+    <div class="flex h-[93vh]" wire:poll.2s>
         <div class="bg-gray-100 w-1/4 border-r-none">
-            <div class="p-2 border-b">
+            <div class="p-2">
+                <section class="my-2">
+                    <div class="center gap-1">
+                        <span class="text-gray-800 font-semibold text-xs">
+                             Messages
+                        </span>
+                        <i class="fa-regular fa-envelope"></i>
+                    </div>
+                </section>
                 <label class="w-full relative">
                     <input wire:model.live="search"
-                           class="message-input rounded-sm"
+                           class="message-input"
                            type="text" placeholder="Search users">
                     <i class="fas btn btn-sm btn-circle fa-search absolute top-1/2 transform -translate-y-1/2 left-2 btn-primary"></i>
                 </label>
             </div>
-            <div class="overflow-y-auto users-chat-container h-[calc(100vh-8rem)]">
+            <div class="overflow-y-auto users-chat-container h-[calc(100vh-10rem)]">
+                @php
+                    function getUnreadMessagesCount($senderId, $recipientId)
+                    {
+                        return Message::where('sender_id', $senderId)
+                            ->where('recipient_id', $recipientId)
+                            ->where('read_at', null)
+                            ->count();
+                    }
+                @endphp
+
                 @foreach($users as $user)
                     <div wire:click="selectRecipient({{ $user->id }})"
                          class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 cursor-pointer hover:bg-gray-200 flex gap-2">
-                        <div class="flex w-14 items-center">
+                        <div class="flex w-14 relative items-center">
                             <img src="{{ $user->profile_picture }}"
                                  class="ring-1 w-10 h-10 ring-gray-400 rounded-full mr-1" alt="{{ $user->name }}">
+                            <!-- getUnreadMessagesCount($senderId, $recipientId): -->
+                            @if (getUnreadMessagesCount($user->id, Auth::id()) > 0)
+                                <div class="bg-blue-500 text-white h-4 w-4 rounded-full center text-[10px] mb-1 absolute right-0 top-0">
+                                    {{ getUnreadMessagesCount($user->id, Auth::id()) }}
+                                </div>
+                            @endif
                         </div>
                         <div class="w-1/2">
                             <!-- 10 characters of the user's name -->
                             <h3 class="font-normal text-sm text-gray-800">{{ substr($user->name, 0, 13) }}{{ strlen($user->name) > 15 ? '...' : '' }}</h3>
                             @php
-                            // Get the last message sent or received by the user
-                                $lastMessage = $user->messages()->where(function ($query) {
-                                    $query->where('sender_id', Auth::id())
-                                        ->orWhere('recipient_id', Auth::id());
-                                })->latest()->first();
+                                // Get the last message sent or received by the user
+                                    $lastMessage = $user->messages()->where(function ($query) {
+                                        $query->where('sender_id', Auth::id())
+                                            ->orWhere('recipient_id', Auth::id());
+                                    })->latest()->first();
+                                    //if the current user is not the one who received the message remove the message
+                                    if ($lastMessage && $lastMessage->recipient_id != Auth::id()) {
+                                        //if the user is not the one who sent the message remove the message
+                                        if ($lastMessage->sender_id != Auth::id()) {
+                                            $lastMessage = null;
+                                        }
+                                    }
                             @endphp
                             @if ($lastMessage)
                                 <p class="text-xs text-gray-500 truncate">
                                     @if ($lastMessage->sender_id == Auth::id())
                                         <span class="font-semibold">You:</span>
                                     @else
-                                        <span class="font-semibold">{{ $user->name }}:</span>
+                                        <!-- Only the first name of the user -->
+                                        <span class="font-semibold">{{ explode(' ', $user->name)[0] }}:</span>
                                     @endif
                                     @if($lastMessage->body)
                                         {{ $lastMessage->body }}
@@ -51,12 +84,7 @@
                             @endif
                         </div>
                         <div class="flex time flex-col items-end">
-                            @if ($user->unreadMessagesCount($user->id) > 0)
-                                <div class="bg-green-500 text-white rounded-full px-2 py-1 text-xs mb-1">
-                                    {{ $user->unreadMessagesCount($user->id) }}
-                                </div>
-                            @endif
-                            <span class="text-xs text-gray-500">
+                            <span class="text-[10px] text-gray-500">
                                 @if ($lastMessage)
                                     @if(str_contains($lastMessage->time, 'minutes') || str_contains($lastMessage->time, 'hours') || str_contains($lastMessage->time, 'days'))
                                         {{ str_replace('minutes', 'min', str_replace('hours', 'hr', str_replace('days', 'day', $lastMessage->time))) }}

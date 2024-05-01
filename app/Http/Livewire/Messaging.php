@@ -89,6 +89,14 @@ class Messaging extends Component
         $recipient->notify((new NewMessageNotification($message))->delay(now()->addMinutes(5)));
     }
 
+    public function getUnreadMessagesCount($senderId, $recipientId): int
+    {
+        return Message::where('sender_id', $senderId)
+            ->where('recipient_id', $recipientId)
+            ->where('is_read', false)
+            ->count();
+    }
+
     public function selectRecipient($userId): void
     {
         $this->selectedRecipientId = $userId;

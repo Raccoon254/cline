@@ -102,13 +102,13 @@
 
         <div class="mb-4 w-full">
             <label for="certifications" class="block text-gray-700 font-bold mb-2">Certifications</label>
-            <textarea wire:model="certifications" id="certifications" class="custom-input-profile"></textarea>
+            <input wire:model.live="certifications" id="certifications" class="custom-input-profile" />
             @error('certifications') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 
         <div class="mb-4 w-full">
             <label for="profile_picture" class="block text-gray-700 font-bold mb-2">Profile Picture</label>
-            <input type="file" wire:model="profile_picture" id="profile_picture" class="custom-file-input">
+            <input type="file" wire:model.live="profile_picture" id="profile_picture" class="custom-file-input">
             @error('profile_picture') <span class="text-red-500">{{ $message }}</span> @enderror
             <div wire:loading wire:target="profile_picture" class="mt-2">
                 Loading...
@@ -117,20 +117,20 @@
 
         <div class="mb-4 w-full">
             <label for="certification_name" class="block text-gray-700 font-bold mb-2">Certification Name</label>
-            <input type="text" wire:model="certification_name" id="certification_name" class="custom-input-profile">
+            <input type="text" wire:model.live="certification_name" id="certification_name" class="custom-input-profile">
             @error('certification_name') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 
         <div class="mb-4 w-full">
             <label for="certification_issuer" class="block text-gray-700 font-bold mb-2">Certification Issuer</label>
-            <input type="text" wire:model="certification_issuer" id="certification_issuer" class="custom-input-profile">
+            <input type="text" wire:model.live="certification_issuer" id="certification_issuer" class="custom-input-profile">
             @error('certification_issuer') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 
         <div class="mb-4 w-full">
             <label for="certification_issue_date" class="block text-gray-700 font-bold mb-2">Certification Issue
                 Date</label>
-            <input type="date" wire:model="certification_issue_date" id="certification_issue_date"
+            <input type="date" wire:model.live="certification_issue_date" id="certification_issue_date"
                    class="custom-input-profile">
             @error('certification_issue_date') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
@@ -138,7 +138,7 @@
         <div class="mb-4 w-full">
             <label for="certification_expiry_date" class="block text-gray-700 font-bold mb-2">Certification Expiry
                 Date</label>
-            <input type="date" wire:model="certification_expiry_date" id="certification_expiry_date"
+            <input type="date" wire:model.live="certification_expiry_date" id="certification_expiry_date"
                    class="custom-input-profile">
             @error('certification_expiry_date') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
@@ -146,7 +146,7 @@
         <div class="mb-4 w-full">
             <label for="certification_validity" class="block text-gray-700 font-bold mb-2">Certification
                 Validity</label>
-            <input type="text" wire:model="certification_validity" id="certification_validity"
+            <input type="text" wire:model.live="certification_validity" id="certification_validity"
                    class="custom-input-profile">
             @error('certification_validity') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
@@ -154,7 +154,7 @@
         <div class="mb-4 w-full">
             <label for="certification_document" class="block text-gray-700 font-bold mb-2">Certification
                 Document</label>
-            <input type="file" wire:model="certification_document" id="certification_document"
+            <input type="file" wire:model.live="certification_document" id="certification_document"
                    class="custom-file-input">
             @error('certification_document') <span class="text-red-500">{{ $message }}</span> @enderror
             <div wire:loading wire:target="certification_document" class="mt-2">

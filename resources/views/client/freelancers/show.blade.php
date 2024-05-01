@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between">
             <div class="message flex flex-col">
                 <span>
-                    <img src="{{ $freelancer->profile_picture}}" alt="{{ $freelancer->name }}" class="rounded-full h-20 mb-3 w-20">
+                    <img src="{{ $freelancer->profile_image}}" alt="{{ $freelancer->name }}" class="rounded-full h-20 mb-3 w-20">
                     {{ $freelancer->name }}
                 </span>
                     <span class="text-xs text-gray-700">

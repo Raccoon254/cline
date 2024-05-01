@@ -1,10 +1,13 @@
 <x-app-layout>
     <div class=" text-gray-900 p-4">
-        <div class="flex items-center justify-between">
+        <div class="flex items-end p-4 rounded-2xl justify-between relative">
+            <div class="absolute top-0 p-4 rounded-2xl left-0 w-full h-full" style="background: url('{{ $client->profile_image }}') no-repeat center center / cover; opacity: 0.2;">
+
+            </div>
             <div class="message flex flex-col">
                 <span>
-                    <img src="{{ $client->profile_picture}}" alt="{{ $client->name }}"
-                         class="rounded-full h-20 mb-3 w-20">
+                    <img src="{{ $client->profile_image}}" alt="{{ $client->name }}"
+                         class="rounded-full object-cover h-20 mb-3 w-20">
                     {{ $client->name }}
                 </span>
                 <span class="text-xs text-gray-700">
@@ -23,28 +26,28 @@
         <!-- Page Content -->
         <div class="py-4">
             <div class="w-full h-full">
-                <div class="bg-white w-full h-full p-1 rounded-md">
-                    <table class="table-auto rounded-md w-full">
+                <div class="w-full h-full">
+                    <table data-theme="light" class="table table-auto table-zebra w-full">
                         <tbody>
                         <tr>
-                            <td class="border px-4 py-2"><i class="fas fa-user"></i> Name</td>
-                            <td class="border px-4 py-2">{{ $client->name }}</td>
+                            <td class="px-4 py-3"><i class="fas mr-2 fa-user"></i> Name</td>
+                            <td class="px-4 py-3">{{ $client->name }}</td>
                         </tr>
                         <tr>
-                            <td class="border px-4 py-2"><i class="fas fa-envelope"></i> Email</td>
-                            <td class="border px-4 py-2">{{ $client->email }}</td>
+                            <td class="px-4 py-3"><i class="fas mr-2 fa-envelope"></i> Email</td>
+                            <td class="px-4 py-3">{{ $client->email }}</td>
                         </tr>
                         <tr>
-                            <td class="border px-4 py-2"><i class="fas fa-briefcase"></i> Role</td>
-                            <td class="border px-4 py-2">{{ $client->role }}</td>
+                            <td class="px-4 py-3"><i class="fas mr-2 fa-briefcase"></i> Role</td>
+                            <td class="px-4 py-3">{{ $client->role }}</td>
                         </tr>
                         <tr>
-                            <td class="border px-4 py-2"><i class="fas fa-phone"></i> Phone Number</td>
-                            <td class="border px-4 py-2">{{ $client->phone_number }}</td>
+                            <td class="px-4 py-3"><i class="fas mr-2 fa-phone"></i> Phone Number</td>
+                            <td class="px-4 py-3">{{ $client->phone_number }}</td>
                         </tr>
                         <tr>
-                            <td class="border px-4 py-2"><i class="fas fa-clock"></i> Last Login</td>
-                            <td class="border px-4 py-2">{{ $client->last_login_at ?? 'Never' }}</td>
+                            <td class="px-4 py-3"><i class="fas mr-2 fa-clock"></i> Last Login</td>
+                            <td class="px-4 py-3">{{ $client->last_login_at ?? 'Never' }}</td>
                         </tr>
                         </tbody>
                     </table>

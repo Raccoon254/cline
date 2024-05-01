@@ -37,8 +37,8 @@
                     <div wire:click="selectRecipient({{ $user->id }})"
                          class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 cursor-pointer hover:bg-gray-200 flex gap-2">
                         <div class="flex w-14 relative items-center">
-                            <img src="{{ $user->profile_picture }}"
-                                 class="ring-1 w-10 h-10 ring-gray-400 rounded-full mr-1" alt="{{ $user->name }}">
+                            <img src="{{ $user->profile_image }}"
+                                 class="ring-1 w-10 object-cover h-10 ring-gray-400 rounded-full mr-1" alt="{{ $user->name }}">
                             <!-- getUnreadMessagesCount($senderId, $recipientId): -->
                             @if (getUnreadMessagesCount($user->id, Auth::id()) > 0)
                                 <div class="bg-blue-500 text-white h-4 w-4 rounded-full center text-[10px] mb-1 absolute right-0 top-0">
@@ -100,8 +100,8 @@
             @if($selectedRecipient)
                 <div class="bg-gray-100 py-[10px] px-3 flex items-center justify-between">
                     <div class="flex items-center">
-                        <img src="{{ $selectedRecipient->profile_picture }}"
-                             class="w-10 h-10 ring-1 ring-gray-400 rounded-full mr-4"
+                        <img src="{{ $selectedRecipient->profile_image }}"
+                             class="w-10 h-10 object-cover ring-1 ring-gray-400 rounded-full mr-4"
                              alt="{{ $selectedRecipient->name }}">
                         <h3 class="font-normal text-gray-800">{{ $selectedRecipient->name }}</h3>
                     </div>

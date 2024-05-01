@@ -21,7 +21,7 @@
                         <div class="top grid items-center gap-2 grid-cols-4">
                             <div class="w-8 p-[1px] animate-scale rounded-full ring-1">
                                 <img
-                                    class="rounded-full w-full h-full object-cover" src="{{ $client->profile_picture }}" alt="{{ $client->name }} profile picture">
+                                    class="rounded-full w-full h-full object-cover" src="{{ $client->profile_image }}" alt="{{ $client->name }} profile picture">
                             </div>
                             <div class="name col-span-3 overflow-x-clip">
                         <span class="text-gray-900 block font-medium">

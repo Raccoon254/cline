@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Skill;
 use App\Models\User;
 use App\Models\UserCertification;
+use App\Models\UserSkill;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -30,7 +31,7 @@ class UserCompleteProfileForm extends Component
     {
         $this->skills = Auth::user()->skills;
         $this->all_skills = Skill::all();
-        $this->certifications = Auth::user()->certifications;
+        //$this->certifications = Auth::user()->certifications;
         $this->profile_picture = Auth::user()->profile_picture;
     }
 
@@ -69,7 +70,6 @@ class UserCompleteProfileForm extends Component
     {
         $this->validate([
             'skills' => 'required|array',
-            'certifications' => 'required',
             'profile_picture' => 'required|image',
             'certification_name' => 'required',
             'certification_issuer' => 'required',
@@ -80,8 +80,14 @@ class UserCompleteProfileForm extends Component
         ]);
 
         $user = User::find(Auth::id());
-        $user->skills()->sync($this->skills->pluck('id'));
-        $user->certifications = $this->certifications;
+        //save skills dont use sync as it will delete the existing skills use foreach
+        foreach ($this->skills as $skill) {
+            UserSkill::create([
+                'user_id' => $user->id,
+                'skill_id' => $skill->id,
+                'mastery_level' => 30,
+            ]);
+        }
 
         // Handle profile picture upload
         $profile_picture_path = $this->profile_picture->store('profile_pictures', 'public');

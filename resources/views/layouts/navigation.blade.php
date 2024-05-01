@@ -15,7 +15,7 @@
                     <div class="w-8 p-[1px] animate-scale rounded-full ring-1">
                         <img
                             class="rounded-full w-full h-full object-cover"
-                            src="https://api.dicebear.com/8.x/identicon/svg?seed={{ Auth::user()->name }}"
+                            src="{{ Auth::user()->profile_image }}"
                             alt="avatar"
                         />
                     </div>

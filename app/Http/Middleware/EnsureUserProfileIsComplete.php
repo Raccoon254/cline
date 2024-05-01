@@ -15,6 +15,14 @@ class EnsureUserProfileIsComplete
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $user = $request->user();
+
+        if ($user && $user->role === 'freelancer') {
+            if (!$user->skills()->exists() || !$user->certifications()->exists() || !$user->profile_picture) {
+                return redirect()->route('user.profile.complete');
+            }
+        }
+
         return $next($request);
     }
 }

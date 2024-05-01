@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         "name",
         "email",
+        "profile_picture",
         "role",//user,client,admin
         "phone_number",
         "password",
@@ -59,6 +60,10 @@ class User extends Authenticatable implements MustVerifyEmail
     //get attribute profile_picture
     public function getProfilePictureAttribute(): string
     {
+        //if the profile picture is not null return the profile picture
+        if ($this->attributes["profile_picture"] !== null) {
+            return $this->attributes["profile_picture"];
+        }
         return "https://api.dicebear.com/8.x/identicon/svg?seed=" . $this->name;
     }
 

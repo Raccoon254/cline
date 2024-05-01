@@ -26,8 +26,8 @@
                             <div class="w-full opacity-30 top-0 left-0 p-1 absolute">
                                 <img
                                     class="h-32 rounded-lg w-full object-cover"
-                                    src="https://cdn.pixabay.com/photo/2023/03/11/22/20/ai-art-7845451_1280.jpg"
-                                    alt="{{ $freelancer->name }} profile picture"
+                                    src="https://source.unsplash.com/random/?nature?sig={{ $freelancer->id }}"
+                                    alt="{{ $freelancer->name }} generated image"
                                 >
                             </div>
                             <div class="absolute top-24 bg-white rounded-full left-4 p-1">

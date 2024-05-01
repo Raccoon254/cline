@@ -19,7 +19,7 @@ class AllFreelancers extends Component
                         ->orWhere('phone_number', 'like', '%' . $this->search . '%');
                 })
                 ->orderBy("name", "asc")
-                ->paginate(20),
+                ->paginate(21),
         ]);
     }
 }

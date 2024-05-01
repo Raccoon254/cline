@@ -36,6 +36,11 @@ class UserCompleteProfileForm extends Component
 
     public function addSkill($skillId = null): void
     {
+        //if the skills are more than 5, return an error message on skills
+        if ($this->skills->count() >= 5) {
+            session()->flash('message', 'You can only add up to 5 skills.');
+            return;
+        }
         $skill = $skillId ? Skill::find($skillId) : Skill::where('name', $this->search)->first();
 
         if ($skill && !$this->skills->contains($skill)) {

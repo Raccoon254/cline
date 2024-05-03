@@ -14,4 +14,8 @@
             </div>
         @endforeach
     </div>
+    <!-- Pagination -->
+    <div class="py-4">
+        {{ $projects->links() }}
+    </div>
 </div>

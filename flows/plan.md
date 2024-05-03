@@ -1,6 +1,7 @@
 ## User Types
 - [ ] Clients
 - [ ] Freelancer
+- [ ] Admin
 
 ## Freelancer Pages
 - My Profile - Edit name of company, logo etc
@@ -63,3 +64,7 @@
 - [ ] Generate notifications
 - [ ] Prioritize tasks depending on the project deadlines
 - [ ] Sync with notes and calendar
+
+### TODO
+- Projects need categories
+- Projects need tags

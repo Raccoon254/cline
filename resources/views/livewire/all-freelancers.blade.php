@@ -1,4 +1,4 @@
-<div class="clients p-2 rounded-lg h-[80vh] overflow-y-auto overflow-x-visible w-full">
+<div class="clients p-2 rounded-lg overflow-x-visible w-full">
     <div class="label flex flex-col center mb-4">
         <label class="w-full relative z-20">
             <input type="text" wire:model.live="search" class="w-full p-2 rounded-lg border border-gray-200"

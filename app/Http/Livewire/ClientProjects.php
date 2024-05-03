@@ -17,7 +17,7 @@ class ClientProjects extends Component
         $currentClient = Auth::user()->client;
         return view('client.projects',
             [
-                'projects' => $currentClient->projects()->where('name', 'like', '%' . $this->searchTerm . '%')->paginate(4)
+                'projects' => $currentClient->projects()->where('name', 'like', '%' . $this->searchTerm . '%')->paginate(3)
             ]
         );
     }

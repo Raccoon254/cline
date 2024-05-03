@@ -15,16 +15,50 @@
             <input wire:model.live="searchTerm" type="text" class="w-full p-2 border border-gray-300 rounded-lg"
                    placeholder="Search Projects...">
         </div>
-        <div class="grid my-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach($projects->sortByDesc('start_date') as $project)
-                <div class="client-card ring-1 ring-gray-500 ring-offset-1 border ring-opacity-10 bg-white rounded-xl p-1">
+                <div class="client-card cursor-pointer border center flex-col ring-opacity-10 bg-white rounded-xl p-1">
+                    <!-- Avatar Like icon depending on the project status -->
+                    <div class="w-full center">
+                        <div
+                            class="avatar h-14 w-14 rounded-full  ring-1 ring-gray-500 ring-offset-1 border center flex-col ring-opacity-10 flex items-center justify-center">
+                            <!-- // 'active', 'completed', 'archived', 'pending', 'cancelled', 'in_progress' -->
+                            @if($project->status == 'completed')
+                                <i class="fas fa-check text-green-500 text-2xl"></i>
+                            @elseif($project->status == 'pending')
+                                <i class="fas fa-clock text-yellow-500 text-2xl"></i>
+                            @elseif($project->status == 'cancelled')
+                                <i class="fas fa-times text-red-500 text-2xl"></i>
+                            @elseif($project->status == 'in_progress')
+                                <i class="fas fa-spinner text-blue-500 text-2xl"></i>
+                            @elseif($project->status == 'archived')
+                                <i class="fas fa-archive text-gray-500 text-2xl"></i>
+                            @else
+                                <i class="fas fa-check text-green-500 text-2xl"></i>
+                            @endif
+                        </div>
+                    </div>
                     <h3 class="font-bold text-xl mb-4">{{ $project->name }}</h3>
                     <p class="text-gray-700 text-base">{{ $project->description }}</p>
                     <div class="mt-4">
                         <p class="text-gray-500">Price: {{ $project->price }}</p>
-                        <p class="text-gray-500">Start Date: {{ $project->start_date }}</p>
-                        <p class="text-gray-500">End Date: {{ $project->end_date }}</p>
-                        <p class="text-gray-500">Status: {{ $project->status }}</p>
+
+                        <div class="relative mt-4">
+                            <div class="bg-green-500 h-2 rounded-full"
+                                 style="width: {{ $project->progress() }}%;"></div>
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>Start Date: {{ $project->start_date->format('d M Y') }}</span>
+                                <span>End Date: {{ $project->end_date->format('d M Y') }}</span>
+                            </div>
+                        </div>
+
+                        @if(now()->greaterThan($project->end_date))
+                            <p class="text-red-500 mt-2">Project is past its deadline!</p>
+                        @elseif(now()->greaterThan($project->end_date->subDays(7)))
+                            <p class="text-yellow-500 mt-2">Project is close to its deadline!</p>
+                        @else
+                            <p class="text-green-500 mt-2">Project is within its timeline.</p>
+                        @endif
                     </div>
                 </div>
             @endforeach

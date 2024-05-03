@@ -23,6 +23,29 @@ class Project extends Model
         'client_id',
     ];
 
+    //casts
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+
+    public function progress(): int
+    {
+        $now = now();
+        $start = $this->start_date;
+        $end = $this->end_date;
+
+        if ($now < $start) {
+            return 0;
+        } elseif ($now > $end) {
+            return 100;
+        } else {
+            $totalDays = $end->diffInDays($start);
+            $elapsedDays = $now->diffInDays($start);
+            return round(($elapsedDays / $totalDays) * 100);
+        }
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

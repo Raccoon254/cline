@@ -17,11 +17,11 @@
         </div>
         <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach($projects->sortByDesc('start_date') as $project)
-                <div class="client-card cursor-pointer border center flex-col ring-opacity-10 bg-white rounded-xl p-1">
+                <div class="client-card h-72 cursor-pointer border ring-1 ring-gray-500 ring-offset-1 center center flex-col ring-opacity-10 bg-white rounded-xl p-1">
                     <!-- Avatar Like icon depending on the project status -->
                     <div class="w-full center">
                         <div
-                            class="avatar h-14 w-14 rounded-full  ring-1 ring-gray-500 ring-offset-1 border center flex-col ring-opacity-10 flex items-center justify-center">
+                            class="avatar center h-14 w-14 rounded-full flex items-center justify-center">
                             <!-- // 'active', 'completed', 'archived', 'pending', 'cancelled', 'in_progress' -->
                             @if($project->status == 'completed')
                                 <i class="fas fa-check text-green-500 text-2xl"></i>
@@ -39,13 +39,23 @@
                         </div>
                     </div>
                     <h3 class="font-bold text-xl mb-4">{{ $project->name }}</h3>
-                    <p class="text-gray-700 text-base">{{ $project->description }}</p>
+                    <!-- Description max 2 lines -->
+                    <p class="text-gray-700 text-sm">{{ Str::limit($project->description, 70) }}</p>
                     <div class="mt-4">
                         <p class="text-gray-500">Price: {{ $project->price }}</p>
 
-                        <div class="relative mt-4">
-                            <div class="bg-green-500 h-2 rounded-full"
-                                 style="width: {{ $project->progress() }}%;"></div>
+                        <div class="relative mt-10">
+                            <div class="relative">
+                                <!-- Icon to point from top at the current day using absolute positioning -->
+                                <div class="absolute flex flex-col -top-4 -mt-2" style="left: {{ $project->progress() }}%">
+                                    <span class="text-gray-500 text-xs">{{ $project->progress() }}%</span>
+                                    <i class="fas fa-caret-down text-gray-500"></i>
+                                </div>
+                                <progress class="progress progress-success w-full"
+                                          value="{{ $project->progress() }}"
+                                          max="100">
+                                </progress>
+                            </div>
                             <div class="flex justify-between text-xs text-gray-500">
                                 <span>Start Date: {{ $project->start_date->format('d M Y') }}</span>
                                 <span>End Date: {{ $project->end_date->format('d M Y') }}</span>

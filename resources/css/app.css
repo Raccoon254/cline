@@ -221,7 +221,6 @@ details > summary::-webkit-details-marker {
 
 .client-card:hover {
     @apply scale-[101%] transform transition-transform duration-300 m-1 ease-in-out bg-gray-200 ring-1 ring-orange-400;
-    cursor: pointer;
 }
 
 .message-input{

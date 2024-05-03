@@ -10,6 +10,12 @@
         </div>
 
         <!-- Page Content -->
+        <!-- All projects -->
+        <div class="py-4">
+            <h3 class="text-lg py-2 center font-semibold">All Projects</h3>
+            <livewire:client-projects />
+        </div>
+        <!-- All freelancers -->
         <div class="py-4">
             <h3 class="text-lg py-2 center font-semibold">All Freelancers</h3>
             <livewire:all-freelancers />

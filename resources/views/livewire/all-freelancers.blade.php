@@ -20,7 +20,6 @@
             @foreach($freelancers as $freelancer)
                 <div class="client-card bg-white rounded-xl"
                    data-tip="View {{ $freelancer->name }}"
-                     onclick="window.location.href={{ route('clients.show', $freelancer) }}"
                 >
                     <div class="bg-white rounded-xl p-4 relative shadow-md">
                         <!--Share button to whatsapp, facebook, twitter and linkedin-->
@@ -58,11 +57,13 @@
                                 >
                             </div>
                             <div class="absolute top-24 bg-white rounded-full left-4 p-1">
-                                <img
-                                    class="h-16 w-16 rounded-full object-cover"
-                                    src="{{ $freelancer->profile_image }}"
-                                    alt="{{ $freelancer->name }} profile picture"
-                                >
+                                <a href="{{ route('client.freelancers.show', $freelancer) }}">
+                                    <img
+                                        class="h-16 w-16 rounded-full object-cover"
+                                        src="{{ $freelancer->profile_image }}"
+                                        alt="{{ $freelancer->name }} profile picture"
+                                    >
+                                </a>
 
                             </div>
                             <div class="z-30 mt-36 pt-2">
@@ -72,13 +73,12 @@
                         </div>
                         <div class="mt-4 flex justify-between items-center">
                             <!-- Messages .create route -->
-                            <div onclick="window.location.href='{{ route('messages.create', $freelancer) }}'"
+                            <a href="{{ route('client.freelancers.show', $freelancer) }}"
                                  class="btn font-normal custom-btn">
-                                <i class="fa-solid fa-message"></i>
                                 <span class="font-normal normal-case">
-                                    Message
+                                    View Profile <i class="fa-solid fa-arrow-right"></i>
                                 </span>
-                            </div>
+                            </a>
 
                             <!-- Mail, phone and message buttons -->
                             <div class="flex gap-2 justify-between">

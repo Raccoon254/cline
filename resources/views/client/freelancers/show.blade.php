@@ -13,7 +13,7 @@
             <!-- Message button -->
             <div class="ml-auto">
                 <a href="{{ route('messages.create', $freelancer) }}" class="btn custom-btn">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fa-solid fa-message"></i>
                     Message
                 </a>
             </div>

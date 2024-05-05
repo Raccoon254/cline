@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Livewire\AllUsers;
 use App\Http\Livewire\Messaging;
 use App\Http\Livewire\MessagingNull;
 use App\Http\Livewire\UserCompleteProfileForm;
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::get("/", function () {
     return view("welcome");
 })->name("welcome");
+
+
+
+Route::get("/users", AllUsers::class)->name("welcome");
 
 Route::get("/dashboard", function () {
     $role = Auth::user()->role ?? "user";

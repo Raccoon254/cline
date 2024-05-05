@@ -18,9 +18,7 @@
     @else
         <div class="grid gap-4 grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach($freelancers as $freelancer)
-                <div class="client-card bg-white rounded-xl"
-                   data-tip="View {{ $freelancer->name }}"
-                >
+                <div class="client-card bg-white rounded-xl" data-tip="View {{ $freelancer->name }}">
                     <div class="bg-white rounded-xl p-4 relative shadow-md">
                         <!--Share button to whatsapp, facebook, twitter and linkedin-->
                         <div class="absolute z-50 top-0 right-0 p-2">
@@ -99,7 +97,7 @@
             @endforeach
         </div>
     @endif
-    <div class="pagination mt-4">
+    <div class="mt-4">
         {{ $freelancers->links() }}
     </div>
 </div>

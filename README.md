@@ -13,6 +13,8 @@ with the following features:
 - Remix icons
 - Alpine js
 
+This is the official Cline repository
+
 ## Installation
 
 clone the repository

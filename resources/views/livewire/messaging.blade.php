@@ -17,7 +17,7 @@
                 </section>
                 <label class="w-full relative">
                     <input wire:model.live="search"
-                           class="message-input"
+                           class="pl-12 pr-4 py-2 w-full rounded-lg border-b border-gray-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
                            type="text" placeholder="Search users">
                     <i class="fas btn btn-sm btn-circle fa-search absolute top-1/2 transform -translate-y-1/2 left-2 btn-primary"></i>
                 </label>

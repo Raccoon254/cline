@@ -15,9 +15,13 @@ class ClientProjects extends Component
     public function render(): View
     {
         $currentClient = Auth::user()->client;
+        //get name and description of projects
+        $projects = $currentClient->projects()->where('name', 'like', '%' . $this->searchTerm . '%')
+            ->orWhere('description', 'like', '%' . $this->searchTerm . '%')
+            ->paginate(3);
         return view('client.projects',
             [
-                'projects' => $currentClient->projects()->where('name', 'like', '%' . $this->searchTerm . '%')->paginate(3)
+                'projects' => $projects
             ]
         );
     }

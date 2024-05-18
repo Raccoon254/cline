@@ -4,7 +4,7 @@
         use Illuminate\Support\Facades\Auth;
         use App\Models\Message;
     @endphp
-    <div class="flex h-[93vh]" wire:poll.2s>
+    <div class="flex h-[93vh]">
         <div class="bg-gray-100 w-1/4 border-r-none">
             <div class="p-2">
                 <section class="my-2">
@@ -38,10 +38,12 @@
                          class="{{ $selectedRecipientId == $user->id ? 'bg-gray-200' : '' }} p-4 cursor-pointer hover:bg-gray-200 flex gap-2">
                         <div class="flex w-14 relative items-center">
                             <img src="{{ $user->profile_image }}"
-                                 class="ring-1 w-10 object-cover h-10 ring-gray-400 rounded-full mr-1" alt="{{ $user->name }}">
+                                 class="ring-1 w-10 object-cover h-10 ring-gray-400 rounded-full mr-1"
+                                 alt="{{ $user->name }}">
                             <!-- getUnreadMessagesCount($senderId, $recipientId): -->
                             @if (getUnreadMessagesCount($user->id, Auth::id()) > 0)
-                                <div class="bg-blue-500 text-white h-4 w-4 rounded-full center text-[10px] mb-1 absolute right-0 top-0">
+                                <div
+                                    class="bg-blue-500 text-white h-4 w-4 rounded-full center text-[10px] mb-1 absolute right-0 top-0">
                                     {{ getUnreadMessagesCount($user->id, Auth::id()) }}
                                 </div>
                             @endif
@@ -99,11 +101,45 @@
         <div class="flex flex-col justify-between w-3/4 bg-white shadow-lg rounded-lg h-full overflow-hidden">
             @if($selectedRecipient)
                 <div class="bg-gray-100 py-[10px] px-3 flex items-center justify-between">
-                    <div class="flex items-center">
-                        <img src="{{ $selectedRecipient->profile_image }}"
+                    <div x-data="{ showModal: false }" class="flex items-center">
+                        <img @click="showModal = true" src="{{ $selectedRecipient->profile_image }}"
                              class="w-10 h-10 object-cover ring-1 ring-gray-400 rounded-full mr-4"
                              alt="{{ $selectedRecipient->name }}">
                         <h3 class="font-normal text-gray-800">{{ $selectedRecipient->name }}</h3>
+
+                        <!-- Modal -->
+                        <div x-show="showModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
+                             role="dialog" aria-modal="true">
+                            <div
+                                class="flex items-end justify-center min-h-screen p-2 pb-20 text-center sm:block sm:p-0">
+                                <!--
+                                  Background overlay, show/hide based on modal state.
+                                -->
+                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                                     aria-hidden="true"></div>
+
+                                <!-- Modal Content -->
+                                <div
+                                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <div class="bg-white p-2">
+                                        <!-- Content goes here -->
+                                        <h1 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                            {{ $selectedRecipient->name }}'s Profile
+                                        </h1>
+                                        <div class="mt-2">
+                                            <img class="rounded-lg" src="{{ $selectedRecipient->profile_image }}"
+                                                 alt="{{ $selectedRecipient->name }}">
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                        <button @click="showModal = false" type="button"
+                                                class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="overflow-y-auto h-full" id="messagesContainer">

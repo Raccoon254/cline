@@ -31,7 +31,7 @@ class ClineSearch extends Component
         //get all models
         $models = [User::class, Invoice::class, Project::class, Task::class, Message::class, Invoice::class];
         foreach ($models as $model) {
-            $searchResults = $searchResults->concat($model::search($this->search)->get());
+            $searchResults = $searchResults->concat($model::where('name', 'like', '%' . $this->search . '%')->get());
         }
         //map the results to have a name
         $this->searchResults = $searchResults->map(function ($result) {

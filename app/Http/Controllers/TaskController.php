@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Task;
+use App\Models\Project;
+use Illuminate\Http\RedirectResponse;
 
 class TaskController extends Controller
 {
@@ -11,7 +14,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::all();
+
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -19,15 +24,34 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $projects = Project::all();
+        return view('tasks.create',  compact('projects'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'due_date' => 'required|date',
+            'priority' => 'required',
+            'status' => 'required',
+            'estimated_duration' => 'required',
+            'project_id' => 'required|exists:projects,id',
+        ]);
+
+        // get the project
+        $project = Project::find($validatedData['project_id']);
+        $validatedData['project_id'] = $project->id;
+
+        Task::create($validatedData);
+
+        // Maybe notify the user who created the task
+
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
     /**

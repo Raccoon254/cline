@@ -67,7 +67,7 @@ class SkillsTableSeeder extends Seeder
         ];
 
         foreach ($skills as $skill) {
-            //Skill::create($skill);
+            Skill::create($skill);
         }
     }
 }

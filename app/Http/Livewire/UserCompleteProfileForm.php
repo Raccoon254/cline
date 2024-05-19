@@ -115,7 +115,8 @@ class UserCompleteProfileForm extends Component
         $searchResults = Skill::where('name', 'like', '%' . $this->search . '%')->get();
         //Todo Return Suggested Skills
 
-        return view('livewire.user-complete-profile-form',
+        return view(
+            'livewire.user-complete-profile-form',
             compact('searchResults')
         );
     }

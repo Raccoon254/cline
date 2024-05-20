@@ -11,10 +11,16 @@ class AllTasks extends Component
 
     public function render()
     {
+
+        // Filtering tasks according to projects linked to the client
+        $taskIds = auth()->user()->client->projects()->with(['tasks' => function ($query) {
+            $query->where('title', 'like', '%' . $this->search . '%');
+        }])->get()->pluck('tasks.*.id')->collapse()->toArray();
+
+        $tasks = Task::whereIn('id', $taskIds)->paginate(10);
+
         return view('livewire.all-tasks', [
-            'tasks' => Task::with('project')
-                ->where('title', 'like', '%' . $this->search . '%')
-                ->paginate(10),
+            'tasks' => $tasks,
         ]);
     }
 }

@@ -64,9 +64,9 @@ class ProjectController extends Controller
 
         $project = Project::create($validatedData);
 
-        //Send a notification to both the client and the freelancer
-        $client->notify(new NewProjectNotification($project, Auth::user()));
-        $project->user->notify(new NewProjectNotification($project, Auth::user()));
+        // //Send a notification to both the client and the freelancer
+        // $client->notify(new NewProjectNotification($project, Auth::user()));
+        // $project->user->notify(new NewProjectNotification($project, Auth::user()));
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }

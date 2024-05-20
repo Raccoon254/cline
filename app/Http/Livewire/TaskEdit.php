@@ -22,7 +22,7 @@ class TaskEdit extends Component
     public function mount($id)
     {
         $this->task = Task::findOrFail($id);
-        $this->projects = Project::all();
+        $this->projects = Project::where('user_id', auth()->id())->get();
         $this->title = $this->task->title;
         $this->description = $this->task->description;
         $this->due_date = $this->task->due_date;

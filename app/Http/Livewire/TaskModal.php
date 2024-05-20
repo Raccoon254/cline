@@ -52,8 +52,7 @@ class TaskModal extends Component
 
     public function render()
     {
-        $tasks = Task::all();
-        $projects = Project::all();
-        return view('livewire.task-modal', compact('tasks', 'projects'));
+        $projects = Project::where('client_id', auth()->user()->client->id)->get();
+        return view('livewire.task-modal', compact('projects'));
     }
 }

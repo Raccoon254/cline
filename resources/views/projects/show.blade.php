@@ -60,7 +60,12 @@
         </div>
 
         <div class="mt-4">
-            <h4 class="font-bold text-lg mb-2">Project Tasks:</h4>
+            <div class="flex items-center justify-between mt-4">
+                <h4 class="font-bold text-lg mb-2">Project Tasks:</h4>
+                <a href="{{ route('tasks.create') }}" class="text-md text-primary">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
             @if ($project->tasks->isEmpty())
                 <p class="text-gray-500">No tasks for this project.</p>
             @else

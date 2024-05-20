@@ -1,4 +1,4 @@
-<x-app-layout>
+<div>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Create Task') }}
@@ -14,48 +14,53 @@
                     <p>
                         Fill in the form below to create a new task
                     </p>
-                    <form class="flex flex-col" action="{{ route('tasks.store') }}" method="POST">
+                    <form class="flex flex-col" wire:submit.prevent="createTask">
                         @csrf
                         <label class="mt-4 mb-2" for="title">
                             Title
                         </label>
-                        <input class="custom-input" id="title" type="text" placeholder="title" name="title"
-                            value="{{ old('title') }}">
+                        <input wire:model="title" class="custom-input" id="title" type="text" placeholder="title"
+                            name="title" value="{{ old('title') }}">
 
                         <label class="mt-4 mb-2" for="description">
                             Description
                         </label>
-                        <textarea class="custom-textarea ring-1" id="description" type="text" placeholder="description" name="description">{{ old('description') }}</textarea>
+                        <textarea wire:model="description" class="custom-textarea ring-1" id="description" type="text"
+                            placeholder="description" name="description">{{ old('description') }}</textarea>
 
                         <label class="mt-4 mb-2" for="due_date">
                             Due Date
                         </label>
-                        <input class="custom-input" id="due_date" type="date" placeholder="due_date" name="due_date"
-                            value="{{ old('due_date') }}">
+                        <input wire:model="due_date" class="custom-input" id="due_date" type="date"
+                            placeholder="due_date" name="due_date" value="{{ old('due_date') }}">
 
                         <label class="mt-4 mb-2" for="priority">
                             Priority
                         </label>
-                        <input class="custom-input" id="priority" type="text" placeholder="priority" name="priority"
-                            value="{{ old('priority') }}">
+                        <input wire:model="priority" class="custom-input" id="priority" type="text"
+                            placeholder="priority" name="priority" value="{{ old('priority') }}">
 
                         <label class="mt-4 mb-2" for="status">
                             Status
                         </label>
-                        <input class="custom-input" id="status" type="text" placeholder="status" name="status"
-                            value="{{ old('status') }}">
+                        <select wire:model="status" class="custom-input" id="status" name="status">
+                            <option value="">Select status</option>
+                            <option value="pending">Pending</option>
+                            <option value="in_progress">In progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
 
                         <label class="mt-4 mb-2" for="estimated_duration">
                             Estimated Duration
                         </label>
-                        <input class="custom-input" id="estimated_duration" type="text"
-                            placeholder="estimated_duration" name="estimated_duration"
+                        <input wire:model="estimated_duration" class="custom-input" id="estimated_duration"
+                            type="text" placeholder="estimated_duration" name="estimated_duration"
                             value="{{ old('estimated_duration') }}">
 
                         <label class="mt-4 mb-2" for="project_id">
                             Project
                         </label>
-                        <select class="custom-input" id="project_id" name="project_id">
+                        <select wire:model="project_id" class="custom-input" id="project_id" name="project_id">
                             <option value="">Select a project</option>
                             @foreach ($projects as $project)
                                 <option value="{{ $project->id }}"
@@ -70,4 +75,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>

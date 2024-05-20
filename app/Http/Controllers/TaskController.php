@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::paginate(10);
 
         return view('tasks.index', compact('tasks'));
     }
@@ -59,7 +59,8 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $tasks = Task::findOrFail($id);
+        return view('tasks.show', compact('tasks'));
     }
 
     /**

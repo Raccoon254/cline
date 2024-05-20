@@ -8,7 +8,6 @@ use App\Http\Livewire\MessagingNull;
 use App\Http\Livewire\UserCompleteProfileForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,10 +100,9 @@ Route::get("/get-theme", [ThemeController::class, "getTheme"])->name(
     "get-theme"
 );
 
-Route::middleware(["auth", "role:client"])->group(function () {
-    Route::resource('tasks', TaskController::class);
-});
+
 
 require __DIR__ . "/auth.php";
 require __DIR__ . "/projects.php";
 require __DIR__ . "/client.php";
+require __DIR__ . "/tasks.php";

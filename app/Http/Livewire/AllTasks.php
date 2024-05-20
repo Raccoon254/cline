@@ -12,7 +12,9 @@ class AllTasks extends Component
     public function render()
     {
         return view('livewire.all-tasks', [
-            'tasks' => Task::where('title', 'like', '%' . $this->search . '%')->paginate(10),
+            'tasks' => Task::with('project')
+                ->where('title', 'like', '%' . $this->search . '%')
+                ->paginate(10),
         ]);
     }
 }

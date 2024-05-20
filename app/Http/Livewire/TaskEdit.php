@@ -23,6 +23,13 @@ class TaskEdit extends Component
     {
         $this->task = Task::findOrFail($id);
         $this->projects = Project::all();
+        $this->title = $this->task->title;
+        $this->description = $this->task->description;
+        $this->due_date = $this->task->due_date;
+        $this->priority = $this->task->priority;
+        $this->status = $this->task->status;
+        $this->estimated_duration = $this->task->estimated_duration;
+        $this->project_id = $this->task->project_id;
     }
 
     public function save()
@@ -37,9 +44,21 @@ class TaskEdit extends Component
             'project_id' => 'required|exists:projects,id',
         ]);
 
+        $this->task->update([
+            'title' => $this->title,
+            'description' => $this->description,
+            'due_date' => $this->due_date,
+            'priority' => $this->priority,
+            'status' => $this->status,
+            'estimated_duration' => $this->estimated_duration,
+            'project_id' => $this->project_id,
+        ]);
+
         $this->task->save();
 
         session()->flash('message', 'Task updated successfully.');
+        // Redirect to the tasks.index route
+        $this->redirectRoute('tasks.index');
     }
 
     public function render()

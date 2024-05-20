@@ -17,8 +17,8 @@
         </div>
         <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($projects->sortByDesc('start_date') as $project)
-                <div
-                    class="client-card h-72 cursor-pointer border ring-1 ring-gray-500 ring-offset-1 center center flex-col ring-opacity-10 bg-white rounded-xl p-1">
+                <div class="client-card h-72 cursor-pointer border ring-1 ring-gray-500 ring-offset-1 center center flex-col ring-opacity-10 bg-white rounded-xl p-1"
+                    onclick="window.location.href='{{ route('projects.show', $project) }}'">
                     <!-- Avatar Like icon depending on the project status -->
                     <div class="w-full center">
                         <div class="avatar center h-14 w-14 rounded-full flex items-center justify-center">

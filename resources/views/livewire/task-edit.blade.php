@@ -16,31 +16,30 @@
                     </p>
                     <form class="flex flex-col" wire:submit.prevent="save">
                         @csrf
+                        @method('PUT')
                         <label class="mt-4 mb-2" for="title">
                             Title
                         </label>
                         <x-text-input wire:model="title" class="custom-input" id="title" type="text"
-                            placeholder="title" name="title" required autofocus autocomplete="title" />
+                            placeholder="title" name="title" required />
 
                         <label class="mt-4 mb-2" for="description">
                             Description
                         </label>
                         <textarea wire:model="description" class="custom-textarea ring-1" id="description" type="text"
-                            placeholder="description" name="description" value="{{ $task->description }}"></textarea>
+                            placeholder="description" name="description"></textarea>
 
                         <label class="mt-4 mb-2" for="due_date">
                             Due Date
                         </label>
                         <x-text-input wire:model="due_date" class="custom-input" id="due_date" type="date"
-                            placeholder="due_date" name="due_date" :value="old('due_date', $task->due_date)" required autofocus
-                            autocomplete="due_date" />
+                            placeholder="due_date" name="due_date" required autofocus autocomplete="due_date" />
 
                         <label class="mt-4 mb-2" for="priority">
                             Priority
                         </label>
                         <x-text-input wire:model="priority" class="custom-input" id="priority" type="text"
-                            placeholder="priority" name="priority" :value="old('priority', $task->priority)" required autofocus
-                            autocomplete="priority" />
+                            placeholder="priority" name="priority" required autofocus autocomplete="priority" />
 
                         <label class="mt-4 mb-2" for="status">
                             Status
@@ -58,8 +57,8 @@
                             Estimated Duration
                         </label>
                         <x-text-input wire:model="estimated_duration" class="custom-input" id="estimated_duration"
-                            type="text" placeholder="estimated_duration" name="estimated_duration" :value="old('estimated_duration', $task->estimated_duration)"
-                            required autofocus autocomplete="estimated_duration" />
+                            type="text" placeholder="estimated_duration" name="estimated_duration" required autofocus
+                            autocomplete="estimated_duration" />
 
                         <label class="mt-4 mb-2" for="project_id">
                             Project

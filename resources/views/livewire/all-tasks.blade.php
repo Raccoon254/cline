@@ -21,7 +21,7 @@
                             <th>Priority</th>
                             <th>Status</th>
                             <th>Estimated Duration</th>
-                            <th>Project ID</th>
+                            <th>Project Name</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -45,7 +45,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $task->estimated_duration }}</td>
-                                <td>{{ $task->project_id }}</td>
+                                <td>{{ $task->project->name }}</td>
                                 <td class="space-x-2 flex">
                                     <a href="{{ route('tasks.edit', $task->id) }}" class="text-md text-primary">
                                         <i class="fas fa-edit"></i>

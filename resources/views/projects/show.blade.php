@@ -1,5 +1,12 @@
 <x-app-layout>
-    <div class="h-screen w-screen flex-col rounded-xl mx-auto sm:px-6 lg:px-8">
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Project') }}
+        </h2>
+    </x-slot>
+
+    <div class="flex-col rounded-xl overflow-x-hidden mx-auto sm:px-6 lg:px-8">
         <div class="flex items-center justify-between mt-4">
             <div class="avatar center h-14 w-14 rounded-full flex items-center justify-center">
                 @if ($project->status == 'completed')
@@ -57,29 +64,62 @@
             @if ($project->tasks->isEmpty())
                 <p class="text-gray-500">No tasks for this project.</p>
             @else
-                <ul class="list-disc list-inside text-gray-700">
-                    @foreach ($project->tasks as $task)
-                        <li>
-                            <h4>{{ $task->title }}</h4>
-                            <p>Description: {{ $task->description }}</p>
-                            <p>Due Date: {{ $task->due_date }}</p>
-                            <p>Priority: {{ $task->priority }}</p>
-                            <p>Status: {{ $task->status }}</p>
-                            <p>Estimated Duration: {{ $task->estimated_duration }}</p>
-                            <p>Project ID: {{ $task->project_id }}</p>
-                            <a href="{{ route('tasks.edit', $task->id) }}" class="text-blue-500">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        </li>
-                    @endforeach
-                </ul>
+                <table class="table w-full table-pin-rows table-pin-cols">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Due Date</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Estimated Duration</th>
+                            <th>Project Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($project->tasks as $task)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $task->title }}</td>
+                                <td>{{ $task->description }}</td>
+                                <td>{{ $task->due_date }}</td>
+                                <td>{{ $task->priority }}</td>
+                                <td>
+                                    @if ($task->status == 'completed')
+                                        <i class="fas fa-check text-green-500 text-lg"></i>
+                                    @elseif($task->status == 'pending')
+                                        <i class="fas fa-clock text-yellow-500 text-lg"></i>
+                                    @elseif($task->status == 'in_progress')
+                                        <i class="fas fa-spinner text-blue-500 text-lg"></i>
+                                    @else
+                                        <i class="fas fa-check text-green-500 text-lg"></i>
+                                    @endif
+                                </td>
+                                <td>{{ $task->estimated_duration }}</td>
+                                <td>{{ $task->project->name }}</td>
+                                <td class="space-x-2 flex">
+                                    <a href="{{ route('tasks.edit', $task->id) }}" class="text-md text-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-md" style="color: red">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                {{-- <div class="mt-4">
+                    {{ $project->tasks->links() }}
+                </div> --}}
             @endif
         </div>
     </div>

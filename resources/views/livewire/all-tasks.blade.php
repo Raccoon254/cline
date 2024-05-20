@@ -1,4 +1,11 @@
 <div class="p-2 rounded-lg overflow-x-hidden w-full">
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('All Projects') }}
+        </h2>
+    </x-slot>
+
     <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="label flex flex-col center mb-4">
             <label class="w-full relative z-20">
@@ -28,7 +35,7 @@
                     <tbody>
                         @foreach ($tasks as $task)
                             <tr>
-                                <td>{{ $task->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $task->title }}</td>
                                 <td>{{ $task->description }}</td>
                                 <td>{{ $task->due_date }}</td>

@@ -14,9 +14,12 @@
             <div class="overflow-hidden sm:rounded-lg">
                 <div class="grid grid-cols-1 p-3 md:grid-cols-2 lg:grid-cols-2 gap-6">
                     @foreach ($projects->sortByDesc('start_date') as $project)
-                        <div class="bg-gray-200 text-gray-900 shadow-sm m-1 rounded-[20px] p-6">
+                        <div class="bg-gray-200 text-gray-900 shadow-sm m-1 rounded-[20px] p-6"
+                            onclick="window.location='{{ route('projects.show', $project) }}'">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold">{{ $project->name }}</h3>
+                                <h3 class="text-lg font-semibold cursor-pointer"
+                                    onclick="window.location='{{ route('projects.show', $project) }}'">
+                                    {{ $project->name }}</h3>
                                 <span class="text-gray-900 text-sm">
                                     @if ($project->status == 'active')
                                         <i class="fas fa-circle text-green-500 mr-2"></i>Active

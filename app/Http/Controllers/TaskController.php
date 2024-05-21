@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\URL;
 
 class TaskController extends Controller
 {
@@ -60,7 +61,7 @@ class TaskController extends Controller
     public function show(string $id)
     {
         $tasks = Task::findOrFail($id);
-        return view('tasks.show', compact('tasks'));
+        // return view('tasks.show', compact('tasks'));
     }
 
     /**
@@ -94,6 +95,12 @@ class TaskController extends Controller
         if ($task) {
             $task->delete();
             session()->flash('message', 'Task deleted successfully.');
+
+            if (URL::previous() == route('tasks.show', $id)) {
+                return redirect()->route('tasks.index'); // Replace 'tasks.index' with your default route
+            }
+
+            return redirect()->back();
         }
 
         session()->flash('message', 'Task not found.');

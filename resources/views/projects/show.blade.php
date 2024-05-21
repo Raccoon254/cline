@@ -61,6 +61,11 @@
                     @endif
                 </div>
 
+                <button onclick="window.location='{{ route('projects.edit', $project) }}'"
+                    class="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-1 px-2 w-full mt-6 rounded">
+                    Edit Project
+                </button>
+
                 <div class="mt-8">
                     <div class="flex items-center justify-between mt-4">
                         <h4 class="font-bold text-lg mb-2">Project Tasks:</h4>
@@ -72,7 +77,7 @@
                         </div>
                     </div>
                     @if ($project->tasks->isEmpty())
-                        <p class="text-gray-500">No tasks for this project.</p>
+                        <p class="text-gray-500 h-96">No tasks for this project.</p>
                     @else
                         <div class="w-full flex flex-wrap space-x-4 rounded">
                             @foreach ($project->tasks as $task)
@@ -127,10 +132,19 @@
                             @endforeach
                         </div>
 
+
                         {{-- <div class="mt-4">
                             {{ $project->tasks->links() }}
                         </div> --}}
                     @endif
+                    <form action="{{ route('projects.destroy', $project) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button
+                            class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 w-full mt-6 rounded">
+                            Delete Project
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

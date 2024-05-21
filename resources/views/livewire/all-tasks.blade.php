@@ -18,8 +18,8 @@
             @if ($tasks->isEmpty())
                 <p class="text-gray-500">No tasks.</p>
             @else
-                <div class="flex space-x-4 p-4">
-                    <div class="w-1/3 bg-gray-200 p-4 rounded" id="pending" data-status="pending">
+                <div class="lg:flex lg:space-x-4 space-y-4 p-4 w-full">
+                    <div class="w-full lg:w-1/3 bg-gray-200 p-4 rounded" id="pending" data-status="pending">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Todo</h2>
                         @foreach ($tasks as $task)
                             @if ($task->status == 'pending')
@@ -33,19 +33,19 @@
                                         <span class="font-semibold">{{ $task->user }}</span>
                                         @switch($task->priority)
                                             @case('high')
-                                                <span class="text-red-500">{{ $task->priority }}</span>
+                                                <span class="text-red-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @case('medium')
-                                                <span class="text-yellow-500">{{ $task->priority }}</span>
+                                                <span class="text-yellow-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @case('low')
-                                                <span class="text-green-500">{{ $task->priority }}</span>
+                                                <span class="text-green-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @default
-                                                <span>{{ $task->priority }}</span>
+                                                <span class="text-xs">{{ $task->priority }}</span>
                                         @endswitch
                                     </div>
                                     <div class="mt-2">
@@ -53,7 +53,7 @@
                                         <p class="text-gray-600">{{ $task->description }}</p>
                                     </div>
                                     <div class="mt-2 flex justify-between items-center">
-                                        <span class="text-gray-500 cursor-pointer"
+                                        <span class="text-gray-500 font-semibold text-sm cursor-pointer"
                                             onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
                                         <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
                                     </div>
@@ -67,7 +67,7 @@
                         </button>
                     </div>
 
-                    <div class="w-1/3 bg-gray-200 p-4 rounded" id="in_progress" data-status="in_progress">
+                    <div class="w-full lg:-1/3 bg-gray-200 p-4 rounded" id="in_progress" data-status="in_progress">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">In Progress</h2>
                         @foreach ($tasks as $task)
                             @if ($task->status == 'in_progress')
@@ -81,19 +81,19 @@
                                         <span class="font-semibold">{{ $task->user }}</span>
                                         @switch($task->priority)
                                             @case('high')
-                                                <span class="text-red-500">{{ $task->priority }}</span>
+                                                <span class="text-red-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @case('medium')
-                                                <span class="text-yellow-500">{{ $task->priority }}</span>
+                                                <span class="text-yellow-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @case('low')
-                                                <span class="text-green-500">{{ $task->priority }}</span>
+                                                <span class="text-green-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @default
-                                                <span>{{ $task->priority }}</span>
+                                                <span class="text-xs">{{ $task->priority }}</span>
                                         @endswitch
                                     </div>
                                     <div class="mt-2">
@@ -101,7 +101,7 @@
                                         <p class="text-gray-600">{{ $task->description }}</p>
                                     </div>
                                     <div class="mt-2 flex justify-between items-center">
-                                        <span class="text-gray-500 cursor-pointer"
+                                        <span class="text-gray-500 font-semibold text-sm cursor-pointer"
                                             onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
                                         <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
                                     </div>
@@ -115,7 +115,7 @@
                         </button>
                     </div>
 
-                    <div class="w-1/3 bg-gray-200 p-4 rounded" id="completed" data-status="completed">
+                    <div class="w-full lg:w-1/3 bg-gray-200 p-4 rounded" id="completed" data-status="completed">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Completed</h2>
                         @foreach ($tasks as $task)
                             @if ($task->status == 'completed')
@@ -129,19 +129,19 @@
                                         <span class="font-semibold">{{ $task->user }}</span>
                                         @switch($task->priority)
                                             @case('high')
-                                                <span class="text-red-500">{{ $task->priority }}</span>
+                                                <span class="text-red-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @case('medium')
-                                                <span class="text-yellow-500">{{ $task->priority }}</span>
+                                                <span class="text-yellow-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @case('low')
-                                                <span class="text-green-500">{{ $task->priority }}</span>
+                                                <span class="text-green-500 text-xs">{{ $task->priority }}</span>
                                             @break
 
                                             @default
-                                                <span>{{ $task->priority }}</span>
+                                                <span class="text-xs">{{ $task->priority }}</span>
                                         @endswitch
                                     </div>
                                     <div class="mt-2">
@@ -149,7 +149,7 @@
                                         <p class="text-gray-600">{{ $task->description }}</p>
                                     </div>
                                     <div class="mt-2 flex justify-between items-center">
-                                        <span class="text-gray-500 cursor-pointer"
+                                        <span class="text-gray-500 font-semibold text-sm cursor-pointer"
                                             onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
                                         <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
                                     </div>

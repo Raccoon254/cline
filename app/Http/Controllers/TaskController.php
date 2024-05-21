@@ -79,7 +79,6 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->status = $request->status;
 
-        dd($task->status);
         $task->save();
 
         return response()->json(['status' => 'success']);

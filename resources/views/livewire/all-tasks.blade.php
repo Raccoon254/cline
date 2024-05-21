@@ -200,7 +200,10 @@
                                 .draggable({
                                     revert: "invalid",
                                 });
-                            $(this).prepend(clonedElement);
+                            $("h2", this).after(clonedElement);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
                         }
                     });
 

@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('All Projects') }}
+            {{ __('All Tasks') }}
         </h2>
     </x-slot>
 
@@ -18,62 +18,201 @@
             @if ($tasks->isEmpty())
                 <p class="text-gray-500">No tasks.</p>
             @else
-                <table class="table w-full table-pin-rows table-pin-cols">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Due Date</th>
-                            <th>Priority</th>
-                            <th>Status</th>
-                            <th>Estimated Duration</th>
-                            <th>Project Name</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="flex space-x-4 p-4">
+                    <div class="w-1/3 bg-gray-200 p-4 rounded" id="pending" data-status="pending">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Todo</h2>
                         @foreach ($tasks as $task)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $task->title }}</td>
-                                <td>{{ $task->description }}</td>
-                                <td>{{ $task->due_date }}</td>
-                                <td>{{ $task->priority }}</td>
-                                <td>
-                                    @if ($task->status == 'completed')
-                                        <i class="fas fa-check text-green-500 text-lg"></i>
-                                    @elseif($task->status == 'pending')
-                                        <i class="fas fa-clock text-yellow-500 text-lg"></i>
-                                    @elseif($task->status == 'in_progress')
-                                        <i class="fas fa-spinner text-blue-500 text-lg"></i>
-                                    @else
-                                        <i class="fas fa-check text-green-500 text-lg"></i>
-                                    @endif
-                                </td>
-                                <td>{{ $task->estimated_duration }}</td>
-                                <td>{{ $task->project->name }}</td>
-                                <td class="space-x-2 flex">
-                                    <a href="{{ route('tasks.edit', $task->id) }}" class="text-md text-primary">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
-                                        class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-md" style="color: red">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                            @if ($task->status == 'pending')
+                                <div class="group relative bg-white shadow rounded-lg p-4 mb-4 cursor-pointer"
+                                    data-id="{{ $task->id }}">
+                                    <button onclick="window.location='{{ route('tasks.edit', $task->id) }}'"
+                                        class="absolute top-0 right-0 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100">
+                                        Edit
+                                    </button>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">{{ $task->user }}</span>
+                                        @switch($task->priority)
+                                            @case('high')
+                                                <span class="text-red-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @case('medium')
+                                                <span class="text-yellow-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @case('low')
+                                                <span class="text-green-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @default
+                                                <span>{{ $task->priority }}</span>
+                                        @endswitch
+                                    </div>
+                                    <div class="mt-2">
+                                        <h3 class="font-semibold">{{ $task->title }}</h3>
+                                        <p class="text-gray-600">{{ $task->description }}</p>
+                                    </div>
+                                    <div class="mt-2 flex justify-between items-center">
+                                        <span class="text-gray-500 cursor-pointer"
+                                            onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
+                                        <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
-                    </tbody>
-                </table>
-                <div class="mt-4">
-                    {{ $tasks->links() }}
+                        <button onclick="window.location='{{ route('tasks.create') }}'"
+                            class="font-bold py-2 px-4 rounded mt-4">
+                            <i class="fas fa-plus mr-2"></i>
+                            Add New Task
+                        </button>
+                    </div>
+
+                    <div class="w-1/3 bg-gray-200 p-4 rounded" id="in_progress" data-status="in_progress">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">In Progress</h2>
+                        @foreach ($tasks as $task)
+                            @if ($task->status == 'in_progress')
+                                <div class="group relative bg-white shadow rounded-lg p-4 mb-4 cursor-pointer"
+                                    data-id="{{ $task->id }}">
+                                    <button onclick="window.location='{{ route('tasks.edit', $task->id) }}'"
+                                        class="absolute top-0 right-0 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100">
+                                        Edit
+                                    </button>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">{{ $task->user }}</span>
+                                        @switch($task->priority)
+                                            @case('high')
+                                                <span class="text-red-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @case('medium')
+                                                <span class="text-yellow-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @case('low')
+                                                <span class="text-green-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @default
+                                                <span>{{ $task->priority }}</span>
+                                        @endswitch
+                                    </div>
+                                    <div class="mt-2">
+                                        <h3 class="font-semibold">{{ $task->title }}</h3>
+                                        <p class="text-gray-600">{{ $task->description }}</p>
+                                    </div>
+                                    <div class="mt-2 flex justify-between items-center">
+                                        <span class="text-gray-500 cursor-pointer"
+                                            onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
+                                        <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        <button onclick="window.location='{{ route('tasks.create') }}'"
+                            class="font-bold py-2 px-4 rounded mt-4">
+                            <i class="fas fa-plus mr-2"></i>
+                            Add New Task
+                        </button>
+                    </div>
+
+                    <div class="w-1/3 bg-gray-200 p-4 rounded" id="completed" data-status="completed">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Completed</h2>
+                        @foreach ($tasks as $task)
+                            @if ($task->status == 'completed')
+                                <div class="group relative bg-white shadow rounded-lg p-4 mb-4 cursor-pointer"
+                                    data-id="{{ $task->id }}">
+                                    <button onclick="window.location='{{ route('tasks.edit', $task->id) }}'"
+                                        class="absolute top-0 right-0 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100">
+                                        Edit
+                                    </button>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">{{ $task->user }}</span>
+                                        @switch($task->priority)
+                                            @case('high')
+                                                <span class="text-red-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @case('medium')
+                                                <span class="text-yellow-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @case('low')
+                                                <span class="text-green-500">{{ $task->priority }}</span>
+                                            @break
+
+                                            @default
+                                                <span>{{ $task->priority }}</span>
+                                        @endswitch
+                                    </div>
+                                    <div class="mt-2">
+                                        <h3 class="font-semibold">{{ $task->title }}</h3>
+                                        <p class="text-gray-600">{{ $task->description }}</p>
+                                    </div>
+                                    <div class="mt-2 flex justify-between items-center">
+                                        <span class="text-gray-500 cursor-pointer"
+                                            onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
+                                        <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        <button onclick="window.location='{{ route('tasks.create') }}'"
+                            class="font-bold py-2 px-4 rounded mt-4">
+                            <i class="fas fa-plus mr-2"></i>
+                            Add New Task
+                        </button>
+                    </div>
                 </div>
             @endif
+
+            {{-- <div class="mt-4">
+                {{ $tasks->links() }}
+            </div> --}}
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+        $(function() {
+            $(".group").draggable({
+                revert: "invalid",
+            });
+
+            $("#pending, #in_progress, #completed").droppable({
+                accept: ".group",
+                tolerance: "intersect",
+                drop: function(event, ui) {
+                    var taskId = ui.draggable.data('id');
+                    var status = $(this).data('status');
+
+                    $.ajax({
+                        url: '/tasks/' + taskId,
+                        type: 'PATCH',
+                        data: {
+                            status: status,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(result) {
+                            // Clone the draggable element, reinitialize its draggable properties, and append it to the droppable element
+                            var clonedElement = ui.helper.clone().removeAttr('style')
+                                .draggable({
+                                    revert: "invalid",
+                                });
+                            $(this).prepend(clonedElement);
+                        }
+                    });
+
+                    var clonedElement = ui.helper.clone().removeAttr('style').draggable({
+                        revert: "invalid",
+                    });
+                    $("h2", this).after(clonedElement);
+
+                    // Remove the original draggable element
+                    ui.helper.remove();
+                }
+            });
+        });
+    </script>
 </div>

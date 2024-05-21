@@ -15,4 +15,5 @@ Route::middleware(["auth", "role:client"])->group(function () {
     Route::get("tasks/{id}/edit", TaskEdit::class)->name("tasks.edit");
     Route::put("tasks/{id}", [TaskController::class, "update"])->name("tasks.update");
     Route::delete("tasks/{id}", [TaskController::class, "destroy"])->name("tasks.destroy");
+    Route::patch('/tasks/{task}', 'TaskController@update');
 });

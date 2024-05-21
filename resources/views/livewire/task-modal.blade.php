@@ -37,8 +37,12 @@
                         <label class="mt-4 mb-2" for="priority">
                             Priority
                         </label>
-                        <input wire:model="priority" class="custom-input" id="priority" type="text"
-                            placeholder="priority" name="priority" value="{{ old('priority') }}">
+                        <select wire:model="priority" class="custom-input" id="priority" name="priority">
+                            <option value="">Select status</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
 
                         <label class="mt-4 mb-2" for="status">
                             Status

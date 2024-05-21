@@ -38,8 +38,12 @@
                         <label class="mt-4 mb-2" for="priority">
                             Priority
                         </label>
-                        <x-text-input wire:model="priority" class="custom-input" id="priority" type="text"
-                            placeholder="priority" name="priority" required autofocus autocomplete="priority" />
+                        <select wire:model="priority" class="custom-input" id="priority" name="priority">
+                            <option value="">Select status</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
 
                         <label class="mt-4 mb-2" for="status">
                             Status
@@ -47,7 +51,7 @@
                         <select wire:model="status" class="custom-input" id="status" name="status">
                             <option value="">Select status</option>
                             <option value="pending" {{ $task->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="in progress" {{ $task->status == 'in progress' ? 'selected' : '' }}>In
+                            <option value="in_progress" {{ $task->status == 'in progress' ? 'selected' : '' }}>In
                                 progress</option>
                             <option value="completed" {{ $task->status == 'completed' ? 'selected' : '' }}>Completed
                             </option>
@@ -67,7 +71,7 @@
                             <option value="">Select a project</option>
                             @foreach ($projects as $project)
                                 <option value="{{ $project->id }}"
-                                    {{ $task->project_id == $project->id ? 'selected' : '' }}>{{ $project->name }}
+                                    {{ old('project_id') == $project->id ? 'selected' : '' }}>{{ $project->name }}
                                 </option>
                             @endforeach
                         </select>

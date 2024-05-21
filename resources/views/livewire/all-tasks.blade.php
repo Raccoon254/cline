@@ -55,7 +55,10 @@
                                     <div class="mt-2 flex justify-between items-center">
                                         <span class="text-gray-500 font-semibold text-sm cursor-pointer"
                                             onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
-                                        <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
+                                        <span class="text-gray-500 text-sm">
+                                            <i class="fas fa-calendar-alt mr-1 text-sm"></i>
+                                            {{ $task->due_date }}
+                                        </span>
                                     </div>
                                 </div>
                             @endif
@@ -103,7 +106,10 @@
                                     <div class="mt-2 flex justify-between items-center">
                                         <span class="text-gray-500 font-semibold text-sm cursor-pointer"
                                             onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
-                                        <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
+                                        <span class="text-gray-500 text-sm">
+                                            <i class="fas fa-calendar-alt mr-1 text-sm"></i>
+                                            {{ $task->due_date }}
+                                        </span>
                                     </div>
                                 </div>
                             @endif
@@ -151,7 +157,10 @@
                                     <div class="mt-2 flex justify-between items-center">
                                         <span class="text-gray-500 font-semibold text-sm cursor-pointer"
                                             onclick="window.location='{{ route('projects.show', $task->project) }}'">{{ $task->project->name }}</span>
-                                        <span class="text-gray-500 text-sm">{{ $task->due_date }}</span>
+                                        <span class="text-gray-500 text-sm">
+                                            <i class="fas fa-calendar-alt mr-1 text-sm"></i>
+                                            {{ $task->due_date }}
+                                        </span>
                                     </div>
                                 </div>
                             @endif

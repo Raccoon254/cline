@@ -11,15 +11,15 @@
         <!-- Page Modals -->
 
         <!-- Page Content -->
-        <div class="flex gap-4">
+        <div class="flex flex-col sm:flex-row md:flex-row gap-4">
             <div class="py-4">
                 <div class="grid gap-2 grid-cols-2 w-full sm:w-[310px]">
                     <div class="dashboard-card">
                         <div class="top">
                             <div class="badge">
-                        <span class="text-xs text-gray-100">
-                            +12
-                        </span>
+                                <span class="text-xs text-gray-100">
+                                    +12
+                                </span>
                             </div>
                         </div>
                         <div class="mid">
@@ -38,9 +38,9 @@
                     <div class="dashboard-card">
                         <div class="top">
                             <div class="badge">
-                        <span class="text-xs text-gray-100">
-                            +2
-                        </span>
+                                <span class="text-xs text-gray-100">
+                                    +2
+                                </span>
                             </div>
                         </div>
                         <div class="mid">
@@ -59,9 +59,9 @@
                     <div class="dashboard-card">
                         <div class="top">
                             <div class="badge">
-                        <span class="text-xs text-gray-100">
-                            +3
-                        </span>
+                                <span class="text-xs text-gray-100">
+                                    +3
+                                </span>
                             </div>
                         </div>
                         <div class="mid">
@@ -80,56 +80,56 @@
                 </div>
                 <div class="next">
                     <div class="label mt-2">
-                    <span class="text-gray-700">
-                        Clients & Stats <i class="fa-solid fa-chart-simple"></i>
-                    </span>
+                        <span class="text-gray-700">
+                            Clients & Stats <i class="fa-solid fa-chart-simple"></i>
+                        </span>
                     </div>
                 </div>
                 <div class="earn-container text-gray-400">
                     <div class="earn-card">
-                    <span class="text-white text-xl">
-                        <i class="fa-solid text-green-500 fa-arrow-trend-up"></i>
-                        +12%
-                    </span>
+                        <span class="text-white text-xl">
+                            <i class="fa-solid text-green-500 fa-arrow-trend-up"></i>
+                            +12%
+                        </span>
                         <div class="">
                             <span class="text-xs">
-                               Clicks
+                                Clicks
                             </span>
                         </div>
                     </div>
 
                     <div class="earn-card">
-                    <span class="text-white text-xl">
-                        <i class="fa-solid text-red-500 fa-arrow-trend-down"></i>
-                        -7
-                    </span>
+                        <span class="text-white text-xl">
+                            <i class="fa-solid text-red-500 fa-arrow-trend-down"></i>
+                            -7
+                        </span>
                         <div class="">
                             <span class="text-xs">
-                               Total Projects
+                                Total Projects
                             </span>
                         </div>
                     </div>
 
                     <div class="earn-card">
-                    <span class="text-white text-xl">
-                        <i class="fa-solid text-green-500 fa-arrow-trend-up"></i>
-                        340 $
-                    </span>
+                        <span class="text-white text-xl">
+                            <i class="fa-solid text-green-500 fa-arrow-trend-up"></i>
+                            340 $
+                        </span>
                         <div class="">
                             <span class="text-xs">
-                                 Total Earnings
+                                Total Earnings
                             </span>
                         </div>
                     </div>
 
                     <div class="earn-card">
-                    <span class="text-white text-xl">
-                        <i class="fa-solid text-orange-500 fa-arrow-right-long"></i>
-                        + 0
-                    </span>
+                        <span class="text-white text-xl">
+                            <i class="fa-solid text-orange-500 fa-arrow-right-long"></i>
+                            + 0
+                        </span>
                         <div class="">
                             <span class="text-xs">
-                               New Clients
+                                New Clients
                             </span>
                         </div>
                     </div>

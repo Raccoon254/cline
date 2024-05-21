@@ -19,7 +19,9 @@ class ClientProjects extends Component
         $projects = $currentClient->projects()->where('name', 'like', '%' . $this->searchTerm . '%')
             ->orWhere('description', 'like', '%' . $this->searchTerm . '%')
             ->paginate(3);
-        return view('client.projects',
+
+        return view(
+            'client.projects',
             [
                 'projects' => $projects
             ]

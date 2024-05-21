@@ -18,7 +18,13 @@ class ProjectController extends Controller
     public function index(): View
     {
         $role = Auth::user()->role ?? "user";
-        $projects = Project::all();
+        // $projects = Project::all();
+
+        if ($role == "user") {
+            $projects = Project::where('user_id', auth()->user()->id)->get();
+        } else {
+            $projects = Project::where('client_id', auth()->user()->client->id)->get();
+        }
 
         return view('projects.index', compact('projects', 'role'));
     }

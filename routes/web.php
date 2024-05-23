@@ -26,7 +26,7 @@ Route::get("/", function () {
 
 
 
-Route::get("/users", AllUsers::class)->name("welcome");
+Route::get("/users", AllUsers::class)->name("welcome")->middleware("auth");
 
 Route::get("/dashboard", function () {
     $role = Auth::user()->role ?? "user";
@@ -44,9 +44,7 @@ Route::get("/dashboard", function () {
     ->name("dashboard");
 
 Route::group(["middleware" => ["auth", "role:admin"]], function () {
-    Route::get("/admin/dashboard", function () {
-        return view("admin.dashboard");
-    })->name("admin.dashboard");
+    // Admin Dashboard
 });
 
 Route::group(["middleware" => ["auth", "role:client"]], function () {

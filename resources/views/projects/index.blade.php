@@ -8,14 +8,18 @@
         All Projects
     </h2>
 
+
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden sm:rounded-lg">
                 <div class="grid grid-cols-1 p-3 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                    @foreach ($projects as $project)
-                        <div class="bg-gray-200 text-gray-900 shadow-sm m-1 rounded-[20px] p-6">
+                    @foreach ($projects->sortByDesc('start_date') as $project)
+                        <div class="bg-gray-200 text-gray-900 shadow-sm m-1 rounded-[20px] p-6"
+                            onclick="window.location='{{ route('projects.show', $project) }}'">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-semibold">{{ $project->name }}</h3>
+                                <h3 class="text-lg font-semibold cursor-pointer"
+                                    onclick="window.location='{{ route('projects.show', $project) }}'">
+                                    {{ $project->name }}</h3>
                                 <span class="text-gray-900 text-sm">
                                     @if ($project->status == 'active')
                                         <i class="fas fa-circle text-green-500 mr-2"></i>Active
@@ -35,7 +39,8 @@
                             <p class="text-gray-600 text-sm mt-2">{{ $project->description }}</p>
                             <div class="flex items-center justify-between mt-4">
                                 <div>
-                                    <i class="fas ring-1 btn btn-sm btn-circle btn-ghost fa-user text-gray-500 mr-2"></i>
+                                    <i
+                                        class="fas ring-1 btn btn-sm btn-circle btn-ghost fa-user text-gray-500 mr-2"></i>
                                     <span class="text-gray-600">{{ $project->user->name }}</span>
                                 </div>
                                 <div>

@@ -1,4 +1,4 @@
-<div class="bar text-gray-900 bg-white rounded-t-[8px] h-12">
+<div class="bar text-gray-900 bg-white rounded-t-[8px] h-14">
     <div class="flex justify-between items-center h-full px-4">
         <livewire:cline_search />
 

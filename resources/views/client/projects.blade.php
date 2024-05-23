@@ -17,7 +17,7 @@
         </div>
         <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($projects->sortByDesc('start_date') as $project)
-                <div class="client-card h-72 cursor-pointer border ring-1 ring-gray-500 ring-offset-1 center center flex-col ring-opacity-10 bg-white rounded-xl p-1"
+                <div class="client-card cursor-pointer border ring-1 ring-gray-500 ring-offset-1 flex-col ring-opacity-10 bg-white rounded-xl p-4"
                     onclick="window.location.href='{{ route('projects.show', $project) }}'">
                     <!-- Avatar Like icon depending on the project status -->
                     <div class="w-full center">
@@ -44,14 +44,14 @@
                     <div class="mt-4">
                         <p class="text-gray-500">Price: {{ $project->price }}</p>
 
-                        <div class="relative mt-10">
+                        <div class="relative mt-2">
                             <div class="relative">
                                 <!-- Icon to point from top at the current day using absolute positioning -->
-                                <div class="absolute flex flex-col -top-4 -mt-2"
-                                    style="left: {{ $project->progress() }}%">
-                                    <span class="text-gray-500 text-xs">{{ $project->progress() }}%</span>
-                                    <i class="fas fa-caret-down text-gray-500"></i>
-                                </div>
+{{--                                <div class="absolute w-[90%] flex flex-col -top-4 -mt-2"--}}
+{{--                                    style="left: {{ $project->progress() }}%">--}}
+{{--                                    <span class="text-gray-500 text-xs">{{ $project->progress() }}%</span>--}}
+{{--                                    <i class="fas fa-caret-down text-gray-500"></i>--}}
+{{--                                </div>--}}
                                 <progress class="progress progress-success w-full" value="{{ $project->progress() }}"
                                     max="100">
                                 </progress>
